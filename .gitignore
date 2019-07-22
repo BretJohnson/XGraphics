@@ -1,0 +1,12 @@
+*.userprefs
+*.mpack
+*.md5
+packages
+bin
+debug
+obj
+nuget.exe
+.vs
+.user
+*.user
+.DS_Store
