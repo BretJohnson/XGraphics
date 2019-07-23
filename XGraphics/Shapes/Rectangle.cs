@@ -1,4 +1,4 @@
-﻿namespace XGraphics
+﻿namespace XGraphics.Shapes
 {
     public class Rectangle : Shape
     {

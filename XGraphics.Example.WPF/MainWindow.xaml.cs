@@ -2,6 +2,7 @@
 using System.Windows;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
+using XGraphics.Shapes;
 using XGraphics.Skia;
 
 namespace XGraphics.Example.WPF
@@ -35,8 +36,8 @@ namespace XGraphics.Example.WPF
 
             yield return new Rectangle()
             {
-                Left = 0,
-                Top = 0,
+                Left = 4,
+                Top = 4,
                 Width = 50,
                 Height = 50,
                 Stroke = new SolidColorBrush(red),

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace XGraphics
+﻿namespace XGraphics
 {
     public abstract class Brush
     {

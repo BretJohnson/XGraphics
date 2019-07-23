@@ -1,5 +1,6 @@
 ﻿using System;
 using SkiaSharp;
+using XGraphics.Shapes;
 
 namespace XGraphics.Skia
 {
