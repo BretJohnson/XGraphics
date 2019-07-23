@@ -25,16 +25,16 @@ namespace XGraphics.Example.WPF
         {
             var skiaCanvas = new SkiaCanvas(skCanvas);
 
-            foreach (Shape shape in SampleShapes())
+            foreach (IShape shape in SampleShapes())
                 skiaCanvas.DrawShape(shape);
         }
 
-        private IEnumerable<Shape> SampleShapes()
+        private IEnumerable<IShape> SampleShapes()
         {
             Color red = Color.FromArgb(255, 255, 0, 0);
             Color blue = Color.FromArgb(255, 0, 0, 255);
 
-            yield return new Rectangle()
+            yield return new IRectangle()
             {
                 Left = 4,
                 Top = 4,
@@ -42,20 +42,20 @@ namespace XGraphics.Example.WPF
                 RadiusY = 8,
                 Width = 50,
                 Height = 50,
-                Stroke = new SolidColorBrush(red),
+                Stroke = new ISolidColorBrush(red),
                 StrokeThickness = 2,
-                Fill = new SolidColorBrush(blue)
+                Fill = new ISolidColorBrush(blue)
             };
 
-            yield return new Rectangle()
+            yield return new IRectangle()
             {
                 Left = 50,
                 Top = 50,
                 Width = 100,
                 Height = 100,
-                Stroke = new SolidColorBrush(blue),
+                Stroke = new ISolidColorBrush(blue),
                 StrokeThickness = 5,
-                Fill = new SolidColorBrush(red)
+                Fill = new ISolidColorBrush(red)
             };
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace XGraphics
 {
-    public abstract class Brush
+    public interface IBrush
     {
     }
 }

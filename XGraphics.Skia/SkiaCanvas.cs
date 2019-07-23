@@ -13,7 +13,7 @@ namespace XGraphics.Skia
             this.skCanvas = skCanvas;
         }
 
-        public override void DrawRectangle(Rectangle rectangle)
+        public override void DrawRectangle(IRectangle rectangle)
         {
             var fill = rectangle.Fill;
             if (fill != null)
@@ -30,7 +30,7 @@ namespace XGraphics.Skia
             }
         }
 
-        private void DrawSkiaRectangle(Rectangle rectangle, SKPaint paint)
+        private void DrawSkiaRectangle(IRectangle rectangle, SKPaint paint)
         {
             var rect = SKRect.Create((float)rectangle.Left, (float)rectangle.Top, (float)rectangle.Width, (float)rectangle.Height);
 
@@ -39,11 +39,11 @@ namespace XGraphics.Skia
             else skCanvas.DrawRoundRect(rect, (float)rectangle.RadiusX, (float)rectangle.RadiusY, paint);
         }
 
-        public static SKPaint CreatePaintForStroke(Shape shape, Brush stroke)
+        public static SKPaint CreatePaintForStroke(IShape shape, IBrush stroke)
         {
             var paint = new SKPaint {Style = SKPaintStyle.Stroke, IsAntialias = true};
 
-            if (stroke is SolidColorBrush solidColorBrush)
+            if (stroke is ISolidColorBrush solidColorBrush)
                 paint.Color = ColorToSKColor(solidColorBrush.Color);
             else throw new InvalidOperationException($"Brush type {stroke.GetType()} isn't currently supported");
             paint.StrokeWidth = (int) shape.StrokeThickness;
@@ -51,11 +51,11 @@ namespace XGraphics.Skia
             return paint;
         }
 
-        public static SKPaint CreatePaintForFill(Shape shape, Brush fill)
+        public static SKPaint CreatePaintForFill(IShape shape, IBrush fill)
         {
             var paint = new SKPaint {Style = SKPaintStyle.Fill, IsAntialias = true};
 
-            if (fill is SolidColorBrush solidColorBrush)
+            if (fill is ISolidColorBrush solidColorBrush)
                 paint.Color = ColorToSKColor(solidColorBrush.Color);
             else throw new InvalidOperationException($"Brush type {fill.GetType()} isn't currently supported");
 
