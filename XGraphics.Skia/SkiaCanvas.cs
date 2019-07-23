@@ -15,21 +15,28 @@ namespace XGraphics.Skia
 
         public override void DrawRectangle(Rectangle rectangle)
         {
-            var rect = SKRect.Create((float)rectangle.Left, (float)rectangle.Top, (float)rectangle.Width, (float)rectangle.Height);
-
             var fill = rectangle.Fill;
             if (fill != null)
             {
                 using SKPaint paint = CreatePaintForFill(rectangle, fill);
-                skCanvas.DrawRect(rect, paint);
+                DrawSkiaRectangle(rectangle, paint);
             }
 
             var stroke = rectangle.Stroke;
             if (stroke != null && rectangle.StrokeThickness > 0.0)
             {
                 using SKPaint paint = CreatePaintForStroke(rectangle, stroke);
-                skCanvas.DrawRect(rect, paint);
+                DrawSkiaRectangle(rectangle, paint);
             }
+        }
+
+        private void DrawSkiaRectangle(Rectangle rectangle, SKPaint paint)
+        {
+            var rect = SKRect.Create((float)rectangle.Left, (float)rectangle.Top, (float)rectangle.Width, (float)rectangle.Height);
+
+            if (rectangle.RadiusX == 0 && rectangle.RadiusY == 0)
+                skCanvas.DrawRect(rect, paint);
+            else skCanvas.DrawRoundRect(rect, (float)rectangle.RadiusX, (float)rectangle.RadiusY, paint);
         }
 
         public static SKPaint CreatePaintForStroke(Shape shape, Brush stroke)

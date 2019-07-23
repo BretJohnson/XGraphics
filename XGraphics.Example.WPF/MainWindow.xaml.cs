@@ -38,6 +38,8 @@ namespace XGraphics.Example.WPF
             {
                 Left = 4,
                 Top = 4,
+                RadiusX = 8,
+                RadiusY = 8,
                 Width = 50,
                 Height = 50,
                 Stroke = new SolidColorBrush(red),
