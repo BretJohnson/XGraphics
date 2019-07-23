@@ -2,7 +2,7 @@
 using SkiaSharp;
 using XGraphics.Shapes;
 
-namespace XGraphics.Skia
+namespace XGraphics.Backend.Skia
 {
     public class SkiaCanvas : Canvas
     {
