@@ -34,8 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,15 +49,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Brush.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Converters\GeometryTypeConverter.cs" />
+    <Compile Include="DependencyObjectWithCascadingNotifications.cs" />
+    <Compile Include="Geometries\ArcSegment.cs" />
+    <Compile Include="Geometries\BezierSegment.cs" />
+    <Compile Include="Geometries\Geometry.cs" />
+    <Compile Include="Geometries\GeometryFactory.cs">
+      <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
+    </Compile>
+    <Compile Include="Geometries\LineSegment.cs" />
+    <Compile Include="Geometries\PathFigure.cs" />
+    <Compile Include="Geometries\PathGeometry.cs" />
+    <Compile Include="Geometries\PathSegment.cs" />
+    <Compile Include="Geometries\PolyBezierSegment.cs" />
+    <Compile Include="Geometries\PolyLineSegment.cs" />
+    <Compile Include="Geometries\PolyQuadraticBezierSegment.cs" />
+    <Compile Include="Geometries\QuadraticBezierSegment.cs" />
+    <Compile Include="Shapes\Ellipse.cs" />
+    <Compile Include="Shapes\Line.cs" />
+    <Compile Include="Shapes\Path.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
+    <Compile Include="Transforms\TransformGroup.cs" />
+    <Compile Include="Transforms\ScaleTransform.cs" />
+    <Compile Include="Transforms\RotateTransform.cs" />
+    <Compile Include="Transforms\Transform.cs" />
+    <Compile Include="Transforms\TranslateTransform.cs" />
+    <Compile Include="Wrapper\Size.cs" />
+    <Compile Include="Wrapper\Point.cs" />
+    <Compile Include="Wrapper\Color.cs" />
+    <Compile Include="Converters\ColorTypeConverter.cs" />
+    <Compile Include="XGraphics.cs" />
+    <Compile Include="Canvas.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GraphicsElement.cs" />
     <Compile Include="Shapes\Shape.cs" />
     <Compile Include="PropertyUtils.cs" />
     <Compile Include="SolidColorBrush.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XGraphics\XGraphics.csproj">
-      <Project>{87e2b057-2f6a-4029-838d-4ea306112dbb}</Project>
+      <Project>{71395577-42c4-4a87-a0e1-2519e10ef2c4}</Project>
       <Name>XGraphics</Name>
     </ProjectReference>
   </ItemGroup>

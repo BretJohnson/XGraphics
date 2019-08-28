@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:xaml="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="XamarinFormsDemo.Views.DemoPage"
+             Title="{Binding Title}"
+             x:Name="BrowseItemsPage">
+
+    <!--
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
+    </ContentPage.ToolbarItems>
+    -->
+
+    <StackLayout>
+        <XGraphics x:Name="appbar_arrow_corner_up_right" WidthRequest="400" HeightRequest="400" xaml:Grid.Row="1" xaml:Grid.Column="1" xmlns="http://schemas.microsoft.com/xgraphics/2019">
+            <XGraphics.GraphicsRenderTransform>
+                <TranslateTransform X="200" Y="200"/>
+            </XGraphics.GraphicsRenderTransform>
+            <Path x:Name="myPath" Width="40.25" Height="40" Left="22" Top="19" Data="F1 M 22,30L 47.75,30L 36.75,19L 48.25,19L 62.25,33L 47.25,48L 36.75,48L 47.75,37L 29,37L 29,59L 22,59L 22,30 Z ">
+                <Path.Fill>
+                    <SolidColorBrush Color="Blue" />
+                </Path.Fill>
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="2" ScaleY="2" />
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+        </XGraphics>
+
+        <XGraphics WidthRequest="400" HeightRequest="400" xaml:Grid.Row="2" xaml:Grid.Column="1" xmlns="http://schemas.microsoft.com/xgraphics/2019">
+            <Ellipse Width="200" Height="100">
+                <Ellipse.Fill>
+                    <SolidColorBrush Color="Blue" />
+                </Ellipse.Fill>
+            </Ellipse>
+        </XGraphics>
+    </StackLayout>
+
+</ContentPage>

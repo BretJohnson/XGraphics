@@ -1,24 +1,21 @@
-﻿using System;
-using Xamarin.Forms;
 using XGraphics.Shapes;
+using Xamarin.Forms;
 
 namespace XGraphics.XamarinForms.Shapes
 {
     public class Rectangle : Shape, IRectangle
     {
-        public static readonly BindableProperty RadiusXProperty = CreateProperty(IRectangleProperties.RadiusXProperty);
-        public static readonly BindableProperty RadiusYProperty = CreateProperty(IRectangleProperties.RadiusYProperty);
+        public static readonly BindableProperty RadiusXProperty = PropertyUtils.Create(nameof(RadiusX), typeof(double), typeof(Rectangle), 0.0);
+        public static readonly BindableProperty RadiusYProperty = PropertyUtils.Create(nameof(RadiusY), typeof(double), typeof(Rectangle), 0.0);
 
-        private static BindableProperty CreateProperty(XPlatBindableProperty xplatProperty, Type? propertyType = null) =>
-            PropertyUtils.CreateProperty(xplatProperty, typeof(Rectangle), propertyType);
-
-
-        public double RadiusX {
+        public double RadiusX
+        {
             get => (double)GetValue(RadiusXProperty);
             set => SetValue(RadiusXProperty, value);
         }
 
-        public double RadiusY {
+        public double RadiusY
+        {
             get => (double)GetValue(RadiusYProperty);
             set => SetValue(RadiusYProperty, value);
         }

@@ -1,18 +1,12 @@
 ﻿namespace XGraphics.Shapes
 {
-    public class IRectangleProperties
-    {
-        public static readonly XPlatBindableProperty RadiusXProperty = XPlatBindableProperty.Create(
-            nameof(IRectangle.RadiusX), typeof(double), 0);
-
-        public static readonly XPlatBindableProperty RadiusYProperty = XPlatBindableProperty.Create(
-            nameof(IRectangle.RadiusY), typeof(double), 0);
-    }
-
+    [GraphicsModelObject]
     public interface IRectangle : IShape
     {
-        double RadiusX { get; set; }
+        [ModelDefaultValue(0.0)]
+        double RadiusX { get; }
 
-        double RadiusY { get; set; }
+        [ModelDefaultValue(0.0)]
+        double RadiusY { get; }
     }
 }

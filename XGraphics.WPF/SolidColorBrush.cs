@@ -1,17 +1,17 @@
-﻿using System;
+using XGraphics;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace XGraphics.WPF
 {
     public class SolidColorBrush : Brush, ISolidColorBrush
     {
-        public static readonly DependencyProperty ColorProperty = CreateProperty(SolidColorBrushProperties.ColorProperty);
+        public static readonly DependencyProperty ColorProperty = PropertyUtils.Create(nameof(Color), typeof(Wrapper.Color), typeof(SolidColorBrush), PropertyUtils.DefaultColor);
 
-        private static DependencyProperty CreateProperty(XPlatBindableProperty xplatProperty, Type? propertyType = null) =>
-            PropertyUtils.CreateProperty(xplatProperty, typeof(SolidColorBrush), propertyType);
-
-        public Color Color {
-            get => (Color)GetValue(ColorProperty);
+        Color ISolidColorBrush.Color => Color.WrappedColor;
+        public Wrapper.Color Color
+        {
+            get => (Wrapper.Color)GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
         }
     }
