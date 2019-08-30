@@ -1,4 +1,6 @@
-﻿namespace XGraphics.Shapes
+﻿using XGraphics.Brushes;
+
+namespace XGraphics.Shapes
 {
     [GraphicsModelObject]
     public interface IShape : IGraphicsElement

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using XGraphics.Brushes;
+using XGraphics.WPF.Brushes;
 using XGraphics;
 using System.Windows;
 using System.Windows.Markup;

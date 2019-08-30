@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using Xamarin.Forms;
+using XGraphics.Brushes;
 using XGraphics.Transforms;
+using XGraphics.XamarinForms.Brushes;
 using XGraphics.XamarinForms.Transforms;
 
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.XamarinForms")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.XamarinForms.Brushes")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.XamarinForms.Geometries")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.XamarinForms.Shapes")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.XamarinForms.Transforms")]
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.XamarinForms.Geometries")]
 
 namespace XGraphics.XamarinForms
 {
@@ -41,7 +44,7 @@ namespace XGraphics.XamarinForms
 
         public GraphicsObjectCollection<GraphicsElement> Children { get; }
 
-        IBrush IXGraphics.Background => Background;
+        IBrush? IXGraphics.Background => Background;
 
         public Brush Background {
             get => (Brush)GetValue(BackgroundProperty);

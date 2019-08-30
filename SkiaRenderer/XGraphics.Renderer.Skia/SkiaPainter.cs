@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SkiaSharp;
+using XGraphics.Brushes;
 using XGraphics.Geometries;
 using XGraphics.Shapes;
 using XGraphics.Transforms;

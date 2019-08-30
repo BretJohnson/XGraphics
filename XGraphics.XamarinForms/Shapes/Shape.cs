@@ -1,3 +1,5 @@
+using XGraphics.Brushes;
+using XGraphics.XamarinForms.Brushes;
 using XGraphics.Shapes;
 using Xamarin.Forms;
 

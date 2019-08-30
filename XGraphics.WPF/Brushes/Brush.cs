@@ -1,7 +1,7 @@
-using XGraphics;
+using XGraphics.Brushes;
 using System.Windows.Markup;
 
-namespace XGraphics.WPF
+namespace XGraphics.WPF.Brushes
 {
     public class Brush : DependencyObjectWithCascadingNotifications, IBrush
     {

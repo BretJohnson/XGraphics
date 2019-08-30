@@ -5,14 +5,16 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using XGraphics.Brushes;
 using XGraphics.Transforms;
 using Transform = XGraphics.WPF.Transforms.Transform;
 
 
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.WPF")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.WPF.Brushes")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.WPF.Geometries")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.WPF.Shapes")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.WPF.Transforms")]
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/xgraphics/2019", "XGraphics.WPF.Geometries")]
 
 namespace XGraphics.WPF
 {
@@ -60,10 +62,10 @@ namespace XGraphics.WPF
 
         public GraphicsObjectCollection<GraphicsElement> Children { get; }
 
-        IBrush IXGraphics.Background => Background;
+        IBrush? IXGraphics.Background => Background;
 
-        public Brush Background {
-            get => (Brush)GetValue(BackgroundProperty);
+        public Brushes.Brush? Background {
+            get => (Brushes.Brush)GetValue(BackgroundProperty);
             set => SetValue(BackgroundProperty, value);
         }
 

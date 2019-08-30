@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using XGraphics.Brushes;
+using XGraphics.XamarinForms.Brushes;
 using XGraphics;
 using Xamarin.Forms;
 

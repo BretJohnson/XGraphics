@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Xamarin.Forms;
+using XGraphics.Brushes;
 using XGraphics.Transforms;
-using XGraphics.XamarinForms.Geometries;
+using XGraphics.XamarinForms.Brushes;
 using XGraphics.XamarinForms.Transforms;
 
 namespace XGraphics.XamarinForms

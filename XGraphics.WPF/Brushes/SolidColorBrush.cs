@@ -1,11 +1,12 @@
-using XGraphics;
-using Xamarin.Forms;
+using XGraphics.Brushes;
+using System.Windows;
+using System.Windows.Markup;
 
-namespace XGraphics.XamarinForms
+namespace XGraphics.WPF.Brushes
 {
     public class SolidColorBrush : Brush, ISolidColorBrush
     {
-        public static readonly BindableProperty ColorProperty = PropertyUtils.Create(nameof(Color), typeof(Wrapper.Color), typeof(SolidColorBrush), PropertyUtils.DefaultColor);
+        public static readonly DependencyProperty ColorProperty = PropertyUtils.Create(nameof(Color), typeof(Wrapper.Color), typeof(SolidColorBrush), PropertyUtils.DefaultColor);
 
         Color ISolidColorBrush.Color => Color.WrappedColor;
         public Wrapper.Color Color

@@ -1,7 +1,7 @@
-using XGraphics;
+using XGraphics.Brushes;
 using Xamarin.Forms;
 
-namespace XGraphics.XamarinForms
+namespace XGraphics.XamarinForms.Brushes
 {
     public class Brush : BindableObjectWithCascadingNotifications, IBrush
     {

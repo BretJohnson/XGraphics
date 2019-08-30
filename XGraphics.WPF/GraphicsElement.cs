@@ -1,5 +1,3 @@
-using XGraphics.Shapes;
-using XGraphics.WPF.Shapes;
 using XGraphics.Transforms;
 using XGraphics.WPF.Transforms;
 using XGraphics;

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Windows;
+using XGraphics.Brushes;
 using XGraphics.Transforms;
+using XGraphics.WPF.Brushes;
 using XGraphics.WPF.Transforms;
 
 namespace XGraphics.WPF

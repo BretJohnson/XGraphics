@@ -48,7 +48,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Brush.cs" />
+    <Compile Include="Brushes\Brush.cs" />
+    <Compile Include="Brushes\GradientBrush.cs" />
+    <Compile Include="Brushes\GradientStop.cs" />
+    <Compile Include="Brushes\LinearGradientBrush.cs" />
+    <Compile Include="Brushes\RadialGradientBrush.cs" />
+    <Compile Include="Brushes\SolidColorBrush.cs" />
     <Compile Include="Converters\GeometryTypeConverter.cs" />
     <Compile Include="DependencyObjectWithCascadingNotifications.cs" />
     <Compile Include="Geometries\ArcSegment.cs" />
@@ -84,7 +89,6 @@
     <Compile Include="GraphicsElement.cs" />
     <Compile Include="Shapes\Shape.cs" />
     <Compile Include="PropertyUtils.cs" />
-    <Compile Include="SolidColorBrush.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XGraphics\XGraphics.csproj">

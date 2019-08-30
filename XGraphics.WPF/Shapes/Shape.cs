@@ -1,3 +1,5 @@
+using XGraphics.Brushes;
+using XGraphics.WPF.Brushes;
 using XGraphics.Shapes;
 using System.Windows;
 using System.Windows.Markup;

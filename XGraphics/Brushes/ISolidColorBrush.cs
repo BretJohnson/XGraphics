@@ -1,4 +1,4 @@
-﻿namespace XGraphics
+﻿namespace XGraphics.Brushes
 {
     [GraphicsModelObject]
     public interface ISolidColorBrush : IBrush
