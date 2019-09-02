@@ -1,5 +1,8 @@
+using XGraphics.Shapes;
+using XGraphics.XamarinForms.Shapes;
 using XGraphics.Transforms;
 using XGraphics.XamarinForms.Transforms;
+using XGraphics;
 using Xamarin.Forms;
 
 namespace XGraphics.XamarinForms
