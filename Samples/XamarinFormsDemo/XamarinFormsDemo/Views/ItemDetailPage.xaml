@@ -13,5 +13,5 @@
         <Label Text="Description:" FontSize="Medium" />
         <Label Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small"/>
     </StackLayout>
-    
+
 </ContentPage>

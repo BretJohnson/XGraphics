@@ -35,7 +35,7 @@ namespace XGraphics.WPF
     [ContentProperty("Children")]
     public class XGraphics : FrameworkElement, IXGraphics, INotifyObjectOrSubobjectChanged
     {
-        public static readonly DependencyProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brush), typeof(XGraphics), null);
+        public static readonly DependencyProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brushes.Brush), typeof(XGraphics), null);
         public static readonly DependencyProperty GraphicsRenderTransformProperty = PropertyUtils.Create(nameof(GraphicsRenderTransform), typeof(Transform), typeof(XGraphics), null);
 
         private readonly bool designMode;
@@ -64,7 +64,7 @@ namespace XGraphics.WPF
 
         IBrush? IXGraphics.Background => Background;
 
-        public Brushes.Brush? Background {
+        public Brushes.Brush Background {
             get => (Brushes.Brush)GetValue(BackgroundProperty);
             set => SetValue(BackgroundProperty, value);
         }

@@ -1,6 +1,5 @@
 using XGraphics.Transforms;
 using XGraphics.XamarinForms.Transforms;
-using XGraphics;
 using Xamarin.Forms;
 
 namespace XGraphics.XamarinForms
