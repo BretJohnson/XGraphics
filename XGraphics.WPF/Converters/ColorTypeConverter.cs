@@ -12,8 +12,7 @@ namespace XGraphics.WPF.Converters
             return sourceType == typeof(string);
         }
 
-        public override object ConvertFrom(ITypeDescriptorContext context,
-            CultureInfo culture, object valueObject)
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object valueObject)
         {
             if (!(valueObject is string value))
                 throw new InvalidOperationException($"Cannot convert from type {valueObject.GetType()}");

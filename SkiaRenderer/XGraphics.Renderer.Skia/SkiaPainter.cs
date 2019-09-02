@@ -129,6 +129,7 @@ namespace XGraphics.Renderer.Skia
 
             return skiaPathFigures;
         }
+
         private void AddPathSegmentToSkiaPath(SKPath skPath, IPathSegment pathSegment)
         {
             if (pathSegment is IBezierSegment bezierSegment)
@@ -136,6 +137,29 @@ namespace XGraphics.Renderer.Skia
                     (float)bezierSegment.Point1.X, (float)bezierSegment.Point1.Y,
                     (float)bezierSegment.Point2.X, (float)bezierSegment.Point2.Y,
                     (float)bezierSegment.Point3.X, (float)bezierSegment.Point3.Y);
+            else if (pathSegment is IPolyBezierSegment polyBezierSegment)
+            {
+                List<Point> points = new List<Point>();
+                foreach (Point point in polyBezierSegment.Points)
+                    points.Add(point);
+
+                if (points.Count % 3 != 0)
+                    throw new InvalidOperationException($"IPolyBezerSegment contains {points.Count} points, which isn't a multiple of 3");
+
+                for (int i = 0; i < points.Count; )
+                {
+                    var point1 = points[i + 0];
+                    var point2 = points[i + 1];
+                    var point3 = points[i + 2];
+
+                    skPath.CubicTo(
+                        (float)point1.X, (float)point1.Y,
+                        (float)point2.X, (float)point2.Y,
+                        (float)point3.X, (float)point3.Y);
+
+                    i += 3;
+                }
+            }
             else if (pathSegment is ILineSegment lineSegment)
                 skPath.LineTo((float) lineSegment.Point.X, (float) lineSegment.Point.Y);
             else if (pathSegment is IQuadraticBezierSegment quadraticBezierSegment)
@@ -203,7 +227,7 @@ namespace XGraphics.Renderer.Skia
             if (fill != null && allowFill)
             {
                 using SKPaint paint = new SKPaint { Style = SKPaintStyle.Fill, IsAntialias = true };
-                InitSkiaPaintForBrush(paint, fill);
+                InitSkiaPaintForBrush(paint, fill, shape);
                 skCanvas.DrawPath(skiaPath, paint);
             }
 
@@ -211,25 +235,66 @@ namespace XGraphics.Renderer.Skia
             if (stroke != null)
             {
                 using SKPaint paint = new SKPaint { Style = SKPaintStyle.Stroke, IsAntialias = true };
-                InitSkiaPaintForBrush(paint, stroke);
+                InitSkiaPaintForBrush(paint, stroke, shape);
                 paint.StrokeWidth = (int)shape.StrokeThickness;
 
                 skCanvas.DrawPath(skiaPath, paint);
             }
         }
 
-        public static void InitSkiaPaintForBrush(SKPaint paint, IBrush brush)
+        public static void InitSkiaPaintForBrush(SKPaint paint, IBrush brush, IShape shape)
         {
             if (brush is ISolidColorBrush solidColorBrush)
                 paint.Color = ToSkiaColor(solidColorBrush.Color);
+            else if (brush is IGradientBrush gradientBrush)
+                paint.Shader = ToSkiaShader(gradientBrush, shape);
             else throw new InvalidOperationException($"Brush type {brush.GetType()} isn't currently supported");
         }
 
-        public static SKColor ToSkiaColor(Color color) =>
-            new SKColor(color.R, color.G, color.B, color.A);
+        public static SKColor ToSkiaColor(Color color) => new SKColor(color.R, color.G, color.B, color.A);
 
-        public static SKPoint ToSkiaPoint(Point point) =>
-            new SKPoint((float) point.X, (float) point.Y);
+        public static SKShader ToSkiaShader(IGradientBrush gradientBrush, IShape shape)
+        {
+            SKShaderTileMode tileMode = gradientBrush.SpreadMethod switch
+            {
+                GradientSpreadMethod.Pad => SKShaderTileMode.Clamp,
+                GradientSpreadMethod.Reflect => SKShaderTileMode.Mirror,
+                GradientSpreadMethod.Repeat => SKShaderTileMode.Repeat,
+                _ => throw new InvalidOperationException($"Unknown GradientSpreadmethod value {gradientBrush.SpreadMethod}")
+            };
+
+            List<SKColor> skiaColors = new List<SKColor>();
+            List<float> skiaColorPositions = new List<float>();
+            foreach (IGradientStop gradientStop in gradientBrush.GradientStops)
+            {
+                skiaColors.Add(ToSkiaColor(gradientStop.Color));
+                skiaColorPositions.Add((float)gradientStop.Offset);
+            }
+
+            if (gradientBrush is ILinearGradientBrush linearGradientBrush)
+            {
+                SKPoint skiaStartPoint = new SKPoint(
+                    (float)(shape.Left + linearGradientBrush.StartPoint.X * shape.Width),
+                    (float)(shape.Top + linearGradientBrush.StartPoint.Y * shape.Height));
+                SKPoint skiaEndPoint = new SKPoint(
+                    (float)(shape.Left + linearGradientBrush.EndPoint.X * shape.Width),
+                    (float)(shape.Top + linearGradientBrush.EndPoint.Y * shape.Height));
+
+                return SKShader.CreateLinearGradient(skiaStartPoint, skiaEndPoint, skiaColors.ToArray(), skiaColorPositions.ToArray(), tileMode);
+            }
+            else if (gradientBrush is IRadialGradientBrush radialGradientBrush)
+            {
+                SKPoint skiaCenterPoint = new SKPoint(
+                    (float)(shape.Left + radialGradientBrush.Center.X * shape.Width),
+                    (float)(shape.Top + radialGradientBrush.Center.Y * shape.Height));
+
+                float radius = (float)(radialGradientBrush.RadiusX * shape.Width);
+                return SKShader.CreateRadialGradient(skiaCenterPoint, radius, skiaColors.ToArray(), skiaColorPositions.ToArray(), tileMode);
+            }
+            else throw new InvalidOperationException($"GradientBrush type {gradientBrush.GetType()} is unknown");
+        }
+
+        public static SKPoint ToSkiaPoint(Point point) => new SKPoint((float) point.X, (float) point.Y);
 
         public static void AddSkiaPoints(IEnumerable<Point> points, List<SKPoint> skiaPoints)
         {

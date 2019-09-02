@@ -495,7 +495,7 @@ namespace XGraphics.DataModelGenerator
 
         private static bool IsEnumType(string typeName)
         {
-            return typeName == "SweepDirection" || typeName == "FillRule";
+            return typeName == "SweepDirection" || typeName == "FillRule" || typeName == "GradientSpreadMethod";
         }
 
         private static bool IsPointType(TypeSyntax type)
@@ -536,7 +536,23 @@ namespace XGraphics.DataModelGenerator
                     if (firstArgument == null)
                         throw new UserViewableException($"Property {modelProperty.Identifier.Text} should have an argument for the [ModelDefaultValue] attribute");
 
-                    return firstArgument.Expression;
+                    ExpressionSyntax defaultExpression = firstArgument.Expression;
+                    if (defaultExpression is LiteralExpressionSyntax literalExpression && literalExpression.Token.IsKind(SyntaxKind.StringLiteralToken))
+                    {
+                        string literalExpressionString = literalExpression.Token.ToString();
+                        if (literalExpressionString == "\"0.5,0.5\"")
+                            defaultExpression =
+                                MemberAccessExpression(
+                                    SyntaxKind.SimpleMemberAccessExpression,
+                                    MemberAccessExpression(
+                                        SyntaxKind.SimpleMemberAccessExpression,
+                                        IdentifierName("Wrapper"),
+                                        IdentifierName("Point")),
+                                    IdentifierName("CenterDefault"));
+                        else throw new UserViewableException($"Unknown string literal based default value: {literalExpressionString}");
+                    }
+
+                    return defaultExpression;
                 }
             }
 

@@ -3,6 +3,7 @@
     public struct Point
     {
         public static readonly Point Default = new Point(0, 0);
+        public static readonly Point CenterDefault = new Point(0.5, 0.5);
 
 
         public Point(double x, double y)
