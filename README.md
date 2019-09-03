@@ -9,8 +9,6 @@ XGraphics aims to solve these problems:
    XGraphics lets you instead do that directly from XAML, in the same way you can in UWP/WPF.
    That's more concise and allows use of Hot Reload to see updates immediately as you get your drawn UI to look just right. It also allows use for XAML animations, for sophisticated visual effects.
 
-<img style="padding-left:50px" src="Media/squircle-animation.gif" width="100">
-
 2. **Be the XAML standard for graphics shape elements (ellipses, paths, gradients, transformations, etc).**
  
    Today UWP, WPF, and Silverlight all use very similar, but slightly different, graphics elements.
@@ -22,7 +20,6 @@ XGraphics aims to solve these problems:
 
    ```
         <XGraphics x:Name="arrow_corner_up_right" xmlns="http://schemas.microsoft.com/xgraphics/2019">
-            <Ellipse Width="100" Height="50" Fill="Blue" Stroke="Black" StrokeThickness="4"/>
             <Path Width="40.25" Height="40" Left="22" Top="19" Data="F1 M 22,30L 47.75,30L 36.75,19L 48.25,19L 62.25,33L 47.25,48L 36.75,48L 47.75,37L 29,37L 29,59L 22,59L 22,30 Z">
                 <Path.Fill>
                     <SolidColorBrush Color="Blue" />
