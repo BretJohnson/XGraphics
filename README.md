@@ -53,3 +53,52 @@ XGraphics aims to solve these problems:
 
    This is all supported by having shared interfaces, like `XGraphics.IEllipse`, which define the object model. Then there are concrete versions of the objects,
    like `XGraphics.XamarinForms.Ellipse` and `XGraphics.WPF.Ellipse` and which implement the interface is the appropriate way for the given XAML flavor or plain old C# object. You don't need to worry about this implementation detail, but Roslyn based code gen creates the concrete classes. Similar technology could be used other places to create a "XAML standard" object model that works across all flavors of XAML, with shared code.
+
+# Currently Supported Elements
+
+### Shape elements
+
+| Element     | Notes, including any differences from UWP |
+| ----------- | ----------- |
+| `XGraphics`      | root Canvas; renamed to identify clearly as XGraphics |
+| `Canvas`   | child canvas |
+| `Shape`  | `Stretch` & stroke join properties not yet implemented |
+| `Ellipse`  |  |
+| `Line`  | |
+| `Rectangle`  | |
+| `Path`  | |
+
+### Geometry elements (mainly used for paths)
+| Element | Notes, including any differences from UWP |
+| ----------- | ----------- |
+| `Geometry` | Base class for geometries |
+| `PathGeometry`  | Contains multiple `PathFigures` |
+| `PathFigure`   | Contains multiple `PathSegments` |
+| `PathSegment`   | Base class for different path segment types |
+| `LineSegment`   | |
+| `ArcSegment` | |
+| `BezierSegment`   | |
+| `PolyBezierSegment`   | |
+| `PolyLineSegment`   | |
+| `PolyQuadraticBezierSegment`   | |
+| `QuadraticBezierSegment` | |
+
+### Transform elements
+| Element | Notes, including any differences from UWP |
+| ----------- | ----------- |
+| `Transform` | Transform base class |
+| `RotateTransform`  | |
+| `ScaleTransform`   | |
+| `TranslateTransform`   | |
+| `TransformGroup`   | |
+
+### Brush elements
+| Element | Notes, including any differences from UWP |
+| ----------- | ----------- |
+| `Brush` | `Opacity` and transform properties not yet implemented |
+| `SolidColorBrush`  | |
+| `GradientBrush`   | |
+| `GradientStop`   | |
+| `LinearGradientBrush`   | |
+| `RadialGradientBrush`   | Not in standard UWP, but exists in WPF and Windows community toolkit. XGraphics only supports circular, not elliptical, gradients, so it just has a single `Radius` property |
+
