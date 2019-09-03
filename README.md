@@ -9,6 +9,8 @@ XGraphics aims to solve these problems:
    XGraphics lets you instead do that directly from XAML, in the same way you can in UWP/WPF.
    That's more concise and allows use of Hot Reload to see updates immediately as you get your drawn UI to look just right. It also allows use for XAML animations, for sophisticated visual effects.
 
+<img style="padding-left:40px" src="Media/squircle-animation.gif">
+
 2. **Be the XAML standard for graphics shape elements (ellipses, paths, gradients, transformations, etc).**
  
    Today UWP, WPF, and Silverlight all use very similar, but slightly different, graphics elements.
@@ -19,7 +21,7 @@ XGraphics aims to solve these problems:
    So you do can take XAML like what's below and use it on any XAML platform - Xamarin.Forms, UWP, WPF, or (eventually) community XAML based platforms like Uno, Ooui, and Avalonia UI. We may not have a XAML Standard for everything, but having a standard for graphic elements is an important step. A standard also helps design assets and graphics tools (e.g. https://github.com/netonjm/FigmaSharp) work across all platforms.
 
    ```
-        <XGraphics x:Name="appbar_arrow_corner_up_right" xmlns="http://schemas.microsoft.com/xgraphics/2019">
+        <XGraphics x:Name="arrow_corner_up_right" xmlns="http://schemas.microsoft.com/xgraphics/2019">
             <Ellipse Width="100" Height="50" Fill="Blue" Stroke="Black" StrokeThickness="4"/>
             <Path Width="40.25" Height="40" Left="22" Top="19" Data="F1 M 22,30L 47.75,30L 36.75,19L 48.25,19L 62.25,33L 47.25,48L 36.75,48L 47.75,37L 29,37L 29,59L 22,59L 22,30 Z">
                 <Path.Fill>
@@ -34,7 +36,9 @@ XGraphics aims to solve these problems:
             </Path>
         </XGraphics>
     ```
-   
+
+<img style="padding-left:40px" src="Media/arrow-corner-up-right.png">
+
 3. **Support pluggable renderer backends, to work well everywhere**
 
    By default XGraphics uses SkiaSharp to do its rendering. SkiaSharp is nice as it supports pixel perfect identical rendering, on the many Skia supported platforms, with OpenGL acceleration.
