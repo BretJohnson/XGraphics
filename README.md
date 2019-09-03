@@ -9,7 +9,7 @@ XGraphics aims to solve these problems:
    XGraphics lets you instead do that directly from XAML, in the same way you can in UWP/WPF.
    That's more concise and allows use of Hot Reload to see updates immediately as you get your drawn UI to look just right. It also allows use for XAML animations, for sophisticated visual effects.
 
-<img style="padding-left:40px" src="Media/squircle-animation.gif">
+<img style="padding-left:50px" src="Media/squircle-animation.gif" width="100">
 
 2. **Be the XAML standard for graphics shape elements (ellipses, paths, gradients, transformations, etc).**
  
