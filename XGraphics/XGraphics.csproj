@@ -7,8 +7,4 @@
     <NullableContextOptions>enable</NullableContextOptions>
   </PropertyGroup>
 
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-codegen" Version="0.6.1" />
-  </ItemGroup>
-
 </Project>
