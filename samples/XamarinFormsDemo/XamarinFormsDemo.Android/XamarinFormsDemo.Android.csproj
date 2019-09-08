@@ -105,24 +105,20 @@
     <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SkiaRenderer\XGraphics.Renderer.Skia.Android\XGraphics.Renderer.Skia.Android.csproj">
+    <ProjectReference Include="..\..\..\src\SkiaRenderer\XGraphics.Renderer.Skia.Android\XGraphics.Renderer.Skia.Android.csproj">
       <Project>{d0c1022e-11a8-4b7c-abb5-2e3dcf23d222}</Project>
       <Name>XGraphics.Renderer.Skia.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\SkiaRenderer\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj">
+    <ProjectReference Include="..\..\..\src\SkiaRenderer\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj">
       <Project>{1711024c-8bab-4b17-8673-e162957757d9}</Project>
       <Name>XGraphics.Renderer.Skia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\XGraphics.XamarinForms.Android\XGraphics.XamarinForms.Android.csproj">
-      <Project>{62d46dff-52c2-418e-ac24-21fed581d14f}</Project>
-      <Name>XGraphics.XamarinForms.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\XGraphics\XGraphics.csproj">
+    <ProjectReference Include="..\..\..\src\XGraphics\XGraphics.csproj">
       <Project>{71395577-42c4-4a87-a0e1-2519e10ef2c4}</Project>
       <Name>XGraphics</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamarinFormsDemo\XamarinFormsDemo.csproj">
-      <Project>{C1E30B3B-5FFB-4CBD-9DF0-1589E273ECC8}</Project>
+      <Project>{7089448d-78dc-4507-8dc0-d05f58261b42}</Project>
       <Name>XamarinFormsDemo</Name>
     </ProjectReference>
   </ItemGroup>

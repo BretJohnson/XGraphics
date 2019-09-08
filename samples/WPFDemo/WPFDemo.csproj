@@ -103,19 +103,18 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SkiaRenderer\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj">
+    <ProjectReference Include="..\..\src\SkiaRenderer\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj">
       <Project>{1711024c-8bab-4b17-8673-e162957757d9}</Project>
       <Name>XGraphics.Renderer.Skia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\XGraphics.WPF\XGraphics.WPF.csproj">
+    <ProjectReference Include="..\..\src\XGraphics.WPF\XGraphics.WPF.csproj">
       <Project>{cfc466c2-98c4-4d48-a9ac-97ef60fc96b2}</Project>
       <Name>XGraphics.WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\XGraphics\XGraphics.csproj">
+    <ProjectReference Include="..\..\src\XGraphics\XGraphics.csproj">
       <Project>{71395577-42c4-4a87-a0e1-2519e10ef2c4}</Project>
       <Name>XGraphics</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
