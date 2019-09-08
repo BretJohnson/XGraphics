@@ -393,6 +393,16 @@ namespace XGraphics.DataModelGenerator
             foreach (QualifiedNameSyntax outputTypeUsing in outputTypeUsings)
                 AddUsing(usingNames, outputTypeUsing);
 
+            foreach (var member in _sourceInterfaceDeclaration.Members)
+            {
+                if (!(member is PropertyDeclarationSyntax modelProperty))
+                    continue;
+
+                // Array.Empty requires System
+                if (modelProperty.Type is ArrayTypeSyntax)
+                    AddUsing(usingNames, IdentifierName("System"));
+            }
+
             if (DestinationTypeHasTypeConverterAttribute)
                 AddUsing(usingNames, QualifiedName(_outputType.RootNamespace, IdentifierName("Converters")));
 
@@ -450,6 +460,8 @@ namespace XGraphics.DataModelGenerator
                 return genericName;
             else if (sourceType is NameSyntax name)
                 return name;
+            else if (sourceType is ArrayTypeSyntax arrayType)
+                return arrayType;
             /*
                 PropertyDeclaration(
                     GenericName(
@@ -580,6 +592,19 @@ namespace XGraphics.DataModelGenerator
                         SyntaxKind.SimpleMemberAccessExpression,
                         IdentifierName("PropertyUtils"),
                         IdentifierName($"Default{propertyTypeName.Identifier.Text}"));
+            }
+            else if (propertyType is ArrayTypeSyntax arrayType)
+            {
+                return
+                    InvocationExpression(
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            IdentifierName("Array"),
+                            GenericName(
+                                    Identifier("Empty"))
+                                .WithTypeArgumentList(
+                                    TypeArgumentList(
+                                        SingletonSeparatedList<TypeSyntax>(arrayType.ElementType)))));
             }
 
             throw new UserViewableException($"Property {modelProperty.Identifier.Text} has no [ModelDefaultValue] attribute nor hardcoded default");

@@ -17,10 +17,10 @@ namespace XGraphics.WPF.Geometries
                 Point = new Wrapper.Point(point)
             };
 
-        public IPolyLineSegment CreatePolyLineSegment(IEnumerable<Point> points)
+        public IPolyLineSegment CreatePolyLineSegment(Point[] points)
         {
             var polyLineSegment = new PolyLineSegment();
-            polyLineSegment.Points.AddRange(points);
+            polyLineSegment.Points = points;
             return polyLineSegment;
         }
 
@@ -32,10 +32,10 @@ namespace XGraphics.WPF.Geometries
                 Point3 = new Wrapper.Point(point3)
             };
 
-        public IPolyBezierSegment CreatePolyBezierSegment(IEnumerable<Point> points)
+        public IPolyBezierSegment CreatePolyBezierSegment(Point[] points)
         {
             var polyBezierSegment = new PolyBezierSegment();
-            polyBezierSegment.Points.AddRange(points);
+            polyBezierSegment.Points = points;
             return polyBezierSegment;
         }
 
@@ -46,10 +46,10 @@ namespace XGraphics.WPF.Geometries
                 Point2 = new Wrapper.Point(point2)
             };
 
-        public IPolyQuadraticBezierSegment CreatePolyQuadraticBezierSegment(IEnumerable<Point> points)
+        public IPolyQuadraticBezierSegment CreatePolyQuadraticBezierSegment(Point[] points)
         {
             var polyQuadraticBezierSegment = new PolyQuadraticBezierSegment();
-            polyQuadraticBezierSegment.Points.AddRange(points);
+            polyQuadraticBezierSegment.Points = points;
             return polyQuadraticBezierSegment;
         }
 

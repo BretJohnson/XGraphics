@@ -1,21 +1,19 @@
 using System.Collections.Generic;
 using XGraphics.Geometries;
+using System.Windows;
 using System.Windows.Markup;
+using System;
 
 namespace XGraphics.WPF.Geometries
 {
     public class PolyLineSegment : PathSegment, IPolyLineSegment
     {
-        public PolyLineSegment()
-        {
-            Points = new PointCollection();
-            Points.Changed += OnSubobjectChanged;
-        }
+        public static readonly DependencyProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Point[]), typeof(PolyLineSegment), Array.Empty<Point>());
 
-        IEnumerable<Point> IPolyLineSegment.Points => Points;
-        public PointCollection Points
+        public Point[] Points
         {
-            get;
+            get => (Point[])GetValue(PointsProperty);
+            set => SetValue(PointsProperty, value);
         }
     }
 }

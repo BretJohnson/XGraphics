@@ -5,6 +5,6 @@ namespace XGraphics.Geometries
     [GraphicsModelObject]
     public interface IPolyLineSegment : IPathSegment
     {
-        IEnumerable<Point> Points { get; }
+        Point[] Points { get; }
     }
 }

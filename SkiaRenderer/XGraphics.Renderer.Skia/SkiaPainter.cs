@@ -139,14 +139,12 @@ namespace XGraphics.Renderer.Skia
                     (float)bezierSegment.Point3.X, (float)bezierSegment.Point3.Y);
             else if (pathSegment is IPolyBezierSegment polyBezierSegment)
             {
-                List<Point> points = new List<Point>();
-                foreach (Point point in polyBezierSegment.Points)
-                    points.Add(point);
+                Point[] points = polyBezierSegment.Points;
 
-                if (points.Count % 3 != 0)
-                    throw new InvalidOperationException($"IPolyBezerSegment contains {points.Count} points, which isn't a multiple of 3");
+                if (points.Length % 3 != 0)
+                    throw new InvalidOperationException($"IPolyBezerSegment contains {points.Length} points, which isn't a multiple of 3");
 
-                for (int i = 0; i < points.Count; )
+                for (int i = 0; i < points.Length;)
                 {
                     var point1 = points[i + 0];
                     var point2 = points[i + 1];

@@ -6,11 +6,11 @@ namespace XGraphics.Geometries
     public interface IGeometryFactory
     {
         ILineSegment CreateLineSegment(in Point point);
-        IPolyLineSegment CreatePolyLineSegment(IEnumerable<Point> points);
+        IPolyLineSegment CreatePolyLineSegment(Point[] points);
         IBezierSegment CreateBezierSegment(in Point point1, in Point point2, in Point point3);
-        IPolyBezierSegment CreatePolyBezierSegment(IEnumerable<Point> points);
+        IPolyBezierSegment CreatePolyBezierSegment(Point[] points);
         IQuadraticBezierSegment CreateQuadraticBezierSegment(in Point point1, in Point point2);
-        IPolyQuadraticBezierSegment CreatePolyQuadraticBezierSegment(IEnumerable<Point> points);
+        IPolyQuadraticBezierSegment CreatePolyQuadraticBezierSegment(Point[] points);
         IArcSegment CreateArcSegment(in Point point, in Size size, double rotationAngle, bool isLargeArc,
             SweepDirection sweepDirection);
 
