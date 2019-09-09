@@ -1,15 +1,14 @@
 parameters:
-  initArgs:
+  slnPath : 'XGraphics.sln'
+  nugetVersion: '5.2.0'
 
 steps:
-
-- powershell: |
-    .\init.ps1 -AccessToken '$(System.AccessToken)' ${{ parameters['initArgs'] }}
-    dotnet --info
-  displayName: Install prerequisites
-
-- task: PowerShell@2
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet ${{ parameters.nugetVersion }}'
   inputs:
-    filePath: azure-pipelines/variables/_pipelines.ps1
-    failOnStderr: true
-  displayName: Set pipeline variables based on source
+    versionSpec: ${{ parameters.nugetVersion }}
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore ${{ parameters.slnPath }}'
+  inputs:
+    restoreSolution: ${{ parameters.slnPath }}

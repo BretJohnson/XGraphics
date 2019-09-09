@@ -19,4 +19,76 @@ variables:
   NUGET_PACKAGES: $(Agent.TempDirectory)/.nuget/packages
 
 jobs:
-- template: azure-pipelines/build.yml
+- job: Windows
+  pool:
+    vmImage: windows-2019
+  steps:
+  - checkout: self
+    clean: true
+
+  - template: azure-pipelines/install-dependencies.yml
+
+  - task: VSBuild@1
+    displayName: 'Build'
+    inputs:
+      solution: '$(solution)'
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: Windows'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+      ArtifactName: WindowsArtifacts
+
+- job: macOS
+  pool:
+    vmImage: macOS 10.14
+  steps:
+  - checkout: self
+    clean: true
+
+  - template: azure-pipelines/install-dependencies.yml
+
+  - task: VSBuild@1
+    displayName: 'Build'
+    inputs:
+      solution: '$(solution)'
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: Mac'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+      ArtifactName: MacArtifacts
+
+- job: WrapUp
+  dependsOn:
+  - Windows
+  - macOS
+  pool:
+    vmImage: Ubuntu 16.04
+  condition: succeededOrFailed()
+  steps:
+  - checkout: self
+    clean: true
+
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download build artifact WindowsArtifacts'
+    inputs:
+      artifactName: 'WindowsArtifacts'
+      downloadPath: '$(Build.ArtifactsDirectory)'
+
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download build artifact MacArtifacts'
+    inputs:
+      artifactName: 'MacArtifacts'
+      downloadPath: '$(Build.ArtifactsDirectory)'
+
+  - template: install-dependencies.yml
+    parameters:
+      initArgs: -NoRestore
+  - template: publish-codecoverage.yml
+  - template: publish-deployables.yml
+
