@@ -1,0 +1,9 @@
+parameters:
+  slnPath : 'XGraphics.sln'
+
+steps:
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore ${{ parameters.slnPath }}'
+    inputs:
+      restoreSolution: ${{ parameters.slnPath }}
+
