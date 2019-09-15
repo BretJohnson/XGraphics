@@ -32,6 +32,8 @@ jobs:
     inputs:
       solution: 'XGraphics.sln'
       configuration: 'Release'
+      # This workaround is currently needed per https://github.com/microsoft/azure-pipelines-image-generation/blob/91fcf62e28a7e05686b780f78a890598a8a60483/images/win/Vs2019-Server2019-Readme.md#known-issues
+      msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: Windows'
