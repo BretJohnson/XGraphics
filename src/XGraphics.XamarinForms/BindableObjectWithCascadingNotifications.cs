@@ -4,7 +4,7 @@ namespace XGraphics.XamarinForms
 {
     public class BindableObjectWithCascadingNotifications : BindableObject, INotifyObjectOrSubobjectChanged
     {
-        public event ObjectOrSubobjectChangedEventHandler Changed;
+        public event ObjectOrSubobjectChangedEventHandler? Changed;
 
         public void OnChanged() => Changed?.Invoke();
 
