@@ -33,9 +33,8 @@ jobs:
   - task: VSBuild@1
     displayName: 'Build'
     inputs:
-      solution: '$(solution)'
-      platform: '$(buildPlatform)'
-      configuration: '$(buildConfiguration)'
+      solution: 'XGraphics.sln'
+      configuration: 'Release'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: Windows'
@@ -54,12 +53,10 @@ jobs:
   - template: azure-pipelines/steps/install-nuget.yml
   - template: azure-pipelines/steps/restore-solution.yml
 
-  - task: VSBuild@1
-    displayName: 'Build'
+  - task: XamariniOS@2
     inputs:
-      solution: '$(solution)'
-      platform: '$(buildPlatform)'
-      configuration: '$(buildConfiguration)'
+      solutionFile: '**/*iOS.csproj'
+      configuration: 'Release'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: Mac'
