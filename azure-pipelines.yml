@@ -27,7 +27,7 @@ jobs:
   - template: azure-pipelines/steps/install-nuget.yml
   - template: azure-pipelines/steps/restore-solution.yml
 
-  - task: VSBuild@1
+  - task: MSBuild@1
     displayName: 'Build'
     inputs:
       solution: 'XGraphics.sln'
