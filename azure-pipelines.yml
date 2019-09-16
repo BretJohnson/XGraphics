@@ -54,7 +54,7 @@ jobs:
 
   - task: MSBuild@1
     inputs:
-      solutionFile: '**/*iOS.csproj'
+      solution: '**/*iOS.csproj'
       configuration: 'Release'
 
   - task: PublishBuildArtifacts@1
