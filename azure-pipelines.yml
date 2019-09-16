@@ -52,7 +52,7 @@ jobs:
   - template: azure-pipelines/steps/install-nuget.yml
   - template: azure-pipelines/steps/restore-solution.yml
 
-  - task: XamariniOS@2
+  - task: MSBuild@1
     inputs:
       solutionFile: '**/*iOS.csproj'
       configuration: 'Release'
