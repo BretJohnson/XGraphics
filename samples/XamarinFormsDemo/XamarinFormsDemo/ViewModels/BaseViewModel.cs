@@ -14,10 +14,10 @@ namespace XamarinFormsDemo.ViewModels
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
 
-        bool isBusy = false;
+        bool _isBusy = false;
         public bool IsBusy {
-            get { return isBusy; }
-            set { SetProperty(ref isBusy, value); }
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value); }
         }
 
         string title = string.Empty;
@@ -28,7 +28,7 @@ namespace XamarinFormsDemo.ViewModels
 
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName]string propertyName = "",
-            Action onChanged = null)
+            Action? onChanged = null)
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value))
                 return false;
