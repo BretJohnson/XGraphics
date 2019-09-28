@@ -30,18 +30,18 @@ namespace XGraphics.Renderer.Skia.Android
 
         private class InternalRenderer : SKGLTextureViewRenderer
         {
-            private readonly AndroidXGraphicsView view;
+            private readonly AndroidXGraphicsView _view;
 
             public InternalRenderer(AndroidXGraphicsView view)
             {
-                this.view = view;
+                this._view = view;
             }
 
             protected override void PaintSurface(SKSurface skSurface, GRBackendRenderTarget grBackendRenderTarget, GRSurfaceOrigin grSurfaceOrigin, 
                 SKColorType skColorType)
             {
                 // Paint all elements from the canvas on the surface
-                new SkiaPainter(skSurface).Paint(view.Content);
+                new SkiaPainter(skSurface).Paint(_view.Content);
             }
         }
     }
