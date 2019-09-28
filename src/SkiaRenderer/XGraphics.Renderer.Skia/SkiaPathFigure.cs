@@ -9,8 +9,8 @@ namespace XGraphics.Renderer.Skia
 
         public SkiaPathFigure(SKPath path, bool isFilled)
         {
-            this.Path = path;
-            this.IsFilled = isFilled;
+            Path = path;
+            IsFilled = isFilled;
         }
     }
 }

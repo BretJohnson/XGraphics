@@ -142,7 +142,7 @@ namespace XGraphics.Renderer.Skia
                 Point[] points = polyBezierSegment.Points;
 
                 if (points.Length % 3 != 0)
-                    throw new InvalidOperationException($"IPolyBezerSegment contains {points.Length} points, which isn't a multiple of 3");
+                    throw new InvalidOperationException($"IPolyBezierSegment contains {points.Length} points, which isn't a multiple of 3");
 
                 for (int i = 0; i < points.Length;)
                 {
