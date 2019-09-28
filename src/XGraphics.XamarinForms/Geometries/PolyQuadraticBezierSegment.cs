@@ -1,3 +1,4 @@
+// This file is generated from IPolyQuadraticBezierSegment.cs. Update the source file to change its contents.
 using XGraphics.Geometries;
 using Xamarin.Forms;
 using System;

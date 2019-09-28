@@ -1,3 +1,4 @@
+// This file is generated from IShape.cs. Update the source file to change its contents.
 using XGraphics.Brushes;
 using XGraphics.XamarinForms.Brushes;
 using XGraphics.Shapes;

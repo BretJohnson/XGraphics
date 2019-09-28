@@ -1,3 +1,4 @@
+// This file is generated from IGraphicsElement.cs. Update the source file to change its contents.
 using XGraphics.Shapes;
 using XGraphics.WPF.Shapes;
 using XGraphics.Transforms;

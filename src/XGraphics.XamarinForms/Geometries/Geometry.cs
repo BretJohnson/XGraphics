@@ -1,3 +1,4 @@
+// This file is generated from IGeometry.cs. Update the source file to change its contents.
 using XGraphics.Transforms;
 using XGraphics.XamarinForms.Transforms;
 using XGraphics.Geometries;

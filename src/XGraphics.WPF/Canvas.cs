@@ -1,3 +1,4 @@
+// This file is generated from ICanvas.cs. Update the source file to change its contents.
 using System.Collections.Generic;
 using XGraphics.Brushes;
 using XGraphics.WPF.Brushes;

@@ -1,3 +1,4 @@
+// This file is generated from IPathGeometry.cs. Update the source file to change its contents.
 using System.Collections.Generic;
 using XGraphics.Transforms;
 using XGraphics.WPF.Transforms;

@@ -1,3 +1,4 @@
+// This file is generated from IPath.cs. Update the source file to change its contents.
 using XGraphics.Geometries;
 using XGraphics.WPF.Geometries;
 using XGraphics.Shapes;

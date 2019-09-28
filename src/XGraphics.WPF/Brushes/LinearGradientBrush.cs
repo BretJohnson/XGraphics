@@ -1,3 +1,4 @@
+// This file is generated from ILinearGradientBrush.cs. Update the source file to change its contents.
 using XGraphics.Brushes;
 using System.Windows;
 using System.Windows.Markup;

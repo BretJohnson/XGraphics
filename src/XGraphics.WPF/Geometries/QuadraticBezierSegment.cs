@@ -1,3 +1,4 @@
+// This file is generated from IQuadraticBezierSegment.cs. Update the source file to change its contents.
 using XGraphics.Geometries;
 using System.Windows;
 using System.Windows.Markup;

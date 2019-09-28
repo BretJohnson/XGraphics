@@ -1,3 +1,4 @@
+// This file is generated from IPolyLineSegment.cs. Update the source file to change its contents.
 using System.Collections.Generic;
 using XGraphics.Geometries;
 using Xamarin.Forms;

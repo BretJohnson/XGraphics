@@ -1,3 +1,4 @@
+// This file is generated from IGradientStop.cs. Update the source file to change its contents.
 using XGraphics.Brushes;
 using Xamarin.Forms;
 
