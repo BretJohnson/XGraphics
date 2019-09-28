@@ -67,12 +67,13 @@ namespace XGraphics.DataModelGenerator
                     if (!HasModelObjectAttribute(interfaceDeclaration))
                         continue;
 
-                    string rootDirectory = "c:\\myhome\\Dropbox\\faml\\XGraphics";
+                    string rootDirectory = "c:\\myhome\\Dropbox\\faml\\XGraphics\\src";
                     try
                     {
                         Console.WriteLine($"Processing {interfaceDeclaration.Identifier.Text}");
                         new CompilationUnitGenerator(interfaceDeclaration, rootDirectory, WpfXamlOutputType.Instance).Generate();
                         new CompilationUnitGenerator(interfaceDeclaration, rootDirectory, XamarinFormsXamlOutputType.Instance).Generate();
+                        //new CompilationUnitGenerator(interfaceDeclaration, Path.Combine(rootDirectory, "BasicModel"), BasicModelOutputType.Instance).Generate();
                     }
                     catch (UserViewableException e)
                     {

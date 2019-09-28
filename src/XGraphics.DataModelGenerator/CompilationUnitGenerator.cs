@@ -406,9 +406,26 @@ namespace XGraphics.DataModelGenerator
             if (DestinationTypeHasTypeConverterAttribute)
                 AddUsing(usingNames, QualifiedName(_outputType.RootNamespace, IdentifierName("Converters")));
 
+            bool first = true;
             var usingDirectives = new List<UsingDirectiveSyntax>();
             foreach (NameSyntax name in usingNames.Values)
-                usingDirectives.Add(UsingDirective(name));
+            {
+                UsingDirectiveSyntax usingDirective = UsingDirective(name);
+
+                if (first)
+                    usingDirective = usingDirective.WithUsingKeyword(
+                        Token(
+                            TriviaList(
+                                Comment(
+                                    $"// This file is generated from {_interfaceName}.cs. Update the source file to change its contents."),
+                                CarriageReturnLineFeed),
+                            SyntaxKind.UsingKeyword,
+                            TriviaList()));
+
+                usingDirectives.Add(usingDirective);
+
+                first = false;
+            }
 
             return new SyntaxList<UsingDirectiveSyntax>(usingDirectives);
         }

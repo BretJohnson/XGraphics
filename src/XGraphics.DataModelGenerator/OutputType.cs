@@ -77,4 +77,20 @@ namespace XGraphics.DataModelGenerator
             return usings;
         }
     }
+
+    public class BasicModelOutputType : OutputType
+    {
+        public static readonly BasicModelOutputType Instance = new BasicModelOutputType();
+
+        public override string ProjectDirectory => "XGraphics";
+        public override QualifiedNameSyntax RootNamespace =>
+            QualifiedName(IdentifierName("XGraphics"), IdentifierName("BasicModel"));
+        public override IdentifierNameSyntax BaseClassName => IdentifierName("object");
+
+        public override IEnumerable<QualifiedNameSyntax> GetUsings(bool hasPropertyDescriptors, bool hasTypeConverterAttribute)
+        {
+            return new List<QualifiedNameSyntax>();
+        }
+    }
+
 }
