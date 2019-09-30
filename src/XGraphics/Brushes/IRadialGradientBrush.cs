@@ -7,7 +7,7 @@
         Point Center { get; }
 
         [ModelDefaultValue("0.5,0.5")]
-        Point GraidentOrigin { get; }
+        Point GradientOrigin { get; }
 
         [ModelDefaultValue(0.5)]
         double RadiusX { get; }
