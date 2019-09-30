@@ -6,44 +6,44 @@ namespace XGraphics
 {
     public class GraphicsObjectCollection<TItem> : IList, IEnumerable<TItem>, INotifyObjectOrSubobjectChanged where TItem : INotifyObjectOrSubobjectChanged
     {
-        private readonly List<TItem> items;
+        private readonly List<TItem> _items;
 
         public GraphicsObjectCollection()
         {
-            items = new List<TItem>();
+            _items = new List<TItem>();
         }
 
-        public event ObjectOrSubobjectChangedEventHandler Changed;
+        public event ObjectOrSubobjectChangedEventHandler? Changed;
 
         public void OnChanged() => Changed?.Invoke();
 
         public void OnSubobjectChanged() => Changed?.Invoke();
 
-        public int Count => items.Count;
+        public int Count => _items.Count;
 
-        public object SyncRoot => ((ICollection) items).SyncRoot;
+        public object SyncRoot => ((ICollection) _items).SyncRoot;
 
-        public bool IsSynchronized => ((ICollection)items).IsSynchronized;
+        public bool IsSynchronized => ((ICollection)_items).IsSynchronized;
 
         public bool IsReadOnly => false;
 
         public bool IsFixedSize => false;
 
-        IEnumerator IEnumerable.GetEnumerator() => items.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _items.GetEnumerator();
 
-        public IEnumerator<TItem> GetEnumerator() => items.GetEnumerator();
+        public IEnumerator<TItem> GetEnumerator() => _items.GetEnumerator();
 
-        public void CopyTo(Array array, int index) => ((IList)items).CopyTo(array, index);
+        public void CopyTo(Array array, int index) => ((IList)_items).CopyTo(array, index);
 
         public object this[int index] {
-            get => items[index];
+            get => _items[index];
             set {
                 if (!(value is TItem item))
                     throw new InvalidOperationException($"Only {typeof(TItem)} subclasses can be added to this collection");
 
-                OnItemRemoved(items[index]);
+                OnItemRemoved(_items[index]);
 
-                items[index] = item;
+                _items[index] = item;
 
                 OnItemAdded(item);
             }
@@ -54,7 +54,7 @@ namespace XGraphics
             if (!(itemObject is TItem item))
                 throw new InvalidOperationException($"Only {typeof(TItem)} subclasses can be added to this collection");
 
-            int index = ((IList)items).Add(item);
+            int index = ((IList)_items).Add(item);
             OnItemAdded(item);
             return index;
         }
@@ -64,23 +64,23 @@ namespace XGraphics
             if (!(itemObject is TItem item))
                 return false;
 
-            return items.Contains(item);
+            return _items.Contains(item);
         }
 
         public void Clear()
         {
-            var temp = items.ToArray();
+            var temp = _items.ToArray();
             foreach (var t in temp)
                 OnItemRemoved(t);
 
-            items.Clear();
+            _items.Clear();
         }
 
         public int IndexOf(object itemObject)
         {
             if (!(itemObject is TItem item))
                 return -1;
-            return items.IndexOf(item);
+            return _items.IndexOf(item);
         }
 
         public void Insert(int index, object itemObject)
@@ -88,7 +88,7 @@ namespace XGraphics
             if (!(itemObject is TItem item))
                 throw new InvalidOperationException($"Only {typeof(TItem)} subclasses can be added to this collection");
 
-            items.Insert(index, item);
+            _items.Insert(index, item);
             OnItemAdded(item);
         }
 
@@ -97,15 +97,15 @@ namespace XGraphics
             if (!(itemObject is TItem item))
                 return;
 
-            var result = items.Remove(item);
+            bool result = _items.Remove(item);
             if (result)
                 OnItemRemoved(item);
         }
 
         public void RemoveAt(int index)
         {
-            OnItemRemoved(items[index]);
-            items.RemoveAt(index);
+            OnItemRemoved(_items[index]);
+            _items.RemoveAt(index);
         }
 
         private void OnItemAdded(TItem element)
