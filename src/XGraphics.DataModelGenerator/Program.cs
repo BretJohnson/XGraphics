@@ -29,31 +29,27 @@ namespace XGraphics.DataModelGenerator
             //       otherwise, MSBuildWorkspace won't MEF compose.
             MSBuildLocator.RegisterInstance(instance);
 
-            using (var workspace = MSBuildWorkspace.Create())
+            using MSBuildWorkspace workspace = MSBuildWorkspace.Create();
+            // Print message for WorkspaceFailed event to help diagnosing project load failures.
+            workspace.WorkspaceFailed += (o, e) => Console.WriteLine(e.Diagnostic.Message);
+
+            if (args.Length < 1)
             {
-                // Print message for WorkspaceFailed event to help diagnosing project load failures.
-                workspace.WorkspaceFailed += (o, e) => Console.WriteLine(e.Diagnostic.Message);
-
-                if (args.Length < 1)
-                {
-                    Console.WriteLine($"Usage: XGraphics.DataModelGenerator.exe <path-to-XGraphics-project>");
-                    Environment.Exit(1);
-                }
-
-                var xgraphicsProjectPath = args[0];
-                Console.WriteLine($"Loading solution '{xgraphicsProjectPath}'");
-
-                // Attach progress reporter so we print projects as they are loaded.
-                Project project = await workspace.OpenProjectAsync(xgraphicsProjectPath, new ConsoleProgressReporter());
-                Console.WriteLine($"Finished loading project '{xgraphicsProjectPath}'");
-
-                GenerateClasses(project);
-
-                // TODO: Do analysis on the projects in the loaded solution
+                Console.WriteLine($"Usage: XGraphics.DataModelGenerator.exe <path-to-XGraphics-project>");
+                Environment.Exit(1);
             }
+
+            string xgraphicsProjectPath = args[0];
+            Console.WriteLine($"Loading solution '{xgraphicsProjectPath}'");
+
+            // Attach progress reporter so we print projects as they are loaded.
+            Project project = await workspace.OpenProjectAsync(xgraphicsProjectPath, new ConsoleProgressReporter());
+            Console.WriteLine($"Finished loading project '{xgraphicsProjectPath}'");
+
+            GenerateClasses(workspace, project);
         }
 
-        private static void GenerateClasses(Project project)
+        private static void GenerateClasses(Workspace workspace, Project project)
         {
             var compilation = project.GetCompilationAsync().Result;
 
@@ -71,9 +67,9 @@ namespace XGraphics.DataModelGenerator
                     try
                     {
                         Console.WriteLine($"Processing {interfaceDeclaration.Identifier.Text}");
-                        new CompilationUnitGenerator(interfaceDeclaration, rootDirectory, WpfXamlOutputType.Instance).Generate();
-                        new CompilationUnitGenerator(interfaceDeclaration, rootDirectory, XamarinFormsXamlOutputType.Instance).Generate();
-                        //new CompilationUnitGenerator(interfaceDeclaration, Path.Combine(rootDirectory, "BasicModel"), BasicModelOutputType.Instance).Generate();
+                        new CompilationUnitGenerator(workspace, interfaceDeclaration, rootDirectory, WpfXamlOutputType.Instance).Generate();
+                        new CompilationUnitGenerator(workspace, interfaceDeclaration, rootDirectory, XamarinFormsXamlOutputType.Instance).Generate();
+                        //new CompilationUnitGenerator(workspace, interfaceDeclaration, rootDirectory, DefaultModelOutputType.Instance).Generate();
                     }
                     catch (UserViewableException e)
                     {

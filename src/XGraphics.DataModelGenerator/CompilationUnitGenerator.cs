@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.Text;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -12,6 +13,7 @@ namespace XGraphics.DataModelGenerator
 {
     public class CompilationUnitGenerator
     {
+        private readonly Workspace _workspace;
         private readonly InterfaceDeclarationSyntax _sourceInterfaceDeclaration;
         private readonly string _rootDirectory;
         private readonly OutputType _outputType;
@@ -21,8 +23,9 @@ namespace XGraphics.DataModelGenerator
         private readonly CompilationUnitSyntax _sourceCompilationUnit;
         private readonly QualifiedNameSyntax _destinationNamespaceName;
 
-        public CompilationUnitGenerator(InterfaceDeclarationSyntax sourceInterfaceDeclaration, string rootDirectory, OutputType outputType)
+        public CompilationUnitGenerator(Workspace workspace, InterfaceDeclarationSyntax sourceInterfaceDeclaration, string rootDirectory, OutputType outputType)
         {
+            _workspace = workspace;
             _sourceInterfaceDeclaration = sourceInterfaceDeclaration;
             _rootDirectory = rootDirectory;
             _outputType = outputType;
@@ -68,7 +71,7 @@ namespace XGraphics.DataModelGenerator
                     collectionProperties.Add(modelProperty);
                 else AddPropertyDescriptor(propertyName, propertyDescriptorName, destinationPropertyType, defaultValue, destinationStaticMembers);
 
-                AddProperty(propertyName, propertyDescriptorName, destinationPropertyType, modelProperty.Type, destinationMembers);
+                AddProperty(modelProperty, propertyName, propertyDescriptorName, destinationPropertyType, destinationMembers);
 
                 if (propertyName == "Children")
                     hasChildrenProperty = true;
@@ -123,7 +126,7 @@ namespace XGraphics.DataModelGenerator
             }
 
             // Add the [ContentProperty("Children")] attribute, if needed
-            if (hasChildrenProperty)
+            if (hasChildrenProperty && _outputType is XamlOutputType)
                 classDeclaration = classDeclaration
                     .WithAttributeLists(
                         SingletonList(
@@ -173,7 +176,7 @@ namespace XGraphics.DataModelGenerator
 #endif
             SyntaxList<UsingDirectiveSyntax> usingDeclarations = CreateUsingDeclarations(destinationStaticMembers.Count > 0);
 
-            var compilationUnit =
+            CompilationUnitSyntax compilationUnit =
                 CompilationUnit()
                     .WithUsings(usingDeclarations)
                     .WithMembers(
@@ -181,6 +184,8 @@ namespace XGraphics.DataModelGenerator
                             NamespaceDeclaration(_destinationNamespaceName)
                                 .WithMembers(SingletonList<MemberDeclarationSyntax>(classDeclaration))))
                     .NormalizeWhitespace();
+
+            compilationUnit = (CompilationUnitSyntax)Formatter.Format(compilationUnit, _workspace);
 
             MemberDeclarationSyntax? lastStaticMember = compilationUnit.DescendantNodes()
                 .OfType<MemberDeclarationSyntax>().FirstOrDefault(n => n.HasAnnotation(lastStaticMemberAnnotation));
@@ -222,15 +227,18 @@ namespace XGraphics.DataModelGenerator
                                 .WithArgumentList(
                                     ArgumentList()))));
 
-                statements.Add(
-                ExpressionStatement(
-                        AssignmentExpression(
-                            SyntaxKind.AddAssignmentExpression,
-                            MemberAccessExpression(
-                                SyntaxKind.SimpleMemberAccessExpression,
-                                IdentifierName(propertyName),
-                                IdentifierName("Changed")),
-                            IdentifierName("OnSubobjectChanged"))));
+                if (_outputType.EmitChangedNotifications)
+                {
+                    statements.Add(
+                        ExpressionStatement(
+                            AssignmentExpression(
+                                SyntaxKind.AddAssignmentExpression,
+                                MemberAccessExpression(
+                                    SyntaxKind.SimpleMemberAccessExpression,
+                                    IdentifierName(propertyName),
+                                    IdentifierName("Changed")),
+                                IdentifierName("OnSubobjectChanged"))));
+                }
             }
 
             return ConstructorDeclaration(_destinationClassName.Identifier)
@@ -292,12 +300,13 @@ namespace XGraphics.DataModelGenerator
             destinationStaticMembers.Add(propertyDescriptor);
         }
 
-        private void AddProperty(string propertyName, string propertyDescriptorName, TypeSyntax propertyType, TypeSyntax sourcePropertyType,
+        private void AddProperty(PropertyDeclarationSyntax modelProperty, string propertyName, string propertyDescriptorName, TypeSyntax destinationPropertyType,
             List<MemberDeclarationSyntax> destinationMembers)
         {
             IdentifierNameSyntax propertyDescriptorIdentifier = IdentifierName(propertyDescriptorName);
+            TypeSyntax sourcePropertyType = modelProperty.Type;
 
-            if (! ReferenceEquals(sourcePropertyType, propertyType))
+            if (! ReferenceEquals(sourcePropertyType, destinationPropertyType))
             {
                 ExpressionSyntax arrowRightHandSide;
                 if (sourcePropertyType is IdentifierNameSyntax identifierName &&
@@ -328,7 +337,7 @@ namespace XGraphics.DataModelGenerator
             if (IsCollectionType(sourcePropertyType, out TypeSyntax collectionElementType))
             {
                 propertyDeclaration =
-                    PropertyDeclaration(propertyType, propertyName)
+                    PropertyDeclaration(destinationPropertyType, propertyName)
                         .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
                         .WithAccessorList(
                             AccessorList(
@@ -338,9 +347,9 @@ namespace XGraphics.DataModelGenerator
                                         .WithSemicolonToken(
                                             Token(SyntaxKind.SemicolonToken)))));
             }
-            else
+            else if (_outputType is XamlOutputType)
             {
-                propertyDeclaration = PropertyDeclaration(propertyType, propertyName)
+                propertyDeclaration = PropertyDeclaration(destinationPropertyType, propertyName)
                     .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
                     .WithAccessorList(
                         AccessorList(
@@ -350,7 +359,7 @@ namespace XGraphics.DataModelGenerator
                                     .WithExpressionBody(
                                         ArrowExpressionClause(
                                             CastExpression(
-                                                propertyType,
+                                                destinationPropertyType,
                                                 InvocationExpression(IdentifierName("GetValue"))
                                                     .WithArgumentList(ArgumentList(
                                                         SingletonSeparatedList(
@@ -369,6 +378,26 @@ namespace XGraphics.DataModelGenerator
                                                     })))))
                                     .WithSemicolonToken(Token(SyntaxKind.SemicolonToken))
                             })));
+            }
+            else
+            {
+                ExpressionSyntax defaultValue = GetDefaultValue(modelProperty);
+
+                propertyDeclaration = PropertyDeclaration(destinationPropertyType, propertyName)
+                    .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+                    .WithAccessorList(
+                        AccessorList(
+                            List(new[]
+                            {
+                                AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
+                                    .WithSemicolonToken(Token(SyntaxKind.SemicolonToken)),
+                                AccessorDeclaration(SyntaxKind.SetAccessorDeclaration)
+                                    .WithSemicolonToken(Token(SyntaxKind.SemicolonToken))
+                            })))
+                    .WithInitializer(
+                        EqualsValueClause(defaultValue))
+                    .WithSemicolonToken(
+                        Token(SyntaxKind.SemicolonToken));
             }
 
             destinationMembers.Add(propertyDeclaration);
@@ -450,7 +479,7 @@ namespace XGraphics.DataModelGenerator
             return destinationNamespaceName;
         }
 
-        private static TypeSyntax ToDestinationType(TypeSyntax sourceType)
+        private TypeSyntax ToDestinationType(TypeSyntax sourceType)
         {
             if (IsCollectionType(sourceType, out TypeSyntax elementType))
             {
@@ -459,8 +488,8 @@ namespace XGraphics.DataModelGenerator
                 else
                 {
                     TypeSyntax elementDestinationType = ToDestinationType(elementType);
-                    return GenericName(
-                            Identifier("GraphicsObjectCollection"))
+
+                    return GenericName(_outputType.EmitChangedNotifications ? "GraphicsObjectCollection" : "List")
                         .WithTypeArgumentList(
                             TypeArgumentList(
                                 SingletonSeparatedList(elementDestinationType)));
@@ -493,15 +522,19 @@ namespace XGraphics.DataModelGenerator
                     $"Type {sourceType.GetType()} isn't supported for model object generation");
         }
 
-        private static NameSyntax GetIdentifierDestinationType(IdentifierNameSyntax identifierName)
+        private NameSyntax GetIdentifierDestinationType(IdentifierNameSyntax identifierName)
         {
             string typeName = identifierName.Identifier.Text;
             if (typeName.StartsWith("I"))
                 return IdentifierName(typeName.Substring(1));
             else if (IsEnumType(typeName))
                 return identifierName;
-            else if (IsWrappedType(typeName))
-                return QualifiedName(IdentifierName("Wrapper"), IdentifierName(typeName));
+            else if (IsWrappableType(typeName))
+            {
+                if (IsWrappedType(typeName))
+                    return QualifiedName(IdentifierName("Wrapper"), IdentifierName(typeName));
+                else return identifierName;
+            }
             else
                 throw new UserViewableException(
                     $"Identifier type {typeName} isn't supported for model object generation; interface name starting with 'I' is expected");
@@ -517,9 +550,14 @@ namespace XGraphics.DataModelGenerator
             return type is IdentifierNameSyntax identifierName && identifierName.Identifier.Text.EndsWith("Transform");
         }
 
-        private static bool IsWrappedType(string typeName)
+        private bool IsWrappableType(string typeName)
         {
             return typeName == "Color" || typeName == "Point" || typeName == "Size";
+        }
+
+        private bool IsWrappedType(string typeName)
+        {
+            return _outputType is XamlOutputType && IsWrappableType(typeName);
         }
 
         private static bool IsEnumType(string typeName)
@@ -552,7 +590,7 @@ namespace XGraphics.DataModelGenerator
             return true;
         }
 
-        private static ExpressionSyntax GetDefaultValue(PropertyDeclarationSyntax modelProperty)
+        private ExpressionSyntax GetDefaultValue(PropertyDeclarationSyntax modelProperty)
         {
             foreach (AttributeListSyntax attributeList in modelProperty.AttributeLists)
             {
@@ -594,7 +632,7 @@ namespace XGraphics.DataModelGenerator
                     InvocationExpression(
                         MemberAccessExpression(
                             SyntaxKind.SimpleMemberAccessExpression,
-                            IdentifierName("PropertyUtils"),
+                            IdentifierName("Enumerable"),
                             GenericName(
                                     Identifier("Empty"))
                                 .WithTypeArgumentList(
@@ -604,11 +642,22 @@ namespace XGraphics.DataModelGenerator
                                                                                propertyTypeName.Identifier.Text == "Point" ||
                                                                                propertyTypeName.Identifier.Text == "Size"))
             {
+                // WithoutTrivia is needed here to remove any comment before the type, so the comment isn't written to the output
+                propertyTypeName = propertyTypeName.WithoutTrivia();
+
+                ExpressionSyntax typeExpression;
+                if (IsWrappedType(propertyTypeName.Identifier.Text))
+                    typeExpression = MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        IdentifierName("Wrapper"),
+                        propertyTypeName);
+                else typeExpression = propertyTypeName;
+
                 return
                     MemberAccessExpression(
                         SyntaxKind.SimpleMemberAccessExpression,
-                        IdentifierName("PropertyUtils"),
-                        IdentifierName($"Default{propertyTypeName.Identifier.Text}"));
+                        typeExpression,
+                        IdentifierName("Default"));
             }
             else if (propertyType is ArrayTypeSyntax arrayType)
             {
@@ -637,7 +686,7 @@ namespace XGraphics.DataModelGenerator
 
         private string GetOutputDirectory(NameSyntax namespaceName)
         {
-            string outputDirectory = Path.Combine(_rootDirectory, _outputType.ProjectDirectory);
+            string outputDirectory = Path.Combine(_rootDirectory, _outputType.ProjectBaseDirectory);
             string? childNamespace = GetChildNamespace(namespaceName);
             if (childNamespace != null)
                 outputDirectory = Path.Combine(outputDirectory, childNamespace);
