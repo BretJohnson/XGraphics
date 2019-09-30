@@ -7,7 +7,7 @@ namespace XGraphics.WPF.Geometries
 {
     public class LineSegment : PathSegment, ILineSegment
     {
-        public static readonly DependencyProperty PointProperty = PropertyUtils.Create(nameof(Point), typeof(Wrapper.Point), typeof(LineSegment), PropertyUtils.DefaultPoint);
+        public static readonly DependencyProperty PointProperty = PropertyUtils.Create(nameof(Point), typeof(Wrapper.Point), typeof(LineSegment), Wrapper.Point.Default);
 
         Point ILineSegment.Point => Point.WrappedPoint;
         public Wrapper.Point Point

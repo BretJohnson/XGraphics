@@ -7,9 +7,9 @@ namespace XGraphics.WPF.Geometries
 {
     public class BezierSegment : PathSegment, IBezierSegment
     {
-        public static readonly DependencyProperty Point1Property = PropertyUtils.Create(nameof(Point1), typeof(Wrapper.Point), typeof(BezierSegment), PropertyUtils.DefaultPoint);
-        public static readonly DependencyProperty Point2Property = PropertyUtils.Create(nameof(Point2), typeof(Wrapper.Point), typeof(BezierSegment), PropertyUtils.DefaultPoint);
-        public static readonly DependencyProperty Point3Property = PropertyUtils.Create(nameof(Point3), typeof(Wrapper.Point), typeof(BezierSegment), PropertyUtils.DefaultPoint);
+        public static readonly DependencyProperty Point1Property = PropertyUtils.Create(nameof(Point1), typeof(Wrapper.Point), typeof(BezierSegment), Wrapper.Point.Default);
+        public static readonly DependencyProperty Point2Property = PropertyUtils.Create(nameof(Point2), typeof(Wrapper.Point), typeof(BezierSegment), Wrapper.Point.Default);
+        public static readonly DependencyProperty Point3Property = PropertyUtils.Create(nameof(Point3), typeof(Wrapper.Point), typeof(BezierSegment), Wrapper.Point.Default);
 
         Point IBezierSegment.Point1 => Point1.WrappedPoint;
         public Wrapper.Point Point1

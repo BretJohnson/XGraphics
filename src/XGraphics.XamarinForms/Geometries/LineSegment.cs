@@ -6,7 +6,7 @@ namespace XGraphics.XamarinForms.Geometries
 {
     public class LineSegment : PathSegment, ILineSegment
     {
-        public static readonly BindableProperty PointProperty = PropertyUtils.Create(nameof(Point), typeof(Wrapper.Point), typeof(LineSegment), PropertyUtils.DefaultPoint);
+        public static readonly BindableProperty PointProperty = PropertyUtils.Create(nameof(Point), typeof(Wrapper.Point), typeof(LineSegment), Wrapper.Point.Default);
 
         Point ILineSegment.Point => Point.WrappedPoint;
         public Wrapper.Point Point

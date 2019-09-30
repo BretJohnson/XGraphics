@@ -27,7 +27,7 @@ namespace XGraphics.XamarinForms
         IBrush? ICanvas.Background => Background;
         public Brush? Background
         {
-            get => (Brush? )GetValue(BackgroundProperty);
+            get => (Brush?)GetValue(BackgroundProperty);
             set => SetValue(BackgroundProperty, value);
         }
     }

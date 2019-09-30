@@ -6,8 +6,8 @@ namespace XGraphics.XamarinForms.Geometries
 {
     public class ArcSegment : PathSegment, IArcSegment
     {
-        public static readonly BindableProperty PointProperty = PropertyUtils.Create(nameof(Point), typeof(Wrapper.Point), typeof(ArcSegment), PropertyUtils.DefaultPoint);
-        public static readonly BindableProperty SizeProperty = PropertyUtils.Create(nameof(Size), typeof(Wrapper.Size), typeof(ArcSegment), PropertyUtils.DefaultSize);
+        public static readonly BindableProperty PointProperty = PropertyUtils.Create(nameof(Point), typeof(Wrapper.Point), typeof(ArcSegment), Wrapper.Point.Default);
+        public static readonly BindableProperty SizeProperty = PropertyUtils.Create(nameof(Size), typeof(Wrapper.Size), typeof(ArcSegment), Wrapper.Size.Default);
         public static readonly BindableProperty RotationAngleProperty = PropertyUtils.Create(nameof(RotationAngle), typeof(double), typeof(ArcSegment), 0.0);
         public static readonly BindableProperty IsLargeArcProperty = PropertyUtils.Create(nameof(IsLargeArc), typeof(bool), typeof(ArcSegment), false);
         public static readonly BindableProperty SweepDirectionProperty = PropertyUtils.Create(nameof(SweepDirection), typeof(SweepDirection), typeof(ArcSegment), SweepDirection.Counterclockwise);

@@ -6,8 +6,8 @@ namespace XGraphics.XamarinForms.Brushes
 {
     public class LinearGradientBrush : GradientBrush, ILinearGradientBrush
     {
-        public static readonly BindableProperty StartPointProperty = PropertyUtils.Create(nameof(StartPoint), typeof(Wrapper.Point), typeof(LinearGradientBrush), PropertyUtils.DefaultPoint);
-        public static readonly BindableProperty EndPointProperty = PropertyUtils.Create(nameof(EndPoint), typeof(Wrapper.Point), typeof(LinearGradientBrush), PropertyUtils.DefaultPoint);
+        public static readonly BindableProperty StartPointProperty = PropertyUtils.Create(nameof(StartPoint), typeof(Wrapper.Point), typeof(LinearGradientBrush), Wrapper.Point.Default);
+        public static readonly BindableProperty EndPointProperty = PropertyUtils.Create(nameof(EndPoint), typeof(Wrapper.Point), typeof(LinearGradientBrush), Wrapper.Point.Default);
 
         Point ILinearGradientBrush.StartPoint => StartPoint.WrappedPoint;
         public Wrapper.Point StartPoint

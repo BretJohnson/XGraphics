@@ -13,10 +13,6 @@ namespace XGraphics.WPF
 {
     public static class PropertyUtils
     {
-        public static readonly Wrapper.Color DefaultColor = Wrapper.Color.Transparent;
-        public static readonly Wrapper.Point DefaultPoint = Wrapper.Point.Default;
-        public static readonly Wrapper.Size DefaultSize = Wrapper.Size.Default;
-
         public static IEnumerable Empty<T>()
         {
             return Enumerable.Empty<T>();
@@ -24,10 +20,6 @@ namespace XGraphics.WPF
 
         public static DependencyProperty Create(string propertyName, Type propertyType, Type ownerType, object? defaultValue)
         {
-            Enumerable.Empty<DependencyProperty>();
-            new List<DependencyProperty>();
-
-
             if (propertyType == typeof(IBrush))
                 propertyType = typeof(Brush);
             else if (propertyType == typeof(ITransform))

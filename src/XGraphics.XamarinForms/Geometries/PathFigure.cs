@@ -7,7 +7,7 @@ namespace XGraphics.XamarinForms.Geometries
 {
     public class PathFigure : BindableObjectWithCascadingNotifications, IPathFigure
     {
-        public static readonly BindableProperty StartPointProperty = PropertyUtils.Create(nameof(StartPoint), typeof(Wrapper.Point), typeof(PathFigure), PropertyUtils.DefaultPoint);
+        public static readonly BindableProperty StartPointProperty = PropertyUtils.Create(nameof(StartPoint), typeof(Wrapper.Point), typeof(PathFigure), Wrapper.Point.Default);
         public static readonly BindableProperty IsClosedProperty = PropertyUtils.Create(nameof(IsClosed), typeof(bool), typeof(PathFigure), false);
         public static readonly BindableProperty IsFilledProperty = PropertyUtils.Create(nameof(IsFilled), typeof(bool), typeof(PathFigure), true);
 

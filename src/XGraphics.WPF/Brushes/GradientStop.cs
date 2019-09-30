@@ -7,7 +7,7 @@ namespace XGraphics.WPF.Brushes
 {
     public class GradientStop : DependencyObjectWithCascadingNotifications, IGradientStop
     {
-        public static readonly DependencyProperty ColorProperty = PropertyUtils.Create(nameof(Color), typeof(Wrapper.Color), typeof(GradientStop), PropertyUtils.DefaultColor);
+        public static readonly DependencyProperty ColorProperty = PropertyUtils.Create(nameof(Color), typeof(Wrapper.Color), typeof(GradientStop), Wrapper.Color.Default);
         public static readonly DependencyProperty OffsetProperty = PropertyUtils.Create(nameof(Offset), typeof(double), typeof(GradientStop), 0.0);
 
         // The default is Transparent

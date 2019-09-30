@@ -7,7 +7,7 @@ namespace XGraphics.XamarinForms.Brushes
     public class RadialGradientBrush : GradientBrush, IRadialGradientBrush
     {
         public static readonly BindableProperty CenterProperty = PropertyUtils.Create(nameof(Center), typeof(Wrapper.Point), typeof(RadialGradientBrush), Wrapper.Point.CenterDefault);
-        public static readonly BindableProperty GraidentOriginProperty = PropertyUtils.Create(nameof(GraidentOrigin), typeof(Wrapper.Point), typeof(RadialGradientBrush), Wrapper.Point.CenterDefault);
+        public static readonly BindableProperty GradientOriginProperty = PropertyUtils.Create(nameof(GradientOrigin), typeof(Wrapper.Point), typeof(RadialGradientBrush), Wrapper.Point.CenterDefault);
         public static readonly BindableProperty RadiusXProperty = PropertyUtils.Create(nameof(RadiusX), typeof(double), typeof(RadialGradientBrush), 0.5);
 
         Point IRadialGradientBrush.Center => Center.WrappedPoint;
@@ -17,11 +17,11 @@ namespace XGraphics.XamarinForms.Brushes
             set => SetValue(CenterProperty, value);
         }
 
-        Point IRadialGradientBrush.GraidentOrigin => GraidentOrigin.WrappedPoint;
-        public Wrapper.Point GraidentOrigin
+        Point IRadialGradientBrush.GradientOrigin => GradientOrigin.WrappedPoint;
+        public Wrapper.Point GradientOrigin
         {
-            get => (Wrapper.Point)GetValue(GraidentOriginProperty);
-            set => SetValue(GraidentOriginProperty, value);
+            get => (Wrapper.Point)GetValue(GradientOriginProperty);
+            set => SetValue(GradientOriginProperty, value);
         }
 
         public double RadiusX

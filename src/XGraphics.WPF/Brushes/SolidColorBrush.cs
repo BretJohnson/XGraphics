@@ -7,7 +7,7 @@ namespace XGraphics.WPF.Brushes
 {
     public class SolidColorBrush : Brush, ISolidColorBrush
     {
-        public static readonly DependencyProperty ColorProperty = PropertyUtils.Create(nameof(Color), typeof(Wrapper.Color), typeof(SolidColorBrush), PropertyUtils.DefaultColor);
+        public static readonly DependencyProperty ColorProperty = PropertyUtils.Create(nameof(Color), typeof(Wrapper.Color), typeof(SolidColorBrush), Wrapper.Color.Default);
 
         Color ISolidColorBrush.Color => Color.WrappedColor;
         public Wrapper.Color Color

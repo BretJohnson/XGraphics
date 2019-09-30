@@ -29,7 +29,7 @@ namespace XGraphics.XamarinForms.Shapes
         IBrush? IShape.Stroke => Stroke;
         public Brush? Stroke
         {
-            get => (Brush? )GetValue(StrokeProperty);
+            get => (Brush?)GetValue(StrokeProperty);
             set => SetValue(StrokeProperty, value);
         }
 
@@ -42,7 +42,7 @@ namespace XGraphics.XamarinForms.Shapes
         IBrush? IShape.Fill => Fill;
         public Brush? Fill
         {
-            get => (Brush? )GetValue(FillProperty);
+            get => (Brush?)GetValue(FillProperty);
             set => SetValue(FillProperty, value);
         }
     }

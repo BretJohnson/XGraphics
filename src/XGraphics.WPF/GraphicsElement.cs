@@ -30,7 +30,7 @@ namespace XGraphics.WPF
         ITransform? IGraphicsElement.RenderTransform => RenderTransform;
         public Transform? RenderTransform
         {
-            get => (Transform? )GetValue(RenderTransformProperty);
+            get => (Transform?)GetValue(RenderTransformProperty);
             set => SetValue(RenderTransformProperty, value);
         }
     }
