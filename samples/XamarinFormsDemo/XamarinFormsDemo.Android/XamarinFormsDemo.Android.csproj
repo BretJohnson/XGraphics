@@ -110,6 +110,10 @@
       <Project>{1711024c-8bab-4b17-8673-e162957757d9}</Project>
       <Name>XGraphics.Renderer.Skia</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\XGraphics.XamarinForms.Android\XGraphics.XamarinForms.Android.csproj">
+      <Project>{62d46dff-52c2-418e-ac24-21fed581d14f}</Project>
+      <Name>XGraphics.XamarinForms.Android</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\XGraphics\XGraphics.csproj">
       <Project>{71395577-42c4-4a87-a0e1-2519e10ef2c4}</Project>
       <Name>XGraphics</Name>

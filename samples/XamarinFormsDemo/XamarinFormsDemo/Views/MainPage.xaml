@@ -8,7 +8,7 @@
             x:Class="XamarinFormsDemo.Views.MainPage">
 
     <TabbedPage.Children>
-        <NavigationPage Title="Browse">
+        <NavigationPage Title="Demo">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="tab_feed.png"/>

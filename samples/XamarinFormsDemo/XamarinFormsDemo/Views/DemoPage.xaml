@@ -25,16 +25,10 @@
     </ContentPage.Resources>
 
     <StackLayout>
-        <BoxView
-            x:Name="FadeBox"
-            HeightRequest="120"
-            WidthRequest="120"
-            Color="Purple" />
-
         <XGraphics WidthRequest="400" HeightRequest="400" xaml:Grid.Row="2" xaml:Grid.Column="1" xmlns="http://schemas.microsoft.com/xgraphics/2019">
-            <Ellipse Width="200" Height="100">
+            <Ellipse Width="400" Height="100">
                 <Ellipse.Fill>
-                    <SolidColorBrush Color="Red" />
+                    <SolidColorBrush Color="Yellow" />
                 </Ellipse.Fill>
             </Ellipse>
         </XGraphics>

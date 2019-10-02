@@ -21,7 +21,7 @@ namespace XamarinFormsDemo.Droid
 
             base.OnCreate(savedInstanceState);
 
-            XGraphicsRenderer.DefaultRenderer = new AndroidSkiaXGraphicsRenderer();
+            XGraphics.XamarinForms.Android.Platform.Init(new AndroidSkiaXGraphicsRenderer());
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 

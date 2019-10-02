@@ -134,6 +134,18 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\SkiaRenderer\XGraphics.Renderer.Skia.iOS\XGraphics.Renderer.Skia.iOS.csproj">
+      <Project>{f42b0187-3815-4fe8-b8ad-b5c94656416f}</Project>
+      <Name>XGraphics.Renderer.Skia.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\XGraphics.XamarinForms.iOS\XGraphics.XamarinForms.iOS.csproj">
+      <Project>{4b9d0b83-5002-4d51-b65c-5d2db80f016d}</Project>
+      <Name>XGraphics.XamarinForms.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\XamarinFormsDemo\XamarinFormsDemo.csproj">
       <Project>{C1E30B3B-5FFB-4CBD-9DF0-1589E273ECC8}</Project>
       <Name>XamarinFormsDemo</Name>

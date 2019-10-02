@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
 using UIKit;
+using XGraphics.Renderer.Skia.iOS;
 
 namespace XamarinFormsDemo.iOS
 {
@@ -22,6 +19,7 @@ namespace XamarinFormsDemo.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            XGraphics.XamarinForms.iOS.Platform.Init(new IOSSkiaXGraphicsRenderer());
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
