@@ -49,6 +49,13 @@ jobs:
   - checkout: self
     clean: true
 
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 3.0.100
+      installationPath: $(Agent.ToolsDirectory)/dotnet    
+
   # To manually select a Xamarin SDK version on the Microsoft-hosted macOS agent,
   # configure this task with the *Mono* version that is associated with the
   # Xamarin SDK version that you need, and set the "enabled" property to true.
