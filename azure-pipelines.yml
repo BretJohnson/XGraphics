@@ -61,6 +61,7 @@ jobs:
     inputs:
       solution: '**/*iOS.csproj'
       configuration: 'Release'
+      msbuildArguments: /t:Restore,Build
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: Mac'
