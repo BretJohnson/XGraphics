@@ -49,6 +49,14 @@ jobs:
   - checkout: self
     clean: true
 
+  # To manually select a Xamarin SDK version on the Microsoft-hosted macOS agent,
+  # configure this task with the *Mono* version that is associated with the
+  # Xamarin SDK version that you need, and set the "enabled" property to true.
+  # See https://go.microsoft.com/fwlink/?linkid=871629
+  - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_4_0
+    displayName: 'Select the Xamarin SDK version'
+    enabled: true
+
   - template: azure-pipelines/steps/install-nuget.yml
   - template: azure-pipelines/steps/restore-solution.yml
 
