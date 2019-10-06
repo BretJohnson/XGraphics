@@ -59,7 +59,7 @@ jobs:
 
   - task: MSBuild@1
     inputs:
-      solution: 'src/XGraphics/XGraphics.csproj'
+      solution: '**/*iOS.csproj'
       configuration: 'Release'
       msbuildArguments: /t:Restore,Build
 
