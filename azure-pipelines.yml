@@ -57,7 +57,7 @@ jobs:
     displayName: 'Select the Xamarin SDK version'
     enabled: true
 
-  - task: XamariniOS@2
+  - task: MSBuild@1
     inputs:
       solution: '**/*iOS.csproj'
       configuration: 'Release'
