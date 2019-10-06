@@ -57,13 +57,11 @@ jobs:
     displayName: 'Select the Xamarin SDK version'
     enabled: true
 
-  - template: azure-pipelines/steps/install-nuget.yml
-  - template: azure-pipelines/steps/restore-solution.yml
-
   - task: MSBuild@1
     inputs:
       solution: '**/*iOS.csproj'
       configuration: 'Release'
+      restoreNugetPackages: true
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: Mac'
