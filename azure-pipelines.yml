@@ -57,11 +57,10 @@ jobs:
     displayName: 'Select the Xamarin SDK version'
     enabled: true
 
-  - task: MSBuild@1
+  - task: XamariniOS@2
     inputs:
       solution: '**/*iOS.csproj'
       configuration: 'Release'
-      msbuildArguments: /t:Restore,Build
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: Mac'
