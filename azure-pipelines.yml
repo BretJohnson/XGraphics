@@ -70,7 +70,7 @@ jobs:
 
   - task: MSBuild@1
     inputs:
-      solution: '**/*iOS.csproj'
+      solution: 'src/**/*iOS.csproj'
       configuration: 'Release'
       msbuildArguments: /t:Restore,Build
 
