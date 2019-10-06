@@ -14,6 +14,8 @@
     <AssemblyName>XamarinFormsDemo.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -140,11 +142,19 @@
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\SkiaRenderer\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj">
+      <Project>{1711024c-8bab-4b17-8673-e162957757d9}</Project>
+      <Name>XGraphics.Renderer.Skia</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\XGraphics.XamarinForms.iOS\XGraphics.XamarinForms.iOS.csproj">
       <Project>{4b9d0b83-5002-4d51-b65c-5d2db80f016d}</Project>
       <Name>XGraphics.XamarinForms.iOS</Name>
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\XGraphics\XGraphics.csproj">
+      <Project>{71395577-42c4-4a87-a0e1-2519e10ef2c4}</Project>
+      <Name>XGraphics</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamarinFormsDemo\XamarinFormsDemo.csproj">
       <Project>{C1E30B3B-5FFB-4CBD-9DF0-1589E273ECC8}</Project>

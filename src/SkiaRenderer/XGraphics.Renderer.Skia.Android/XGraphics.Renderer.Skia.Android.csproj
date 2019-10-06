@@ -20,7 +20,6 @@
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
-    <NullableContextOptions>enable</NullableContextOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
