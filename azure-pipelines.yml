@@ -15,33 +15,9 @@ variables:
   #ci_feed: # find guid used by Azure DevOps Artifacts for the feed
   NUGET_PACKAGES: $(Agent.TempDirectory)/.nuget/packages
   xcodeRoot: /Applications/Xcode_11.app
+  nugetVersion: '5.2.0'
 
 jobs:
-- job: Windows
-  pool:
-    vmImage: windows-2019
-  steps:
-  - checkout: self
-    clean: true
-
-  - template: azure-pipelines/steps/install-nuget.yml
-  - template: azure-pipelines/steps/restore-solution.yml
-
-  - task: MSBuild@1
-    displayName: 'Build'
-    inputs:
-      solution: 'XGraphics.sln'
-      configuration: 'Release'
-      # This workaround is currently needed per https://github.com/microsoft/azure-pipelines-image-generation/blob/91fcf62e28a7e05686b780f78a890598a8a60483/images/win/Vs2019-Server2019-Readme.md#known-issues
-      msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
-
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: Windows'
-    inputs:
-      PathtoPublish: '$(build.artifactstagingdirectory)'
-      ArtifactName: WindowsArtifacts
-
-
 - job: macOS
   pool:
     vmImage: macOS 10.14
@@ -74,44 +50,69 @@ jobs:
       configuration: 'Release'
       msbuildArguments: /t:Restore,Build
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: Mac'
+  - task: CopyFiles@2
+    displayName: 'Copy build to artifact staging'
     inputs:
-      PathtoPublish: '$(build.artifactstagingdirectory)'
-      ArtifactName: MacArtifacts
+      Contents: |
+        src/SkiaRenderer/XGraphics.SkiaRenderer.iOS/bin/**/*.dll
+        src/SkiaRenderer/XGraphics.SkiaRenderer.iOS/bin/**/*.pdb
+        src/SkiaRenderer/XGraphics.SkiaRenderer.iOS/bin/**/*.mdb
+        src/XamarinForms/XGraphics.XamarinForms.iOS/bin/**/*.dll
+        src/XamarinForms/XGraphics.XamarinForms.iOS/bin/**/*.pdb
+        src/XamarinForms/XGraphics.XamarinForms.iOS/bin/**/*.mdb
+      TargetFolder: $(Build.ArtifactStagingDirectory)
 
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: MacBuild'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: MacBuild
 
-- job: WrapUp
+- job: Windows
   dependsOn:
-  - Windows
   - macOS
   pool:
-    vmImage: Ubuntu 16.04
-  condition: succeededOrFailed()
+    vmImage: windows-2019
   steps:
   - checkout: self
     clean: true
 
-  - template: azure-pipelines/steps/install-nuget.yml
+  - task: NuGetToolInstaller@0
+    displayName: 'Use NuGet $(nugetVersion)'
+    inputs:
+      versionSpec: $(nugetVersion)
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      restoreSolution: XGraphics.sln
+
+  - task: MSBuild@1
+    displayName: 'Build'
+    inputs:
+      solution: 'XGraphics.sln'
+      configuration: 'Release'
+      # This workaround is currently needed per https://github.com/microsoft/azure-pipelines-image-generation/blob/91fcf62e28a7e05686b780f78a890598a8a60483/images/win/Vs2019-Server2019-Readme.md#known-issues
+      msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
 
   - task: DownloadBuildArtifacts@0
-    displayName: 'Download build artifact WindowsArtifacts'
+    displayName: 'Download build artifact MacBuild'
     inputs:
-      artifactName: 'WindowsArtifacts'
-      downloadPath: '$(Build.ArtifactsDirectory)'
+      artifactName: 'MacBuild'
+      downloadPath: '$(Build.ArtifactsDirectory)/MacBuild'
 
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download build artifact MacArtifacts'
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(System.DefaultWorkingDirectory)'
     inputs:
-      artifactName: 'MacArtifacts'
-      downloadPath: '$(Build.ArtifactsDirectory)'
+      SourceFolder: '$(Build.ArtifactsDirectory)/MacBuild'
+      TargetFolder: '$(System.DefaultWorkingDirectory)'
 
   - task: NuGetCommand@2
     displayName: 'Make NuGet Package Release'
     inputs:
       command: pack
       feedsToUse: config
-      packagesToPack: '.nuspec/*.nuspec'
+      packagesToPack: 'nuspec/*.nuspec'
       packDestination: '$(Build.ArtifactStagingDirectory)/nuget/release'
 
   - task: PublishBuildArtifacts@1
