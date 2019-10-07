@@ -10,12 +10,11 @@
     <TemplateGuid>{9ef11e43-1701-4396-8835-8392d57abb70}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XGraphics.Renderer.Skia.Android</RootNamespace>
-    <AssemblyName>XGraphics.Renderer.Skia.Android</AssemblyName>
+    <RootNamespace>XGraphics.SkiaRenderer.Android</RootNamespace>
+    <AssemblyName>XGraphics.SkiaRenderer.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <LangVersion>8.0</LangVersion>
@@ -75,9 +74,9 @@
       <Project>{71395577-42c4-4a87-a0e1-2519e10ef2c4}</Project>
       <Name>XGraphics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj">
+    <ProjectReference Include="..\XGraphics.SkiaRenderer\XGraphics.SkiaRenderer.csproj">
       <Project>{1711024c-8bab-4b17-8673-e162957757d9}</Project>
-      <Name>XGraphics.Renderer.Skia</Name>
+      <Name>XGraphics.SkiaRenderer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
