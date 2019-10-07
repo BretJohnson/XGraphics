@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\XGraphics\XGraphics.csproj" />
+    <ProjectReference Include="..\..\XGraphics\XGraphics.csproj" />
   </ItemGroup>
 
 </Project>

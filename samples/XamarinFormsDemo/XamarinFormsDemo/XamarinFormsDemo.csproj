@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\XGraphics.XamarinForms\XGraphics.XamarinForms.csproj" />
+    <ProjectReference Include="..\..\..\src\XamarinForms\XGraphics.XamarinForms\XGraphics.XamarinForms.csproj" />
   </ItemGroup>
 
   <ItemGroup>

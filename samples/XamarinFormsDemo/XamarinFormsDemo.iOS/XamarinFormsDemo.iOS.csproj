@@ -146,7 +146,7 @@
       <Project>{1711024c-8bab-4b17-8673-e162957757d9}</Project>
       <Name>XGraphics.Renderer.Skia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\XGraphics.XamarinForms.iOS\XGraphics.XamarinForms.iOS.csproj">
+    <ProjectReference Include="..\..\..\src\XamarinForms\XGraphics.XamarinForms.iOS\XGraphics.XamarinForms.iOS.csproj">
       <Project>{4b9d0b83-5002-4d51-b65c-5d2db80f016d}</Project>
       <Name>XGraphics.XamarinForms.iOS</Name>
       <IsAppExtension>false</IsAppExtension>
