@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>XGraphics</id>
+    <version>0.1.0</version>
+    <authors>Bret Johnson</authors>
+    <owners>Bret Johnson</owners>
+    <tags>xgraphics xamarin skia</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <description>Cross platform UWP-inspired graphics primitives, for XAML and code</description>
+    <copyright>© Microsoft. All rights reserved.</copyright>
+    <repository type="git" url="https://github.com/BretJohnson/XGraphics.git"/>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\src\XGraphics\bin\Release\netstandard2.0\XGraphics.dll" target="lib\netstandard2.0" />
+    <file src="..\src\XGraphics\bin\Release\netstandard2.0\XGraphics.*pdb" target="lib\netstandard2.0" />
+    <file src="..\src\XGraphics\bin\Release\netstandard2.0\XGraphics.*mdb" target="lib\netstandard2.0" />
+  </files>
+</package>

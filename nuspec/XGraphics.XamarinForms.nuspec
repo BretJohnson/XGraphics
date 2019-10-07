@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>XGraphics.XamarinForms</id>
+    <version>0.1.0</version>
+    <authors>Bret Johnson</authors>
+    <owners>Bret Johnson</owners>
+    <tags>xgraphics xamarin skia</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <description>Cross platform UWP-inspired graphics primitives, for XAML and code</description>
+    <copyright>© Microsoft. All rights reserved.</copyright>
+    <repository type="git" url="https://github.com/BretJohnson/XGraphics.git"/>
+    <dependencies>
+      <group>
+        <dependency id="XGraphics" version="0.1.0" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.Forms" version="4.2.0.709249" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <!--netstandard-->
+    <file src="..\src\XamarinForms\XGraphics.XamarinForms\bin\Release\netstandard2.0\XGraphics.XamarinForms.dll" target="lib\netstandard2.0" />
+    <file src="..\src\XamarinForms\XGraphics.XamarinForms\bin\Release\netstandard2.0\XGraphics.XamarinForms.*pdb" target="lib\netstandard2.0" />
+    <file src="..\src\XamarinForms\XGraphics.XamarinForms\bin\Release\netstandard2.0\XGraphics.XamarinForms.*mdb" target="lib\netstandard2.0" />
+
+    <!--iPhone Unified-->
+    <file src="..\src\XamarinForms\XGraphics.XamarinForms.iOS\bin\Release\XGraphics.XamarinForms.iOS.dll" target="lib\Xamarin.iOS" />
+    <file src="..\src\XamarinForms\XGraphics.XamarinForms.iOS\bin\Release\XGraphics.XamarinForms.iOS.*pdb" target="lib\Xamarin.iOS" />
+    <file src="..\src\XamarinForms\XGraphics.XamarinForms.iOS\bin\Release\XGraphics.XamarinForms.iOS.*mdb" target="lib\Xamarin.iOS" />
+
+    <!--MonoAndroid-->
+    <file src="..\src\XamarinForms\XGraphics.XamarinForms.Android\bin\Release\XGraphics.XamarinForms.Android.dll" target="lib\MonoAndroid" />
+    <file src="..\src\XamarinForms\XGraphics.XamarinForms.Android\bin\Release\XGraphics.XamarinForms.Android.*pdb" target="lib\MonoAndroid" />
+    <file src="..\src\XamarinForms\XGraphics.XamarinForms.Android\bin\Release\XGraphics.XamarinForms.Android.*mdb" target="lib\MonoAndroid" />
+  </files>
+</package>
