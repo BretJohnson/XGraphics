@@ -1,6 +1,6 @@
 ﻿using Android.Content;
 
-namespace XGraphics.Renderer.Skia.Android
+namespace XGraphics.SkiaRenderer.Android
 {
     public class AndroidSkiaXGraphicsRenderer : SkiaXGraphicsRenderer
     {

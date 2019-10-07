@@ -4,7 +4,7 @@ using Javax.Microedition.Khronos.Opengles;
 using SkiaSharp;
 using EGLConfig = Javax.Microedition.Khronos.Egl.EGLConfig;
 
-namespace XGraphics.Renderer.Skia.Android
+namespace XGraphics.SkiaRenderer.Android
 {
     /// <summary>
     /// This code was copied from https://github.com/mono/SkiaSharp/blob/9665c11f45b0444e2a44976b3053b07df21a60b3/source/SkiaSharp.Views/SkiaSharp.Views.Android/SKGLTextureViewRenderer.cs

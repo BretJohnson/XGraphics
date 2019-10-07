@@ -6,7 +6,7 @@ using XGraphics.Geometries;
 using XGraphics.Shapes;
 using XGraphics.Transforms;
 
-namespace XGraphics.Renderer.Skia
+namespace XGraphics.SkiaRenderer
 {
     public class SkiaPainter
     {

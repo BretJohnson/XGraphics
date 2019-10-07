@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("XGraphics.Renderer.Skia.Android.Resource", IsApplication=false)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("XGraphics.SkiaRenderer.Android.Resource", IsApplication=false)]
 
-namespace XGraphics.Renderer.Skia.Android
+namespace XGraphics.SkiaRenderer.Android
 {
 	
 	

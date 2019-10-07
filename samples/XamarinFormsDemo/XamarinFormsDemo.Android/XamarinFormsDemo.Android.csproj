@@ -15,7 +15,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -102,15 +101,15 @@
     <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\SkiaRenderer\XGraphics.Renderer.Skia.Android\XGraphics.Renderer.Skia.Android.csproj">
+    <ProjectReference Include="..\..\..\src\SkiaRenderer\XGraphics.SkiaRenderer.Android\XGraphics.SkiaRenderer.Android.csproj">
       <Project>{d0c1022e-11a8-4b7c-abb5-2e3dcf23d222}</Project>
-      <Name>XGraphics.Renderer.Skia.Android</Name>
+      <Name>XGraphics.SkiaRenderer.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\SkiaRenderer\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj">
+    <ProjectReference Include="..\..\..\src\SkiaRenderer\XGraphics.SkiaRenderer\XGraphics.SkiaRenderer.csproj">
       <Project>{1711024c-8bab-4b17-8673-e162957757d9}</Project>
-      <Name>XGraphics.Renderer.Skia</Name>
+      <Name>XGraphics.SkiaRenderer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\XGraphics.XamarinForms.Android\XGraphics.XamarinForms.Android.csproj">
+    <ProjectReference Include="..\..\..\src\XamarinForms\XGraphics.XamarinForms.Android\XGraphics.XamarinForms.Android.csproj">
       <Project>{62d46dff-52c2-418e-ac24-21fed581d14f}</Project>
       <Name>XGraphics.XamarinForms.Android</Name>
     </ProjectReference>

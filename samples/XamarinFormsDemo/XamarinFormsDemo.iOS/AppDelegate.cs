@@ -1,6 +1,6 @@
 ﻿using Foundation;
 using UIKit;
-using XGraphics.Renderer.Skia.iOS;
+using XGraphics.SkiaRenderer.iOS;
 
 namespace XamarinFormsDemo.iOS
 {

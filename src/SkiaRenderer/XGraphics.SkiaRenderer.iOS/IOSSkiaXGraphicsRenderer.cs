@@ -1,4 +1,4 @@
-﻿namespace XGraphics.Renderer.Skia.iOS
+﻿namespace XGraphics.SkiaRenderer.iOS
 {
     public class IOSSkiaXGraphicsRenderer : SkiaXGraphicsRenderer
     {

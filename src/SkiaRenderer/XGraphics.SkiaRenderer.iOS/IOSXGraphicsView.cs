@@ -1,6 +1,6 @@
 ﻿using SkiaSharp;
 
-namespace XGraphics.Renderer.Skia.iOS
+namespace XGraphics.SkiaRenderer.iOS
 {
     public class IOSXGraphicsView : SKGLView, IXGraphicsView
     {

@@ -17,7 +17,7 @@ using EGLContext = Javax.Microedition.Khronos.Egl.EGLContext;
 using EGLDisplay = Javax.Microedition.Khronos.Egl.EGLDisplay;
 using EGLSurface = Javax.Microedition.Khronos.Egl.EGLSurface;
 
-namespace XGraphics.Renderer.Skia.Android
+namespace XGraphics.SkiaRenderer.Android
 {
     /// <summary>
     /// This code was copied from https://github.com/mono/SkiaSharp/blob/d5aa34a78786a9e24c13655694760bf3ee4db45a/source/SkiaSharp.Views/SkiaSharp.Views.Android/GLTextureView.cs

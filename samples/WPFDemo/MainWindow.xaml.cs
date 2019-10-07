@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Shapes;
 using XGraphics;
-using XGraphics.Renderer.Skia;
+using XGraphics.SkiaRenderer;
 
 namespace WPFDemo
 {

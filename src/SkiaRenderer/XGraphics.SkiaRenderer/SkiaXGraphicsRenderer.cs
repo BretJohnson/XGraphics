@@ -1,7 +1,7 @@
 ﻿using System;
 using SkiaSharp;
 
-namespace XGraphics.Renderer.Skia
+namespace XGraphics.SkiaRenderer
 {
     public class SkiaXGraphicsRenderer : XGraphicsRenderer
     {

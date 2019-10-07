@@ -105,9 +105,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SkiaRenderer\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj">
+    <ProjectReference Include="..\..\src\SkiaRenderer\XGraphics.SkiaRenderer\XGraphics.SkiaRenderer.csproj">
       <Project>{1711024c-8bab-4b17-8673-e162957757d9}</Project>
-      <Name>XGraphics.Renderer.Skia</Name>
+      <Name>XGraphics.SkiaRenderer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\XGraphics.WPF\XGraphics.WPF.csproj">
       <Project>{cfc466c2-98c4-4d48-a9ac-97ef60fc96b2}</Project>

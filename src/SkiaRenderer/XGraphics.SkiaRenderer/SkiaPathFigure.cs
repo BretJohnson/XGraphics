@@ -1,6 +1,6 @@
 ﻿using SkiaSharp;
 
-namespace XGraphics.Renderer.Skia
+namespace XGraphics.SkiaRenderer
 {
     public struct SkiaPathFigure
     {

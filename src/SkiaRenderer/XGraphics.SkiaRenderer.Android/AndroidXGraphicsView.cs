@@ -1,7 +1,7 @@
 ﻿using Android.Content;
 using SkiaSharp;
 
-namespace XGraphics.Renderer.Skia.Android
+namespace XGraphics.SkiaRenderer.Android
 {
     /// <summary>
     /// This code was adapted from https://github.com/mono/SkiaSharp/blob/e64780c8c8e313ef518a56c6dec2b890ff2877a5/source/SkiaSharp.Views/SkiaSharp.Views.Android/SKGLTextureView.cs

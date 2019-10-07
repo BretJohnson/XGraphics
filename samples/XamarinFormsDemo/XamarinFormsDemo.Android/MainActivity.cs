@@ -7,7 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using XGraphics;
-using XGraphics.Renderer.Skia.Android;
+using XGraphics.SkiaRenderer.Android;
 
 namespace XamarinFormsDemo.Droid
 {

@@ -15,9 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDemo", "samples\WPFDemo\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SkiaRenderer", "SkiaRenderer", "{21C506D4-5F8A-4E85-A076-A8591E09F1CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XGraphics.Renderer.Skia", "src\SkiaRenderer\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj", "{1711024C-8BAB-4B17-8673-E162957757D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XGraphics.SkiaRenderer", "src\SkiaRenderer\XGraphics.SkiaRenderer\XGraphics.SkiaRenderer.csproj", "{1711024C-8BAB-4B17-8673-E162957757D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.Renderer.Skia.Android", "src\SkiaRenderer\XGraphics.Renderer.Skia.Android\XGraphics.Renderer.Skia.Android.csproj", "{D0C1022E-11A8-4B7C-ABB5-2E3DCF23D222}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.SkiaRenderer.Android", "src\SkiaRenderer\XGraphics.SkiaRenderer.Android\XGraphics.SkiaRenderer.Android.csproj", "{D0C1022E-11A8-4B7C-ABB5-2E3DCF23D222}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.XamarinForms.Android", "src\XamarinForms\XGraphics.XamarinForms.Android\XGraphics.XamarinForms.Android.csproj", "{62D46DFF-52C2-418E-AC24-21FED581D14F}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XGraphics", "src\XGraphics\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinFormsDemo", "XamarinFormsDemo", "{9C127D4A-C79A-4ACE-99D3-62F1543332A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.Renderer.Skia.iOS", "src\SkiaRenderer\XGraphics.Renderer.Skia.iOS\XGraphics.Renderer.Skia.iOS.csproj", "{F42B0187-3815-4FE8-B8AD-B5C94656416F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.SkiaRenderer.iOS", "src\SkiaRenderer\XGraphics.SkiaRenderer.iOS\XGraphics.SkiaRenderer.iOS.csproj", "{F42B0187-3815-4FE8-B8AD-B5C94656416F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.XamarinForms.iOS", "src\XamarinForms\XGraphics.XamarinForms.iOS\XGraphics.XamarinForms.iOS.csproj", "{4B9D0B83-5002-4D51-B65C-5D2DB80F016D}"
 EndProject

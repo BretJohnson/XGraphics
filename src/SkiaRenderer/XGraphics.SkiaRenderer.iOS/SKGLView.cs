@@ -6,12 +6,12 @@ using GLKit;
 using OpenGLES;
 using SkiaSharp;
 #if !__WATCHOS__
-using XGraphics.Renderer.Skia.iOS.GlesInterop;
+using XGraphics.SkiaRenderer.iOS.GlesInterop;
 
 #if __TVOS__
-namespace XGraphics.Renderer.Skia.tvOS
+namespace XGraphics.SkiaRenderer.tvOS
 #elif __IOS__
-namespace XGraphics.Renderer.Skia.iOS
+namespace XGraphics.SkiaRenderer.iOS
 #endif
 {
     ///

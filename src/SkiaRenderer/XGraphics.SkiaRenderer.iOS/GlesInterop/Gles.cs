@@ -1,7 +1,7 @@
 ﻿#if !__WATCHOS__
 using System.Runtime.InteropServices;
 
-namespace XGraphics.Renderer.Skia.iOS.GlesInterop
+namespace XGraphics.SkiaRenderer.iOS.GlesInterop
 {
     /// <summary>
     /// This code was copied from https://github.com/mono/SkiaSharp/blob/d5aa34a78786a9e24c13655694760bf3ee4db45a/source/SkiaSharp.Views/SkiaSharp.Views.Shared/GlesInterop/Gles.cs
