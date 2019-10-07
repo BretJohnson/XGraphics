@@ -56,7 +56,7 @@
       <Project>{d987324d-a62b-4510-afd2-b24305fdc040}</Project>
       <Name>XGraphics.XamarinForms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XGraphics\XGraphics.csproj">
+    <ProjectReference Include="..\..\XGraphics\XGraphics.csproj">
       <Project>{71395577-42c4-4a87-a0e1-2519e10ef2c4}</Project>
       <Name>XGraphics</Name>
     </ProjectReference>

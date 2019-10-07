@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29111.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XGraphics.XamarinForms", "src\XGraphics.XamarinForms\XGraphics.XamarinForms.csproj", "{D987324D-A62B-4510-AFD2-B24305FDC040}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XGraphics.XamarinForms", "src\XamarinForms\XGraphics.XamarinForms\XGraphics.XamarinForms.csproj", "{D987324D-A62B-4510-AFD2-B24305FDC040}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.WPF", "src\XGraphics.WPF\XGraphics.WPF.csproj", "{CFC466C2-98C4-4D48-A9AC-97EF60FC96B2}"
 EndProject
@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{0F97
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDemo", "samples\WPFDemo\WPFDemo.csproj", "{5E2CFCAD-0EE9-415C-91D6-91BB61F38590}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SkiaRenderer", "src\SkiaRenderer", "{21C506D4-5F8A-4E85-A076-A8591E09F1CF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SkiaRenderer", "SkiaRenderer", "{21C506D4-5F8A-4E85-A076-A8591E09F1CF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XGraphics.Renderer.Skia", "src\SkiaRenderer\XGraphics.Renderer.Skia\XGraphics.Renderer.Skia.csproj", "{1711024C-8BAB-4B17-8673-E162957757D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.Renderer.Skia.Android", "src\SkiaRenderer\XGraphics.Renderer.Skia.Android\XGraphics.Renderer.Skia.Android.csproj", "{D0C1022E-11A8-4B7C-ABB5-2E3DCF23D222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.XamarinForms.Android", "src\XGraphics.XamarinForms.Android\XGraphics.XamarinForms.Android.csproj", "{62D46DFF-52C2-418E-AC24-21FED581D14F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.XamarinForms.Android", "src\XamarinForms\XGraphics.XamarinForms.Android\XGraphics.XamarinForms.Android.csproj", "{62D46DFF-52C2-418E-AC24-21FED581D14F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinFormsDemo.Android", "samples\XamarinFormsDemo\XamarinFormsDemo.Android\XamarinFormsDemo.Android.csproj", "{1562ECF4-28F5-4929-A5C3-DE1B915F18D3}"
 EndProject
@@ -29,11 +29,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinFormsDemo", "samples
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XGraphics", "src\XGraphics\XGraphics.csproj", "{71395577-42C4-4A87-A0E1-2519E10EF2C4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinFormsDemo", "samples\XamarinFormsDemo", "{9C127D4A-C79A-4ACE-99D3-62F1543332A0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinFormsDemo", "XamarinFormsDemo", "{9C127D4A-C79A-4ACE-99D3-62F1543332A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.Renderer.Skia.iOS", "src\SkiaRenderer\XGraphics.Renderer.Skia.iOS\XGraphics.Renderer.Skia.iOS.csproj", "{F42B0187-3815-4FE8-B8AD-B5C94656416F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.XamarinForms.iOS", "src\XGraphics.XamarinForms.iOS\XGraphics.XamarinForms.iOS.csproj", "{4B9D0B83-5002-4D51-B65C-5D2DB80F016D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGraphics.XamarinForms.iOS", "src\XamarinForms\XGraphics.XamarinForms.iOS\XGraphics.XamarinForms.iOS.csproj", "{4B9D0B83-5002-4D51-B65C-5D2DB80F016D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinForms", "XamarinForms", "{4FBB1457-F037-478D-BA55-E90D45747283}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -426,14 +428,17 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{D987324D-A62B-4510-AFD2-B24305FDC040} = {4FBB1457-F037-478D-BA55-E90D45747283}
 		{5E2CFCAD-0EE9-415C-91D6-91BB61F38590} = {0F975378-AC67-46E5-B91A-53B6783E4D74}
 		{1711024C-8BAB-4B17-8673-E162957757D9} = {21C506D4-5F8A-4E85-A076-A8591E09F1CF}
 		{D0C1022E-11A8-4B7C-ABB5-2E3DCF23D222} = {21C506D4-5F8A-4E85-A076-A8591E09F1CF}
+		{62D46DFF-52C2-418E-AC24-21FED581D14F} = {4FBB1457-F037-478D-BA55-E90D45747283}
 		{1562ECF4-28F5-4929-A5C3-DE1B915F18D3} = {9C127D4A-C79A-4ACE-99D3-62F1543332A0}
 		{0BBA6353-CE00-417A-A348-795DDEB9232A} = {9C127D4A-C79A-4ACE-99D3-62F1543332A0}
 		{7089448D-78DC-4507-8DC0-D05F58261B42} = {9C127D4A-C79A-4ACE-99D3-62F1543332A0}
 		{9C127D4A-C79A-4ACE-99D3-62F1543332A0} = {0F975378-AC67-46E5-B91A-53B6783E4D74}
 		{F42B0187-3815-4FE8-B8AD-B5C94656416F} = {21C506D4-5F8A-4E85-A076-A8591E09F1CF}
+		{4B9D0B83-5002-4D51-B65C-5D2DB80F016D} = {4FBB1457-F037-478D-BA55-E90D45747283}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0684A7CE-8711-4F75-A4CC-7B4318DE1EDA}
