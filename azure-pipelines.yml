@@ -91,7 +91,7 @@ jobs:
     displayName: 'Download build artifact MacBuild'
     inputs:
       artifactName: 'MacBuild'
-      downloadPath: '$(Build.ArtifactsDirectory)/MacBuild'
+      downloadPath: '$(Build.ArtifactsDirectory)'
 
   - task: CopyFiles@2
     displayName: 'Copy MacBuild files to: $(System.DefaultWorkingDirectory)'
