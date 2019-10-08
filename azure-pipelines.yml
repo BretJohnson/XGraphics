@@ -100,30 +100,13 @@ jobs:
       TargetFolder: '$(System.DefaultWorkingDirectory)'
 
   - task: MSBuild@1
-    displayName: 'Build XGraphics.WPF'
+    displayName: 'Build all non-iOS projects'
     inputs:
-      solution: 'src/XGraphics.WPF/XGraphics.WPF.csproj'
+      solution:  |
+        'src/**/*.csproj'
+        '!src/**/*.iOS.csproj'
       configuration: 'Release'
-      msbuildArguments: /t:Restore,Build /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
-
-  - task: MSBuild@1
-    displayName: 'Build XGraphics.XamarinForms'
-    inputs:
-      solution: 'src/XamarinForms/XGraphics.XamarinForms(|.Android)/XGraphics.XamarinForms(|.Android).csproj'
-      configuration: 'Release'
-      msbuildArguments: /t:Restore,Build /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
-
-  - task: MSBuild@1
-    displayName: 'Build XGraphics.SkiaRenderer'
-    inputs:
-      solution: 'src/SkiaRendererXGraphics.SkiaRenderer(|.Android)/XGraphics.SkiaRenderer(|.Android).csproj'
-      configuration: 'Release'
-      msbuildArguments: /t:Restore,Build /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
-
-  #solution: 'XGraphics.sln'
-  #configuration: 'Release'
-  # This workaround is currently needed per https://github.com/microsoft/azure-pipelines-image-generation/blob/91fcf62e28a7e05686b780f78a890598a8a60483/images/win/Vs2019-Server2019-Readme.md#known-issues
-  #msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
+      msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
 
   - task: NuGetCommand@2
     displayName: 'Make NuGet Package Release'
