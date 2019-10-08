@@ -26,11 +26,19 @@
     <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer\bin\Release\netstandard2.0\XGraphics.SkiaRenderer.*mdb" target="lib\netstandard2.0" />
 
     <!--iPhone Unified-->
+    <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer\bin\Release\netstandard2.0\XGraphics.SkiaRenderer.dll" target="lib\netstandard2.0" />
+    <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer\bin\Release\netstandard2.0\XGraphics.SkiaRenderer.*pdb" target="lib\netstandard2.0" />
+    <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer\bin\Release\netstandard2.0\XGraphics.SkiaRenderer.*mdb" target="lib\netstandard2.0" />
+
     <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer.iOS\bin\Release\XGraphics.SkiaRenderer.iOS.dll" target="lib\Xamarin.iOS" />
     <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer.iOS\bin\Release\XGraphics.SkiaRenderer.iOS.*pdb" target="lib\Xamarin.iOS" />
     <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer.iOS\bin\Release\XGraphics.SkiaRenderer.iOS.*mdb" target="lib\Xamarin.iOS" />
 
     <!--MonoAndroid-->
+    <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer\bin\Release\netstandard2.0\XGraphics.SkiaRenderer.dll" target="lib\netstandard2.0" />
+    <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer\bin\Release\netstandard2.0\XGraphics.SkiaRenderer.*pdb" target="lib\netstandard2.0" />
+    <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer\bin\Release\netstandard2.0\XGraphics.SkiaRenderer.*mdb" target="lib\netstandard2.0" />
+
     <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer.Android\bin\Release\XGraphics.SkiaRenderer.Android.dll" target="lib\MonoAndroid" />
     <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer.Android\bin\Release\XGraphics.SkiaRenderer.Android.*pdb" target="lib\MonoAndroid" />
     <file src="..\src\SkiaRenderer\XGraphics.SkiaRenderer.Android\bin\Release\XGraphics.SkiaRenderer.Android.*mdb" target="lib\MonoAndroid" />
