@@ -30,7 +30,7 @@ jobs:
     inputs:
       packageType: sdk
       version: 3.0.100
-      installationPath: $(Agent.ToolsDirectory)/dotnet    
+      installationPath: $(Agent.ToolsDirectory)/dotnet
 
   - script: /bin/bash -c "sudo xcode-select -s /Applications/Xcode_11.app/Contents/Developer"
     displayName: 'Select Xcode version'
@@ -94,18 +94,36 @@ jobs:
       downloadPath: '$(Build.ArtifactsDirectory)/MacBuild'
 
   - task: CopyFiles@2
-    displayName: 'Copy Files to: $(System.DefaultWorkingDirectory)'
+    displayName: 'Copy MacBuild files to: $(System.DefaultWorkingDirectory)'
     inputs:
       SourceFolder: '$(Build.ArtifactsDirectory)/MacBuild'
       TargetFolder: '$(System.DefaultWorkingDirectory)'
 
   - task: MSBuild@1
-    displayName: 'Build'
+    displayName: 'Build XGraphics.WPF'
     inputs:
-      solution: 'XGraphics.sln'
+      solution: 'src/XGraphics.WPF/XGraphics.WPF.csproj'
       configuration: 'Release'
-      # This workaround is currently needed per https://github.com/microsoft/azure-pipelines-image-generation/blob/91fcf62e28a7e05686b780f78a890598a8a60483/images/win/Vs2019-Server2019-Readme.md#known-issues
-      msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
+      msbuildArguments: /t:Restore,Build /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
+
+  - task: MSBuild@1
+    displayName: 'Build XGraphics.XamarinForms'
+    inputs:
+      solution: 'src/XamarinForms/XGraphics.XamarinForms(|.Android)/XGraphics.XamarinForms(|.Android).csproj'
+      configuration: 'Release'
+      msbuildArguments: /t:Restore,Build /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
+
+  - task: MSBuild@1
+    displayName: 'Build XGraphics.SkiaRenderer'
+    inputs:
+      solution: 'src/SkiaRendererXGraphics.SkiaRenderer(|.Android)/XGraphics.SkiaRenderer(|.Android).csproj'
+      configuration: 'Release'
+      msbuildArguments: /t:Restore,Build /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
+
+  #solution: 'XGraphics.sln'
+  #configuration: 'Release'
+  # This workaround is currently needed per https://github.com/microsoft/azure-pipelines-image-generation/blob/91fcf62e28a7e05686b780f78a890598a8a60483/images/win/Vs2019-Server2019-Readme.md#known-issues
+  #msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"
 
   - task: NuGetCommand@2
     displayName: 'Make NuGet Package Release'
