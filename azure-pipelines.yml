@@ -77,6 +77,23 @@ jobs:
   - checkout: self
     clean: true
 
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core sdk'
+    inputs:
+      packageType: sdk
+      version: 3.0.100
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: custom
+      custom: tool
+      arguments: install --tool-path . nbgv
+    displayName: Install NBGV tool
+
+  - script: nbgv cloud --all-vars
+    displayName: Set Version
+
   - task: NuGetToolInstaller@0
     displayName: 'Use NuGet $(nugetVersion)'
     inputs:
@@ -105,6 +122,8 @@ jobs:
     displayName: 'Make NuGet Package Release'
     inputs:
       command: pack
+      versioningScheme: byEnvVar
+      versionEnvVar: NBGV_NUGETPACKAGEVERSION
       feedsToUse: config
       packagesToPack: 'nuspec/*.nuspec'
       packDestination: '$(Build.ArtifactStagingDirectory)/nuget/release'
