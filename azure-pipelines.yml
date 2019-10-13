@@ -1,3 +1,6 @@
+# This is the build name, which shows in Azure DevOps and is stamped into the built assemblies
+name: '$(versionBase).$(buildNumber)'
+
 trigger:
   branches:
     include:
@@ -16,6 +19,10 @@ variables:
   NUGET_PACKAGES: $(Agent.TempDirectory)/.nuget/packages
   xcodeRoot: /Applications/Xcode_11.app
   nugetVersion: '5.2.0'
+  buildNumber: $[counter('buildNumberCounter', 1)]
+  versionBase: '0.1.0'
+  releaseVersion: $(versionBase)
+  prereleaseVersion: $(versionBase)-beta.$(buildNumber)
 
 jobs:
 - job: macOS
@@ -77,23 +84,6 @@ jobs:
   - checkout: self
     clean: true
 
-  - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk'
-    inputs:
-      packageType: sdk
-      version: 3.0.100
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: custom
-      custom: tool
-      arguments: install --tool-path . nbgv
-    displayName: Install NBGV tool
-
-  - script: nbgv cloud --all-vars
-    displayName: Set Version
-
   - task: NuGetToolInstaller@0
     displayName: 'Use NuGet $(nugetVersion)'
     inputs:
@@ -123,10 +113,12 @@ jobs:
     inputs:
       command: pack
       versioningScheme: byEnvVar
-      versionEnvVar: NBGV_NUGETPACKAGEVERSION
+      versionEnvVar: 'PACK_VERSION'
       feedsToUse: config
       packagesToPack: 'nuspec/*.nuspec'
       packDestination: '$(Build.ArtifactStagingDirectory)/nuget/release'
+    env:
+      PACK_VERSION: '$(prereleaseVersion)'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: nuget'
