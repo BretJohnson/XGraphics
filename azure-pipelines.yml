@@ -108,45 +108,53 @@ jobs:
       configuration: 'CIBuild'
       msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)" /t:Restore,Build
 
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: ./nuspec/
+      contents: *.nuspec
+      targetFolder: ./nuspec/prerelease
+
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: ./nuspec/
+      contents: *.nuspec
+      targetFolder: ./nuspec/erelease
+
   - powershell: |
        Write-Host("Update nuspecs")
-       Get-ChildItem './nuspec/*.nuspec' -Recurse | Foreach-Object {
+       mkdir ./nuspec/prerelease
+       mkdir ./nuspec/release
+       Get-ChildItem './nuspec/*.nuspec' | Foreach-Object {
             (Get-Content $_) | Foreach-Object  {
-                $_ -replace '\$version\$', $env:NUSPEC_VERSION `
-           } | Set-Content $_
+                $_ -replace '\$version\$', $env:PRERELEASE_VERSION `
+           } | Set-Content -Path (Join-Path 'nuspec/prerelease' $_.Name)
+       }
+       Get-ChildItem './nuspec/*.nuspec' | Foreach-Object {
+            (Get-Content $_) | Foreach-Object  {
+                $_ -replace '\$version\$', $env:RELEASE_VERSION `
+           } | Set-Content -Path (Join-Path 'nuspec/release' $_.Name)
        }
     failOnStderr: true
-    displayName: 'Update nuspecs - Prerelease'
+    displayName: 'Update nuspecs'
     env:
-      NUSPEC_VERSION: '$(prereleaseVersion)'
+      PRERELEASE_VERSION: '$(prereleaseVersion)'
+      RELEASE_VERSION: '$(ereleaseVersion)'
 
   - task: NuGetCommand@2
     displayName: 'Make NuGet Package - Prerelease'
     inputs:
       command: pack
       feedsToUse: config
-      packagesToPack: 'nuspec/*.nuspec'
+      packagesToPack: 'nuspec/prerelease/*.nuspec'
       packDestination: '$(Build.ArtifactStagingDirectory)/nuget/prerelease'
-
-  - powershell: |
-       Write-Host("Update nuspecs")
-       Get-ChildItem './nuspec/*.nuspec' -Recurse | Foreach-Object {
-            (Get-Content $_) | Foreach-Object  {
-                $_ -replace '\$version\$', $env:NUSPEC_VERSION `
-           } | Set-Content $_
-       }
-    failOnStderr: true
-    displayName: 'Update nuspecs - Release'
-    env:
-      NUSPEC_VERSION: '$(releaseVersion)'
 
   - task: NuGetCommand@2
     displayName: 'Make NuGet Package - Release'
     inputs:
       command: pack
       feedsToUse: config
-      packagesToPack: 'nuspec/*.nuspec'
-      packDestination: '$(Build.ArtifactStagingDirectory)/nuget/rerelease'
+      packagesToPack: 'nuspec/release/*.nuspec'
+      packDestination: '$(Build.ArtifactStagingDirectory)/nuget/release'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: nuget'
