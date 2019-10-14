@@ -116,7 +116,7 @@ jobs:
       versionEnvVar: 'PACK_VERSION'
       feedsToUse: config
       packagesToPack: 'nuspec/*.nuspec'
-      packDestination: '$(Build.ArtifactStagingDirectory)/nuget/release'
+      packDestination: '$(Build.ArtifactStagingDirectory)/nuget'
     env:
       PACK_VERSION: '$(prereleaseVersion)'
 
@@ -125,3 +125,13 @@ jobs:
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)/nuget'
       ArtifactName: nuget
+
+  # Publish to our CI NuGet feed (Azure Artifacts)
+  - task: NuGetCommand@2
+    displayName: 'Publish prerelease NuGet to CI feed'
+    inputs:
+      command: push
+      publishVstsFeed: 'ci-feed'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/*.nupkg'
+      allowPackageConflicts: false
+
