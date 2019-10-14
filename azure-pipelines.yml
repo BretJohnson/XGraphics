@@ -128,6 +128,26 @@ jobs:
       packagesToPack: 'nuspec/*.nuspec'
       packDestination: '$(Build.ArtifactStagingDirectory)/nuget/prerelease'
 
+  - powershell: |
+       Write-Host("Update nuspecs")
+       Get-ChildItem './nuspec/*.nuspec' -Recurse | Foreach-Object {
+            (Get-Content $_) | Foreach-Object  {
+                $_ -replace '\$version\$', $env:NUSPEC_VERSION `
+           } | Set-Content $_
+       }
+    failOnStderr: true
+    displayName: 'Update nuspecs - Release'
+    env:
+      NUSPEC_VERSION: '$(releaseVersion)'
+
+  - task: NuGetCommand@2
+    displayName: 'Make NuGet Package - Release'
+    inputs:
+      command: pack
+      feedsToUse: config
+      packagesToPack: 'nuspec/*.nuspec'
+      packDestination: '$(Build.ArtifactStagingDirectory)/nuget/rerelease'
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: nuget'
     inputs:
