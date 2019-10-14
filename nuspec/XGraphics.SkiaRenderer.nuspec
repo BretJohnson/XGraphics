@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>XGraphics.SkiaRenderer</id>
-    <version>0.1.0</version>
+    <version>$version$</version>
     <authors>Bret Johnson</authors>
     <owners>Bret Johnson</owners>
     <tags>xgraphics xamarin skia</tags>
@@ -14,7 +14,7 @@
     <repository type="git" url="https://github.com/BretJohnson/XGraphics.git"/>
     <dependencies>
       <group>
-        <dependency id="XGraphics" version="0.1.0" exclude="Build,Analyzers" />
+        <dependency id="XGraphics" version="$version$" exclude="Build,Analyzers" />
         <dependency id="SkiaSharp" version="1.68.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>

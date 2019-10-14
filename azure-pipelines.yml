@@ -20,7 +20,7 @@ variables:
   xcodeRoot: /Applications/Xcode_11.app
   nugetVersion: '5.2.0'
   buildNumber: $[counter('buildNumberCounter', 1)]
-  versionBase: '0.1.0'
+  versionBase: '0.1.1'
   releaseVersion: $(versionBase)
   prereleaseVersion: $(versionBase)-beta.$(buildNumber)
 
@@ -108,6 +108,18 @@ jobs:
       configuration: 'CIBuild'
       msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)" /t:Restore,Build
 
+  - powershell: |
+       $nugetVersion = "" + $env:prereleaseVersion
+
+       Write-Host("Update nuspecs")
+       Get-ChildItem './.nuspec/*.nuspec' -Recurse | Foreach-Object {
+            (Get-Content $_) | Foreach-Object  {
+                $_ -replace '\$version\$', $formsNugetVersion `
+           } | Set-Content $_
+       }
+    failOnStderr: true
+    displayName: 'Update nuspecs'
+
   - task: NuGetCommand@2
     displayName: 'Make NuGet Package Release'
     inputs:
@@ -116,9 +128,7 @@ jobs:
       versionEnvVar: 'PACK_VERSION'
       feedsToUse: config
       packagesToPack: 'nuspec/*.nuspec'
-      packDestination: '$(Build.ArtifactStagingDirectory)/nuget'
-    env:
-      PACK_VERSION: '$(prereleaseVersion)'
+      packDestination: '$(Build.ArtifactStagingDirectory)/nuget/prerelease'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: nuget'
@@ -132,6 +142,6 @@ jobs:
     inputs:
       command: push
       publishVstsFeed: 'ci-feed'
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/*.nupkg'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/prerelease/*.nupkg'
       allowPackageConflicts: false
 
