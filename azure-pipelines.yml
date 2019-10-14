@@ -109,16 +109,16 @@ jobs:
       msbuildArguments: /p:JavaSdkDirectory="$(JAVA_HOME_8_X64)" /t:Restore,Build
 
   - powershell: |
-       $nugetVersion = "" + $env:prereleaseVersion
-
        Write-Host("Update nuspecs")
        Get-ChildItem './nuspec/*.nuspec' -Recurse | Foreach-Object {
             (Get-Content $_) | Foreach-Object  {
-                $_ -replace '\$version\$', $formsNugetVersion `
+                $_ -replace '\$version\$', $env:NUSPEC_VERSION `
            } | Set-Content $_
        }
     failOnStderr: true
     displayName: 'Update nuspecs'
+    env:
+      NUSPEC_VERSION: '$(prereleaseVersion)'
 
   - task: NuGetCommand@2
     displayName: 'Make NuGet Package Release'
