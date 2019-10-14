@@ -112,7 +112,7 @@ jobs:
        $nugetVersion = "" + $env:prereleaseVersion
 
        Write-Host("Update nuspecs")
-       Get-ChildItem './.nuspec/*.nuspec' -Recurse | Foreach-Object {
+       Get-ChildItem './nuspec/*.nuspec' -Recurse | Foreach-Object {
             (Get-Content $_) | Foreach-Object  {
                 $_ -replace '\$version\$', $formsNugetVersion `
            } | Set-Content $_
