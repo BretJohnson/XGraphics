@@ -116,16 +116,14 @@ jobs:
            } | Set-Content $_
        }
     failOnStderr: true
-    displayName: 'Update nuspecs'
+    displayName: 'Update nuspecs - Prerelease'
     env:
       NUSPEC_VERSION: '$(prereleaseVersion)'
 
   - task: NuGetCommand@2
-    displayName: 'Make NuGet Package Release'
+    displayName: 'Make NuGet Package - Prerelease'
     inputs:
       command: pack
-      versioningScheme: byEnvVar
-      versionEnvVar: 'PACK_VERSION'
       feedsToUse: config
       packagesToPack: 'nuspec/*.nuspec'
       packDestination: '$(Build.ArtifactStagingDirectory)/nuget/prerelease'
