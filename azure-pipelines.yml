@@ -110,15 +110,15 @@ jobs:
 
   - task: CopyFiles@2
     inputs:
-      sourceFolder: ./nuspec/
-      contents: *.nuspec
-      targetFolder: ./nuspec/prerelease
+      sourceFolder: './nuspec/'
+      contents: '*.nuspec'
+      targetFolder: './nuspec/prerelease'
 
   - task: CopyFiles@2
     inputs:
-      sourceFolder: ./nuspec/
-      contents: *.nuspec
-      targetFolder: ./nuspec/erelease
+      sourceFolder: './nuspec/'
+      contents: '*.nuspec'
+      targetFolder: './nuspec/erelease'
 
   - powershell: |
        Write-Host("Update nuspecs")
