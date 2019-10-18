@@ -110,17 +110,17 @@ jobs:
 
   - powershell: |
        Write-Host("Update nuspecs")
-       mkdir ./nuspec/prerelease
-       mkdir ./nuspec/release
+       mkdir ./nuspec-prerelease
+       mkdir ./nuspec-release
        Get-ChildItem './nuspec/*.nuspec' | Foreach-Object {
             (Get-Content $_) | Foreach-Object  {
                 $_ -replace '\$version\$', $env:PRERELEASE_VERSION `
-           } | Set-Content -Path (Join-Path 'nuspec/prerelease' $_.Name)
+           } | Set-Content -Path (Join-Path 'nuspec-prerelease' $_.Name)
        }
        Get-ChildItem './nuspec/*.nuspec' | Foreach-Object {
             (Get-Content $_) | Foreach-Object  {
                 $_ -replace '\$version\$', $env:RELEASE_VERSION `
-           } | Set-Content -Path (Join-Path 'nuspec/release' $_.Name)
+           } | Set-Content -Path (Join-Path 'nuspec-release' $_.Name)
        }
     failOnStderr: true
     displayName: 'Update nuspecs'
@@ -133,7 +133,7 @@ jobs:
     inputs:
       command: pack
       feedsToUse: config
-      packagesToPack: 'nuspec/prerelease/*.nuspec'
+      packagesToPack: 'nuspec-prerelease/*.nuspec'
       packDestination: '$(Build.ArtifactStagingDirectory)/nuget/prerelease'
 
   - task: NuGetCommand@2
@@ -141,7 +141,7 @@ jobs:
     inputs:
       command: pack
       feedsToUse: config
-      packagesToPack: 'nuspec/release/*.nuspec'
+      packagesToPack: 'nuspec-release/*.nuspec'
       packDestination: '$(Build.ArtifactStagingDirectory)/nuget/release'
 
   - task: PublishBuildArtifacts@1
