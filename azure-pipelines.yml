@@ -126,7 +126,7 @@ jobs:
     displayName: 'Update nuspecs'
     env:
       PRERELEASE_VERSION: '$(prereleaseVersion)'
-      RELEASE_VERSION: '$(ereleaseVersion)'
+      RELEASE_VERSION: '$(releaseVersion)'
 
   - task: NuGetCommand@2
     displayName: 'Make NuGet Package - Prerelease'
