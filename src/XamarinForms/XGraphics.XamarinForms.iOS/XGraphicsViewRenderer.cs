@@ -4,17 +4,17 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XGraphics.XamarinForms.iOS;
 
-[assembly: ExportRenderer(typeof(XGraphics.XamarinForms.XGraphics), typeof(XGraphicsViewRenderer))]
+[assembly: ExportRenderer(typeof(XGraphics.XamarinForms.XCanvas), typeof(XGraphicsViewRenderer))]
 
 namespace XGraphics.XamarinForms.iOS
 {
-    public class XGraphicsViewRenderer : ViewRenderer<XGraphics, UIView>
+    public class XGraphicsViewRenderer : ViewRenderer<XCanvas, UIView>
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<XGraphics> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<XCanvas> e)
         {
             if (e.NewElement != null)
             {
-                XGraphics xGraphics = e.NewElement;
+                XCanvas xCanvas = e.NewElement;
 
                 // create the native view
                 if (Control == null)
@@ -27,7 +27,7 @@ namespace XGraphics.XamarinForms.iOS
                     var nativeControl = (UIView)graphicsView.NativeControl;
 
                     // TODO: Handle thread safety issues if necessary, like if the object goes away while it's rendering on its separate thread
-                    graphicsView.Content = xGraphics;
+                    graphicsView.Content = xCanvas;
 
                     SetNativeControl(nativeControl);
                 }

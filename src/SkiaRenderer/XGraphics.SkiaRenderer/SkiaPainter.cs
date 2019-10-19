@@ -19,18 +19,18 @@ namespace XGraphics.SkiaRenderer
             skCanvas = surface.Canvas;
         }
 
-        public void Paint(IXGraphics xGraphics)
+        public void Paint(IXCanvas xCanvas)
         {
-            IBrush? background = xGraphics.Background;
+            IBrush? background = xCanvas.Background;
             if (background is ISolidColorBrush solidColorBrush)
                 skCanvas.Clear(ToSkiaColor(solidColorBrush.Color));
             else skCanvas.Clear(SKColors.Transparent);
 
-            ITransform? xGraphicsRenderTransform = xGraphics.GraphicsRenderTransform;
+            ITransform? xGraphicsRenderTransform = xCanvas.GraphicsRenderTransform;
             if (xGraphicsRenderTransform != null)
-                ApplyTransform(xGraphicsRenderTransform, xGraphics);
+                ApplyTransform(xGraphicsRenderTransform, xCanvas);
 
-            foreach (IGraphicsElement graphicsElement in xGraphics.Children)
+            foreach (IGraphicsElement graphicsElement in xCanvas.Children)
             {
                 ITransform? renderTransform = graphicsElement.RenderTransform;
 
@@ -201,7 +201,7 @@ namespace XGraphics.SkiaRenderer
             else throw new InvalidOperationException($"Unknown transform type {transform.GetType()}");
         }
 
-        private void ApplyTransform(ITransform transform, IXGraphics xGraphics)
+        private void ApplyTransform(ITransform transform, IXCanvas xCanvas)
         {
             if (transform is IRotateTransform rotateTransform)
                 skCanvas.RotateDegrees((float) rotateTransform.Angle, (float) rotateTransform.CenterX,
@@ -214,7 +214,7 @@ namespace XGraphics.SkiaRenderer
             else if (transform is ITransformGroup transformGroup)
             {
                 foreach (ITransform childTransform in transformGroup.Children)
-                    ApplyTransform(childTransform, xGraphics);
+                    ApplyTransform(childTransform, xCanvas);
             }
             else throw new InvalidOperationException($"Unknown transform type {transform.GetType()}");
         }

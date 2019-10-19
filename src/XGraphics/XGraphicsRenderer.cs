@@ -12,12 +12,12 @@ namespace XGraphics
         /// <summary>
         /// Render the graphics to the specified bitmap memory buffer.
         /// </summary>
-        /// <param name="xGraphics">graphics object to render</param>
+        /// <param name="xCanvas">graphics object to render</param>
         /// <param name="pixels">buffer data</param>
         /// <param name="width">width of the bitmap, in pixels</param>
         /// <param name="height">height of the bitmap, in pixels</param>
         /// <param name="rowBytes">number of bytes per row in the buffer</param>
-        public abstract void RenderToBuffer(IXGraphics xGraphics, IntPtr pixels, int width, int height,
+        public abstract void RenderToBuffer(IXCanvas xCanvas, IntPtr pixels, int width, int height,
             int rowBytes);
 
         public abstract IXGraphicsView CreateGraphicsView(object? arg1 = null, object? arg2 = null, object? arg3 = null);
@@ -25,7 +25,7 @@ namespace XGraphics
 
     public interface IXGraphicsView
     {
-        IXGraphics? Content { set;  }
+        IXCanvas? Content { set;  }
 
         object? NativeControl { get; }
     }

@@ -33,10 +33,10 @@ namespace XGraphics.WPF
     }
 
     [ContentProperty("Children")]
-    public class XGraphics : FrameworkElement, IXGraphics, INotifyObjectOrSubobjectChanged
+    public class XCanvas : FrameworkElement, IXCanvas, INotifyObjectOrSubobjectChanged
     {
-        public static readonly DependencyProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brushes.Brush), typeof(XGraphics), null);
-        public static readonly DependencyProperty GraphicsRenderTransformProperty = PropertyUtils.Create(nameof(GraphicsRenderTransform), typeof(Transform), typeof(XGraphics), null);
+        public static readonly DependencyProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brushes.Brush), typeof(XCanvas), null);
+        public static readonly DependencyProperty GraphicsRenderTransformProperty = PropertyUtils.Create(nameof(GraphicsRenderTransform), typeof(Transform), typeof(XCanvas), null);
 
         private readonly bool designMode;
         private WriteableBitmap? bitmap;
@@ -44,7 +44,7 @@ namespace XGraphics.WPF
 
         public event ObjectOrSubobjectChangedEventHandler Changed;
 
-        public XGraphics()
+        public XCanvas()
         {
             designMode = DesignerProperties.GetIsInDesignMode(this);
             Children = new GraphicsObjectCollection<GraphicsElement>();
@@ -58,11 +58,11 @@ namespace XGraphics.WPF
 
         public void OnSubobjectChanged() => Changed?.Invoke();
 
-        IEnumerable<IGraphicsElement> IXGraphics.Children => Children;
+        IEnumerable<IGraphicsElement> IXCanvas.Children => Children;
 
         public GraphicsObjectCollection<GraphicsElement> Children { get; }
 
-        IBrush? IXGraphics.Background => Background;
+        IBrush? IXCanvas.Background => Background;
 
         public Brushes.Brush Background {
             get => (Brushes.Brush)GetValue(BackgroundProperty);
@@ -79,7 +79,7 @@ namespace XGraphics.WPF
 			}
 		}
 
-        ITransform? IXGraphics.GraphicsRenderTransform => GraphicsRenderTransform;
+        ITransform? IXCanvas.GraphicsRenderTransform => GraphicsRenderTransform;
         public Transform? GraphicsRenderTransform {
             get => (Transform?)GetValue(GraphicsRenderTransformProperty);
             set => SetValue(GraphicsRenderTransformProperty, value);

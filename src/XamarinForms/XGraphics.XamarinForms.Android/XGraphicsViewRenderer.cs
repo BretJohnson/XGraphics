@@ -4,21 +4,21 @@ using Android.Content;
 using XGraphics.XamarinForms.Android;
 using System;
 
-[assembly: ExportRenderer(typeof(XGraphics.XamarinForms.XGraphics), typeof(XGraphicsViewRenderer))]
+[assembly: ExportRenderer(typeof(XGraphics.XamarinForms.XCanvas), typeof(XGraphicsViewRenderer))]
 
 namespace XGraphics.XamarinForms.Android
 {
-    public class XGraphicsViewRenderer : ViewRenderer<XGraphics, global::Android.Views.View>
+    public class XGraphicsViewRenderer : ViewRenderer<XCanvas, global::Android.Views.View>
     {
         public XGraphicsViewRenderer(Context context) : base(context)
         {
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<XGraphics> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<XCanvas> e)
         {
             if (e.NewElement != null)
             {
-                XGraphics xGraphics = e.NewElement;
+                XCanvas xCanvas = e.NewElement;
 
                 // create the native view
                 if (Control == null)
@@ -31,7 +31,7 @@ namespace XGraphics.XamarinForms.Android
                     var nativeControl = (global::Android.Views.View)graphicsView.NativeControl;
 
                     // TODO: Handle thread safety issues if necessary, like if the object goes away while it's rendering on its separate thread
-                    graphicsView.Content = xGraphics;
+                    graphicsView.Content = xCanvas;
 
                     SetNativeControl(nativeControl);
                 }

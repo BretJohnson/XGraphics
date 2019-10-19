@@ -4,7 +4,7 @@ namespace XGraphics.SkiaRenderer.iOS
 {
     public class IOSXGraphicsView : SKGLView, IXGraphicsView
     {
-        public IXGraphics? Content { get; set; } = null;
+        public IXCanvas? Content { get; set; } = null;
 
         public object? NativeControl => this;
 

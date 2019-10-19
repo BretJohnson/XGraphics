@@ -17,29 +17,24 @@
     -->
 
     <ContentPage.Resources>
-        <xamanimation:FadeToAnimation 
-             x:Key="FadeToAnimation"
-             Target="{x:Reference FadeBox}"
-             Duration="2000"
-             Opacity="0"/>
     </ContentPage.Resources>
 
     <StackLayout>
-        <XGraphics WidthRequest="400" HeightRequest="400" xaml:Grid.Row="2" xaml:Grid.Column="1" xmlns="http://schemas.microsoft.com/xgraphics/2019">
+        <XCanvas WidthRequest="400" HeightRequest="400" xaml:Grid.Row="2" xaml:Grid.Column="1" xmlns="http://schemas.microsoft.com/xgraphics/2019">
             <Ellipse Width="400" Height="100">
                 <Ellipse.Fill>
-                    <SolidColorBrush Color="Yellow" />
+                    <SolidColorBrush Color="Blue" />
                 </Ellipse.Fill>
             </Ellipse>
-        </XGraphics>
+        </XCanvas>
 
-        <XGraphics x:Name="appbar_arrow_corner_up_right" WidthRequest="400" HeightRequest="400" xaml:Grid.Row="1" xaml:Grid.Column="1" xmlns="http://schemas.microsoft.com/xgraphics/2019">
-            <XGraphics.GraphicsRenderTransform>
+        <XCanvas x:Name="appbar_arrow_corner_up_right" WidthRequest="400" HeightRequest="400" xaml:Grid.Row="1" xaml:Grid.Column="1" xmlns="http://schemas.microsoft.com/xgraphics/2019">
+            <XCanvas.GraphicsRenderTransform>
                 <TranslateTransform X="200" Y="200"/>
-            </XGraphics.GraphicsRenderTransform>
+            </XCanvas.GraphicsRenderTransform>
             <Path x:Name="myPath" Width="40.25" Height="40" Left="42" Top="19" Data="F1 M 22,30L 47.75,30L 36.75,19L 48.25,19L 62.25,33L 47.25,48L 36.75,48L 47.75,37L 29,37L 29,59L 22,59L 22,30 Z ">
                 <Path.Fill>
-                    <SolidColorBrush Color="Green" />
+                    <SolidColorBrush Color="Blue" />
                 </Path.Fill>
                 <Path.RenderTransform>
                     <TransformGroup>
@@ -47,7 +42,7 @@
                     </TransformGroup>
                 </Path.RenderTransform>
             </Path>
-        </XGraphics>
+        </XCanvas>
 
     </StackLayout>
 

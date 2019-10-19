@@ -4,7 +4,7 @@ using XGraphics.Transforms;
 
 namespace XGraphics
 {
-    public interface IXGraphics
+    public interface IXCanvas
     {
         IEnumerable<IGraphicsElement> Children { get; }
 

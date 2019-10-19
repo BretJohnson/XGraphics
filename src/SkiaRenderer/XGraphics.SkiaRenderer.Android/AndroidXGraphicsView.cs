@@ -10,7 +10,7 @@ namespace XGraphics.SkiaRenderer.Android
     {
         private readonly SKGLTextureViewRenderer renderer;
 
-        public IXGraphics? Content { get; set; } = null;
+        public IXCanvas? Content { get; set; } = null;
 
         public AndroidXGraphicsView(Context context)
             : base(context)

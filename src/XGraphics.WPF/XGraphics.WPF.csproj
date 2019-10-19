@@ -83,7 +83,7 @@
     <Compile Include="Wrapper\Point.cs" />
     <Compile Include="Wrapper\Color.cs" />
     <Compile Include="Converters\ColorTypeConverter.cs" />
-    <Compile Include="XGraphics.cs" />
+    <Compile Include="XCanvas.cs" />
     <Compile Include="Canvas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GraphicsElement.cs" />

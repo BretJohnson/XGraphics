@@ -16,17 +16,17 @@ namespace XGraphics.XamarinForms
     // TODO: Maybe include RenderWith later, along with reworking to have all custom renderers use same code (or at least same namespace)
     //[RenderWith(typeof(SKGLViewRenderer))]
     [ContentProperty("Children")]
-    public class XGraphics : View, IXGraphics, INotifyObjectOrSubobjectChanged
+    public class XCanvas : View, IXCanvas, INotifyObjectOrSubobjectChanged
     {
-        public static readonly BindableProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brush), typeof(XGraphics), null);
-        public static readonly BindableProperty GraphicsRenderTransformProperty = PropertyUtils.Create(nameof(GraphicsRenderTransform), typeof(Transform), typeof(XGraphics), null);
+        public static readonly BindableProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brush), typeof(XCanvas), null);
+        public static readonly BindableProperty GraphicsRenderTransformProperty = PropertyUtils.Create(nameof(GraphicsRenderTransform), typeof(Transform), typeof(XCanvas), null);
 
         //private readonly bool designMode;
         private bool ignorePixelScaling;
 
         public event ObjectOrSubobjectChangedEventHandler Changed;
 
-        public XGraphics()
+        public XCanvas()
         {
             //designMode = DesignerProperties.GetIsInDesignMode(this);
             Children = new GraphicsObjectCollection<GraphicsElement>();
@@ -40,18 +40,18 @@ namespace XGraphics.XamarinForms
 
         public void OnSubobjectChanged() => Changed?.Invoke();
 
-        IEnumerable<IGraphicsElement> IXGraphics.Children => Children;
+        IEnumerable<IGraphicsElement> IXCanvas.Children => Children;
 
         public GraphicsObjectCollection<GraphicsElement> Children { get; }
 
-        IBrush? IXGraphics.Background => Background;
+        IBrush? IXCanvas.Background => Background;
 
         public Brush Background {
             get => (Brush)GetValue(BackgroundProperty);
             set => SetValue(BackgroundProperty, value);
         }
 
-        ITransform? IXGraphics.GraphicsRenderTransform => GraphicsRenderTransform;
+        ITransform? IXCanvas.GraphicsRenderTransform => GraphicsRenderTransform;
         public Transform? GraphicsRenderTransform {
             get => (Transform?)GetValue(GraphicsRenderTransformProperty);
             set => SetValue(GraphicsRenderTransformProperty, value);

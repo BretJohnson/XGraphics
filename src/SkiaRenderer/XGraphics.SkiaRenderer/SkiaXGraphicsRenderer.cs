@@ -5,14 +5,14 @@ namespace XGraphics.SkiaRenderer
 {
     public class SkiaXGraphicsRenderer : XGraphicsRenderer
     {
-        public override void RenderToBuffer(IXGraphics xGraphics, IntPtr pixels, int width, int height, int rowBytes)
+        public override void RenderToBuffer(IXCanvas xCanvas, IntPtr pixels, int width, int height, int rowBytes)
         {
             var info = new SKImageInfo(width, height, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
 
             using (SKSurface surface = SKSurface.Create(info, pixels, rowBytes))
             {
                 // Paint all elements from the canvas on the surface
-                new SkiaPainter(surface).Paint(xGraphics);
+                new SkiaPainter(surface).Paint(xCanvas);
             }
         }
 
