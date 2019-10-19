@@ -33,7 +33,7 @@ namespace XGraphics.Converters.Path
         internal override void SetClosedState(bool isClosed)
         {
             Debug.Assert(_currentFigure != null);
-            _currentFigure.IsClosed = isClosed;
+            _currentFigure!.IsClosed = isClosed;
         }
 
         private void FinishFigure()
@@ -136,7 +136,7 @@ namespace XGraphics.Converters.Path
             FinishSegment();
 
             IArcSegment segment = _geometryFactory.CreateArcSegment(point, size, rotationAngle, isLargeArc, sweepDirection);
-            _currentFigure.Segments.Add(segment);
+            _currentFigure!.Segments.Add(segment);
 
             _currentSegment = new PathSegmentInfo(MIL_SEGMENT_TYPE.MilSegmentArc, 0);
         }
@@ -220,7 +220,7 @@ namespace XGraphics.Converters.Path
             }
 
             if (segment != null)
-                _currentFigure.Segments.Add(segment);
+                _currentFigure!.Segments.Add(segment);
 
             _currentSegment = null;
         }

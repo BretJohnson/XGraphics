@@ -12,7 +12,7 @@ namespace XGraphics
             _items = new List<Point>();
         }
 
-        public event ObjectOrSubobjectChangedEventHandler Changed;
+        public event ObjectOrSubobjectChangedEventHandler? Changed;
 
         public void OnChanged() => Changed?.Invoke();
 
