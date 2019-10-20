@@ -68,7 +68,7 @@ namespace XGraphics.DataModelGenerator
     {
         public static readonly XamarinFormsXamlOutputType Instance = new XamarinFormsXamlOutputType();
 
-        public override string ProjectBaseDirectory => "XGraphics.XamarinForms";
+        public override string ProjectBaseDirectory => Path.Combine("XamarinForms", "XGraphics.XamarinForms");
         public override QualifiedNameSyntax RootNamespace =>
             QualifiedName(IdentifierName("XGraphics"), IdentifierName("XamarinForms"));
         public override IdentifierNameSyntax DependencyPropertyClassName => IdentifierName("BindableProperty");

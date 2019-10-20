@@ -53,6 +53,9 @@
     <Compile Include="Brushes\LinearGradientBrush.cs" />
     <Compile Include="Brushes\RadialGradientBrush.cs" />
     <Compile Include="Brushes\SolidColorBrush.cs" />
+    <Compile Include="Converters\BrushTypeConverter.cs" />
+    <Compile Include="Converters\TypeConverterBase.cs" />
+    <Compile Include="Converters\SizeTypeConverter.cs" />
     <Compile Include="Converters\PointTypeConverter.cs" />
     <Compile Include="Converters\GeometryTypeConverter.cs" />
     <Compile Include="DependencyObjectWithCascadingNotifications.cs" />

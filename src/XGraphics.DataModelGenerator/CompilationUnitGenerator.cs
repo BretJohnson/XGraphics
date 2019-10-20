@@ -108,7 +108,7 @@ namespace XGraphics.DataModelGenerator
                                 })))
                     .WithMembers(new SyntaxList<MemberDeclarationSyntax>(classMembers));
 
-            if (DestinationTypeHasTypeConverterAttribute)
+            if (DestinationTypeHasTypeConverterAttribute())
             {
                 classDeclaration =
                     classDeclaration.WithAttributeLists(
@@ -418,7 +418,7 @@ namespace XGraphics.DataModelGenerator
 
             AddUsing(usingNames, _sourceNamespaceName);
 
-            IEnumerable<QualifiedNameSyntax> outputTypeUsings = _outputType.GetUsings(hasPropertyDescriptors, DestinationTypeHasTypeConverterAttribute);
+            IEnumerable<QualifiedNameSyntax> outputTypeUsings = _outputType.GetUsings(hasPropertyDescriptors, DestinationTypeHasTypeConverterAttribute());
             foreach (QualifiedNameSyntax outputTypeUsing in outputTypeUsings)
                 AddUsing(usingNames, outputTypeUsing);
 
@@ -432,7 +432,7 @@ namespace XGraphics.DataModelGenerator
                     AddUsing(usingNames, IdentifierName("System"));
             }
 
-            if (DestinationTypeHasTypeConverterAttribute)
+            if (DestinationTypeHasTypeConverterAttribute())
                 AddUsing(usingNames, QualifiedName(_outputType.RootNamespace, IdentifierName("Converters")));
 
             bool first = true;
@@ -540,7 +540,13 @@ namespace XGraphics.DataModelGenerator
                     $"Identifier type {typeName} isn't supported for model object generation; interface name starting with 'I' is expected");
         }
 
-        private bool DestinationTypeHasTypeConverterAttribute => _destinationClassName.Identifier.Text == "Geometry" && _outputType is XamlOutputType;
+        private bool DestinationTypeHasTypeConverterAttribute()
+        {
+            string destinationTypeName = _destinationClassName.Identifier.Text;
+
+            return _outputType is XamlOutputType &&
+                   (destinationTypeName == "Geometry" || destinationTypeName == "Brush");
+        }
 
         private static bool IsTransformType(TypeSyntax type)
         {
