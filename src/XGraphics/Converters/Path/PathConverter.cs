@@ -12,7 +12,6 @@
 
 using System;
 using XGraphics.Geometries;
-using XGraphics.StringConverters.Path;
 
 namespace XGraphics.Converters.Path
 {

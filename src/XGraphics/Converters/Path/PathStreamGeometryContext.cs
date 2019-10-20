@@ -11,7 +11,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using XGraphics.Geometries;
-using XGraphics.StringConverters.Path;
 using XGraphics.Transforms;
 
 namespace XGraphics.Converters.Path

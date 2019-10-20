@@ -11,7 +11,7 @@
 using System.Collections.Generic;
 using XGraphics.Geometries;
 
-namespace XGraphics.StringConverters.Path
+namespace XGraphics.Converters.Path
 {
     internal abstract class StreamGeometryContext
     {
