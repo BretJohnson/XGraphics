@@ -1,15 +1,17 @@
-﻿using XGraphicsSize = XGraphics.Size;
+﻿using System.ComponentModel;
+using XGraphics.WPF.Converters;
 
 namespace XGraphics.WPF.Wrapper
 {
+    [TypeConverter(typeof(SizeTypeConverter))]
     public struct Size
     {
-        public static readonly Size Default = new Size(XGraphicsSize.Default);
+        public static readonly Size Default = new Size(XGraphics.Size.Default);
 
 
-        public XGraphicsSize WrappedSize { get; }
+        public XGraphics.Size WrappedSize { get; }
 
-        public Size(XGraphicsSize wrappedSize)
+        public Size(XGraphics.Size wrappedSize)
         {
             WrappedSize = wrappedSize;
         }
