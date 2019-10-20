@@ -7,6 +7,7 @@ namespace XGraphics.XamarinForms.Brushes
 {
     public class GradientBrush : Brush, IGradientBrush
     {
+        public static readonly BindableProperty MappingModeProperty = PropertyUtils.Create(nameof(MappingMode), typeof(BrushMappingMode), typeof(GradientBrush), BrushMappingMode.RelativeToBoundingBox);
         public static readonly BindableProperty SpreadMethodProperty = PropertyUtils.Create(nameof(SpreadMethod), typeof(GradientSpreadMethod), typeof(GradientBrush), GradientSpreadMethod.Pad);
 
         public GradientBrush()
@@ -15,16 +16,22 @@ namespace XGraphics.XamarinForms.Brushes
             GradientStops.Changed += OnSubobjectChanged;
         }
 
-        public GradientSpreadMethod SpreadMethod
-        {
-            get => (GradientSpreadMethod)GetValue(SpreadMethodProperty);
-            set => SetValue(SpreadMethodProperty, value);
-        }
-
         IEnumerable<IGradientStop> IGradientBrush.GradientStops => GradientStops;
         public GraphicsObjectCollection<GradientStop> GradientStops
         {
             get;
+        }
+
+        public BrushMappingMode MappingMode
+        {
+            get => (BrushMappingMode)GetValue(MappingModeProperty);
+            set => SetValue(MappingModeProperty, value);
+        }
+
+        public GradientSpreadMethod SpreadMethod
+        {
+            get => (GradientSpreadMethod)GetValue(SpreadMethodProperty);
+            set => SetValue(SpreadMethodProperty, value);
         }
     }
 }

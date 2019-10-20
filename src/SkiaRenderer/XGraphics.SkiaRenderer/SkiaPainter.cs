@@ -297,25 +297,29 @@ namespace XGraphics.SkiaRenderer
 
             if (gradientBrush is ILinearGradientBrush linearGradientBrush)
             {
-                SKPoint skiaStartPoint = new SKPoint(
-                    (float)(shape.Left + linearGradientBrush.StartPoint.X * shape.Width),
-                    (float)(shape.Top + linearGradientBrush.StartPoint.Y * shape.Height));
-                SKPoint skiaEndPoint = new SKPoint(
-                    (float)(shape.Left + linearGradientBrush.EndPoint.X * shape.Width),
-                    (float)(shape.Top + linearGradientBrush.EndPoint.Y * shape.Height));
+                SKPoint skiaStartPoint = GradientBrushPointToSkiaPoint(linearGradientBrush.StartPoint, gradientBrush, shape);
+                SKPoint skiaEndPoint = GradientBrushPointToSkiaPoint(linearGradientBrush.EndPoint, gradientBrush, shape);
 
                 return SKShader.CreateLinearGradient(skiaStartPoint, skiaEndPoint, skiaColors.ToArray(), skiaColorPositions.ToArray(), tileMode);
             }
             else if (gradientBrush is IRadialGradientBrush radialGradientBrush)
             {
-                SKPoint skiaCenterPoint = new SKPoint(
-                    (float)(shape.Left + radialGradientBrush.Center.X * shape.Width),
-                    (float)(shape.Top + radialGradientBrush.Center.Y * shape.Height));
+                SKPoint skiaCenterPoint = GradientBrushPointToSkiaPoint(radialGradientBrush.Center, gradientBrush, shape);
 
                 float radius = (float)(radialGradientBrush.RadiusX * shape.Width);
                 return SKShader.CreateRadialGradient(skiaCenterPoint, radius, skiaColors.ToArray(), skiaColorPositions.ToArray(), tileMode);
             }
             else throw new InvalidOperationException($"GradientBrush type {gradientBrush.GetType()} is unknown");
+        }
+
+        public static SKPoint GradientBrushPointToSkiaPoint(Point point, IGradientBrush gradientBrush, IShape shape)
+        {
+            if (gradientBrush.MappingMode == BrushMappingMode.RelativeToBoundingBox)
+                return new SKPoint(
+                    (float)(shape.Left + point.X * shape.Width),
+                    (float)(shape.Top + point.Y * shape.Height));
+            else
+                return new SKPoint((float)point.X, (float)point.Y);
         }
 
         public static SKPoint ToSkiaPoint(Point point) => new SKPoint((float) point.X, (float) point.Y);

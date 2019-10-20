@@ -8,6 +8,7 @@ namespace XGraphics.WPF.Brushes
 {
     public class GradientBrush : Brush, IGradientBrush
     {
+        public static readonly DependencyProperty MappingModeProperty = PropertyUtils.Create(nameof(MappingMode), typeof(BrushMappingMode), typeof(GradientBrush), BrushMappingMode.RelativeToBoundingBox);
         public static readonly DependencyProperty SpreadMethodProperty = PropertyUtils.Create(nameof(SpreadMethod), typeof(GradientSpreadMethod), typeof(GradientBrush), GradientSpreadMethod.Pad);
 
         public GradientBrush()
@@ -16,16 +17,22 @@ namespace XGraphics.WPF.Brushes
             GradientStops.Changed += OnSubobjectChanged;
         }
 
-        public GradientSpreadMethod SpreadMethod
-        {
-            get => (GradientSpreadMethod)GetValue(SpreadMethodProperty);
-            set => SetValue(SpreadMethodProperty, value);
-        }
-
         IEnumerable<IGradientStop> IGradientBrush.GradientStops => GradientStops;
         public GraphicsObjectCollection<GradientStop> GradientStops
         {
             get;
+        }
+
+        public BrushMappingMode MappingMode
+        {
+            get => (BrushMappingMode)GetValue(MappingModeProperty);
+            set => SetValue(MappingModeProperty, value);
+        }
+
+        public GradientSpreadMethod SpreadMethod
+        {
+            get => (GradientSpreadMethod)GetValue(SpreadMethodProperty);
+            set => SetValue(SpreadMethodProperty, value);
         }
     }
 }
