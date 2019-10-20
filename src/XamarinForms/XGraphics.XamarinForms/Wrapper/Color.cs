@@ -1,6 +1,5 @@
-﻿using System.ComponentModel;
-using XGraphics.XamarinForms.Converters;
-using XGraphicsColor = XGraphics.Color;
+﻿using Xamarin.Forms;
+using ColorTypeConverter = XGraphics.XamarinForms.Converters.ColorTypeConverter;
 
 namespace XGraphics.XamarinForms.Wrapper
 {
@@ -11,9 +10,9 @@ namespace XGraphics.XamarinForms.Wrapper
         public static readonly Color Transparent = new Color(Colors.Transparent);
 
 
-        public XGraphicsColor WrappedColor { get; }
+        public XGraphics.Color WrappedColor { get; }
 
-        public Color(XGraphicsColor wrappedColor)
+        public Color(XGraphics.Color wrappedColor)
         {
             WrappedColor = wrappedColor;
         }
