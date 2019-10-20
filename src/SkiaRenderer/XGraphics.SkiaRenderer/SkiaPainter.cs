@@ -45,7 +45,8 @@ namespace XGraphics.SkiaRenderer
                 else if (graphicsElement is IShape shape)
                 {
                     SKPath skiaPath = NonPathShapeToSkiaPath(shape);
-                    PaintSkiaPath(skiaPath, shape);
+                    FillSkiaPath(skiaPath, shape);
+                    StrokeSkiaPath(skiaPath, shape);
                 }
                 else throw new InvalidOperationException($"Unknown graphics element type {graphicsElement.GetType()}");
 
@@ -65,10 +66,11 @@ namespace XGraphics.SkiaRenderer
 
             if (geometry is IPathGeometry pathGeometry)
             {
-                List<SkiaPathFigure> skiaPathFigures = PathGeometryToSkiaPathFigures(pathGeometry);
+                SKPath skiaPathForFill = PathGeometryToSkiaPath(pathGeometry, onlyIncludeFilledFigures:true);
+                SKPath skiaPathForStroke = PathGeometryToSkiaPath(pathGeometry);
 
-                foreach (SkiaPathFigure skiaPathFigure in skiaPathFigures)
-                    PaintSkiaPath(skiaPathFigure.Path, path, skiaPathFigure.IsFilled);
+                FillSkiaPath(skiaPathForFill, path);
+                StrokeSkiaPath(skiaPathForStroke, path);
             }
             else throw new InvalidOperationException($"Geometry type {geometry.GetType()} isn't currently supported; only IPathGeometry is supported currently");
         }
@@ -97,7 +99,7 @@ namespace XGraphics.SkiaRenderer
             return skPath;
         }
 
-        private List<SkiaPathFigure> PathGeometryToSkiaPathFigures(IPathGeometry pathGeometry)
+        private SKPath PathGeometryToSkiaPath(IPathGeometry pathGeometry, bool onlyIncludeFilledFigures = false)
         {
             SKPathFillType fillType = pathGeometry.FillRule switch
                 {
@@ -109,25 +111,26 @@ namespace XGraphics.SkiaRenderer
             List<SkiaPathFigure> skiaPathFigures = new List<SkiaPathFigure>();
             // TODO: Decide how (or if) to support geometry.StandardFlatteningTolerance
 
+            SKPath skPath = new SKPath();
+            skPath.FillType = fillType;
+
             foreach (IPathFigure pathFigure in pathGeometry.Figures)
             {
+                if (onlyIncludeFilledFigures && !pathFigure.IsFilled)
+                    continue;
+
                 Point startPoint = pathFigure.StartPoint;
 
-                SKPath skPath = new SKPath();
-
-                skPath.FillType = fillType;
                 skPath.MoveTo((float)startPoint.X, (float)startPoint.Y);
 
                 foreach (IPathSegment pathSegment in pathFigure.Segments)
                     AddPathSegmentToSkiaPath(skPath, pathSegment);
 
                 if (pathFigure.IsClosed)
-                    skPath.LineTo((float)startPoint.X, (float)startPoint.Y);
-
-                skiaPathFigures.Add(new SkiaPathFigure(skPath, pathFigure.IsFilled));
+                    skPath.Close();
             }
 
-            return skiaPathFigures;
+            return skPath;
         }
 
         private void AddPathSegmentToSkiaPath(SKPath skPath, IPathSegment pathSegment)
@@ -166,9 +169,28 @@ namespace XGraphics.SkiaRenderer
                     (float) quadraticBezierSegment.Point2.X, (float) quadraticBezierSegment.Point2.Y);
             else if (pathSegment is IPolyLineSegment polyLineSegment)
             {
-                var skiaPoints = new List<SKPoint>();
-                AddSkiaPoints(polyLineSegment.Points, skiaPoints);
-                skPath.AddPoly(skiaPoints.ToArray());
+                Point[] points = polyLineSegment.Points;
+                int length = points.Length;
+                for (int i = 0; i < length; i++)
+                {
+                    Point point = points[i];
+                    skPath.LineTo((float)point.X, (float)point.Y);
+                }
+            }
+            else if (pathSegment is IArcSegment arcSegment)
+            {
+                SKPathDirection skiaPathDirection = arcSegment.SweepDirection switch
+                {
+                    SweepDirection.Clockwise => SKPathDirection.Clockwise,
+                    SweepDirection.Counterclockwise => SKPathDirection.CounterClockwise,
+                    _ => throw new InvalidOperationException($"Unknown SweepDirection value {arcSegment.SweepDirection}")
+                };
+
+                SKPathArcSize skiaPathArcSize = arcSegment.IsLargeArc ? SKPathArcSize.Large : SKPathArcSize.Small;
+
+                skPath.ArcTo((float)arcSegment.Size.Width, (float)arcSegment.Size.Height,
+                    (float)arcSegment.RotationAngle,
+                    skiaPathArcSize, skiaPathDirection, (float)arcSegment.Point.X, (float)arcSegment.Point.Y);
             }
             else throw new InvalidOperationException($"IPathSegment type {pathSegment.GetType()} not yet implemented");
         }
@@ -219,17 +241,20 @@ namespace XGraphics.SkiaRenderer
             else throw new InvalidOperationException($"Unknown transform type {transform.GetType()}");
         }
 
-        private void PaintSkiaPath(SKPath skiaPath, IShape shape, bool allowFill = true)
+        private void FillSkiaPath(SKPath skiaPath, IShape shape)
         {
-            var fill = shape.Fill;
-            if (fill != null && allowFill)
+            IBrush? fill = shape.Fill;
+            if (fill != null)
             {
                 using SKPaint paint = new SKPaint { Style = SKPaintStyle.Fill, IsAntialias = true };
                 InitSkiaPaintForBrush(paint, fill, shape);
                 skCanvas.DrawPath(skiaPath, paint);
             }
+        }
 
-            var stroke = shape.Stroke;
+        private void StrokeSkiaPath(SKPath skiaPath, IShape shape)
+        {
+            IBrush? stroke = shape.Stroke;
             if (stroke != null)
             {
                 using SKPaint paint = new SKPaint { Style = SKPaintStyle.Stroke, IsAntialias = true };
@@ -258,7 +283,7 @@ namespace XGraphics.SkiaRenderer
                 GradientSpreadMethod.Pad => SKShaderTileMode.Clamp,
                 GradientSpreadMethod.Reflect => SKShaderTileMode.Mirror,
                 GradientSpreadMethod.Repeat => SKShaderTileMode.Repeat,
-                _ => throw new InvalidOperationException($"Unknown GradientSpreadmethod value {gradientBrush.SpreadMethod}")
+                _ => throw new InvalidOperationException($"Unknown GradientSpreadMethod value {gradientBrush.SpreadMethod}")
             };
 
             List<SKColor> skiaColors = new List<SKColor>();
