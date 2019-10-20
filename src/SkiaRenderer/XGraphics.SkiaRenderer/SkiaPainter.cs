@@ -260,6 +260,7 @@ namespace XGraphics.SkiaRenderer
                 using SKPaint paint = new SKPaint { Style = SKPaintStyle.Stroke, IsAntialias = true };
                 InitSkiaPaintForBrush(paint, stroke, shape);
                 paint.StrokeWidth = (int)shape.StrokeThickness;
+                paint.StrokeMiter = (float)shape.StrokeMiterLimit;
 
                 skCanvas.DrawPath(skiaPath, paint);
             }

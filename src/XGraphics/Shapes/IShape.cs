@@ -17,6 +17,9 @@ namespace XGraphics.Shapes
         [ModelDefaultValue(1.0)]
         double StrokeThickness { get; }
 
+        [ModelDefaultValue(10.0)]
+        double StrokeMiterLimit { get; }
+
         [ModelDefaultValue(null)]
         IBrush? Fill { get; }
     }

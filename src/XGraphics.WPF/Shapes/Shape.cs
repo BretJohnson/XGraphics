@@ -13,6 +13,7 @@ namespace XGraphics.WPF.Shapes
         public static readonly DependencyProperty HeightProperty = PropertyUtils.Create(nameof(Height), typeof(double), typeof(Shape), double.NaN);
         public static readonly DependencyProperty StrokeProperty = PropertyUtils.Create(nameof(Stroke), typeof(Brush), typeof(Shape), null);
         public static readonly DependencyProperty StrokeThicknessProperty = PropertyUtils.Create(nameof(StrokeThickness), typeof(double), typeof(Shape), 1.0);
+        public static readonly DependencyProperty StrokeMiterLimitProperty = PropertyUtils.Create(nameof(StrokeMiterLimit), typeof(double), typeof(Shape), 10.0);
         public static readonly DependencyProperty FillProperty = PropertyUtils.Create(nameof(Fill), typeof(Brush), typeof(Shape), null);
 
         public double Width
@@ -38,6 +39,12 @@ namespace XGraphics.WPF.Shapes
         {
             get => (double)GetValue(StrokeThicknessProperty);
             set => SetValue(StrokeThicknessProperty, value);
+        }
+
+        public double StrokeMiterLimit
+        {
+            get => (double)GetValue(StrokeMiterLimitProperty);
+            set => SetValue(StrokeMiterLimitProperty, value);
         }
 
         IBrush? IShape.Fill => Fill;
