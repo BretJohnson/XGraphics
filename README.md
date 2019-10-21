@@ -61,45 +61,45 @@ XGraphics aims to solve these problems:
 
 | Element     | Notes, including any differences from UWP |
 | ----------- | ----------- |
-| `XGraphics`      | root Canvas; renamed to identify clearly as XGraphics |
-| `Canvas`   | child canvas |
-| `Shape`  | `Stretch` & stroke join properties not yet implemented |
-| `Ellipse`  |  |
-| `Line`  | |
-| `Rectangle`  | |
-| `Path`  | |
+| [`XCanvas`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.canvas)      | root Canvas; renamed to identify clearly as XGraphics |
+| [`Canvas`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.canvas)   | child canvas |
+| [`Shape`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.shape)  | `Stretch` & stroke join properties not yet implemented |
+| [`Ellipse`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.ellipse)  |  |
+| [`Line`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.line)  | |
+| [`Rectangle`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.rectangle)  | |
+| [`Path`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.path)  | |
 
 ### Geometry elements (mainly used for paths)
 | Element | Notes, including any differences from UWP |
 | ----------- | ----------- |
-| `Geometry` | Base class for geometries |
-| `PathGeometry`  | Contains multiple `PathFigures` |
-| `PathFigure`   | Contains multiple `PathSegments` |
-| `PathSegment`   | Base class for different path segment types |
-| `LineSegment`   | |
-| `ArcSegment` | |
-| `BezierSegment`   | |
-| `PolyBezierSegment`   | |
-| `PolyLineSegment`   | |
-| `PolyQuadraticBezierSegment`   | |
-| `QuadraticBezierSegment` | |
+| [`Geometry`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.geometry) | Base class for geometries |
+| [`PathGeometry`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.pathgeometry)  | Contains multiple `PathFigures` |
+| [`PathFigure`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.pathfigure)   | Contains multiple `PathSegments` |
+| [`PathSegment`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.pathsegment)   | Base class for different path segment types |
+| [`LineSegment`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.linesegment)   | |
+| [`ArcSegment`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.arcsegment) | |
+| [`BezierSegment`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.beziersegment)   | |
+| [`PolyBezierSegment`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.polybeziersegment)   | |
+| [`PolyLineSegment`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.polylinesegment)   | |
+| [`PolyQuadraticBezierSegment`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.polyquadraticbeziersegment)   | |
+| [`QuadraticBezierSegment`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.quadraticbeziersegment) | |
 
 ### Transform elements
 | Element | Notes, including any differences from UWP |
 | ----------- | ----------- |
-| `Transform` | Transform base class |
-| `RotateTransform`  | |
-| `ScaleTransform`   | |
-| `TranslateTransform`   | |
-| `TransformGroup`   | |
+| [`Transform`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.transform) | Transform base class |
+| [`RotateTransform`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.rotatetransform)  | |
+| [`ScaleTransform`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.scaletransform)   | |
+| [`TranslateTransform`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.translatetransform)   | |
+| [`TransformGroup`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.transformgroup)   | |
 
 ### Brush elements
 | Element | Notes, including any differences from UWP |
 | ----------- | ----------- |
-| `Brush` | `Opacity` and transform properties not yet implemented |
-| `SolidColorBrush`  | |
-| `GradientBrush`   | |
-| `GradientStop`   | |
-| `LinearGradientBrush`   | |
-| `RadialGradientBrush`   | Not in standard UWP, but exists in WPF and Windows community toolkit. XGraphics only supports circular, not elliptical, gradients, so it just has a single `Radius` property |
+| [`Brush`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.brush) | `Opacity` and transform properties not yet implemented |
+| [`SolidColorBrush`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.solidcolorbrush)  | |
+| [`GradientBrush`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.gradientbrush)   | |
+| [`GradientStop`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.gradientstop)   | |
+| [`LinearGradientBrush`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.lineargradientbrush)   | |
+| [`RadialGradientBrush`](https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.radialgradientbrush?view=netframework-4.8)   | Not in standard UWP, but exists in WPF and Windows community toolkit. XGraphics only supports circular, not elliptical, gradients, so it just has a single `Radius` property |
 
