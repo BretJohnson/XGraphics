@@ -30,7 +30,12 @@ namespace XGraphics.SkiaRenderer
             if (xGraphicsRenderTransform != null)
                 ApplyTransform(xGraphicsRenderTransform, xCanvas);
 
-            foreach (IGraphicsElement graphicsElement in xCanvas.Children)
+            PaintGraphicsElements(xCanvas.Children);
+        }
+
+        private void PaintGraphicsElements(IEnumerable<IGraphicsElement> graphicsElements)
+        {
+            foreach (IGraphicsElement graphicsElement in graphicsElements)
             {
                 ITransform? renderTransform = graphicsElement.RenderTransform;
 
@@ -42,6 +47,11 @@ namespace XGraphics.SkiaRenderer
 
                 if (graphicsElement is IPath path)
                     PaintPath(path);
+                else if (graphicsElement is ICanvas canvas)
+                {
+                    // TODO: Handle canvas offset / transform
+                    PaintGraphicsElements(canvas.Children);
+                }
                 else if (graphicsElement is IShape shape)
                 {
                     SKPath skiaPath = NonPathShapeToSkiaPath(shape);
