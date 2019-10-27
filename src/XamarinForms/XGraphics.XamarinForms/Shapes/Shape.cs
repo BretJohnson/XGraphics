@@ -13,6 +13,8 @@ namespace XGraphics.XamarinForms.Shapes
         public static readonly BindableProperty StrokeProperty = PropertyUtils.Create(nameof(Stroke), typeof(Brush), typeof(Shape), null);
         public static readonly BindableProperty StrokeThicknessProperty = PropertyUtils.Create(nameof(StrokeThickness), typeof(double), typeof(Shape), 1.0);
         public static readonly BindableProperty StrokeMiterLimitProperty = PropertyUtils.Create(nameof(StrokeMiterLimit), typeof(double), typeof(Shape), 10.0);
+        public static readonly BindableProperty StrokeLineCapProperty = PropertyUtils.Create(nameof(StrokeLineCap), typeof(PenLineCap), typeof(Shape), PenLineCap.Flat);
+        public static readonly BindableProperty StrokeLineJoinProperty = PropertyUtils.Create(nameof(StrokeLineJoin), typeof(PenLineJoin), typeof(Shape), PenLineJoin.Miter);
         public static readonly BindableProperty FillProperty = PropertyUtils.Create(nameof(Fill), typeof(Brush), typeof(Shape), null);
 
         public double Width
@@ -44,6 +46,18 @@ namespace XGraphics.XamarinForms.Shapes
         {
             get => (double)GetValue(StrokeMiterLimitProperty);
             set => SetValue(StrokeMiterLimitProperty, value);
+        }
+
+        public PenLineCap StrokeLineCap
+        {
+            get => (PenLineCap)GetValue(StrokeLineCapProperty);
+            set => SetValue(StrokeLineCapProperty, value);
+        }
+
+        public PenLineJoin StrokeLineJoin
+        {
+            get => (PenLineJoin)GetValue(StrokeLineJoinProperty);
+            set => SetValue(StrokeLineJoinProperty, value);
         }
 
         IBrush? IShape.Fill => Fill;

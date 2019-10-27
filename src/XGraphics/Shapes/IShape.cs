@@ -20,6 +20,12 @@ namespace XGraphics.Shapes
         [ModelDefaultValue(10.0)]
         double StrokeMiterLimit { get; }
 
+        [ModelDefaultValue(PenLineCap.Flat)]
+        PenLineCap StrokeLineCap { get; }
+
+        [ModelDefaultValue(PenLineJoin.Miter)]
+        PenLineJoin StrokeLineJoin { get; }
+
         [ModelDefaultValue(null)]
         IBrush? Fill { get; }
     }

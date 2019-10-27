@@ -568,7 +568,7 @@ namespace XGraphics.DataModelGenerator
 
         private static bool IsEnumType(string typeName)
         {
-            return typeName == "SweepDirection" || typeName == "FillRule" || typeName == "GradientSpreadMethod" || typeName == "BrushMappingMode";
+            return typeName == "SweepDirection" || typeName == "FillRule" || typeName == "GradientSpreadMethod" || typeName == "BrushMappingMode" || typeName == "PenLineCap" || typeName == "PenLineJoin";
         }
 
         private static bool IsPointType(TypeSyntax type)

@@ -272,6 +272,24 @@ namespace XGraphics.SkiaRenderer
                 paint.StrokeWidth = (int)shape.StrokeThickness;
                 paint.StrokeMiter = (float)shape.StrokeMiterLimit;
 
+                SKStrokeCap strokeCap = shape.StrokeLineCap switch
+                {
+                    PenLineCap.Flat => SKStrokeCap.Butt,
+                    PenLineCap.Round => SKStrokeCap.Round,
+                    PenLineCap.Square => SKStrokeCap.Square,
+                    _ => throw new InvalidOperationException($"Unknown PenLineCap value {shape.StrokeLineCap}")
+                };
+                paint.StrokeCap = strokeCap;
+
+                SKStrokeJoin strokeJoin = shape.StrokeLineJoin switch
+                {
+                    PenLineJoin.Miter => SKStrokeJoin.Miter,
+                    PenLineJoin.Bevel => SKStrokeJoin.Bevel,
+                    PenLineJoin.Round => SKStrokeJoin.Round,
+                    _ => throw new InvalidOperationException($"Unknown PenLineJoin value {shape.StrokeLineJoin}")
+                };
+                paint.StrokeJoin = strokeJoin;
+
                 skCanvas.DrawPath(skiaPath, paint);
             }
         }
