@@ -20,7 +20,7 @@ variables:
   xcodeRoot: /Applications/Xcode_11.app
   nugetVersion: '5.2.0'
   buildNumber: $[counter('buildNumberCounter', 1)]
-  versionBase: '0.1.1'
+  versionBase: '0.2.0'
   releaseVersion: $(versionBase)
   prereleaseVersion: $(versionBase)-beta.$(buildNumber)
 
