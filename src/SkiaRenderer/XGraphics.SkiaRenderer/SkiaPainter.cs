@@ -106,23 +106,25 @@ namespace XGraphics.SkiaRenderer
                 SKRect skRect = SKRect.Create((float)ellipse.Left, (float)ellipse.Top, (float)ellipse.Width, (float)ellipse.Height);
 			    skPath.AddOval(skRect);
             }
+            else if (shape is IPolygon polygon)
+            {
+                skPath.FillType = FillRuleToSkiaPathFillType(polygon.FillRule);
+                skPath.AddPoly(PointsToSkiaPoints(polygon.Points), close: true);
+            }
+            else if (shape is IPolyline polyline)
+            {
+                skPath.FillType = FillRuleToSkiaPathFillType(polyline.FillRule);
+                skPath.AddPoly(PointsToSkiaPoints(polyline.Points), close: false);
+            }
             return skPath;
         }
 
         private SKPath PathGeometryToSkiaPath(IPathGeometry pathGeometry, bool onlyIncludeFilledFigures = false)
         {
-            SKPathFillType fillType = pathGeometry.FillRule switch
-                {
-                FillRule.EvenOdd => SKPathFillType.EvenOdd,
-                FillRule.Nonzero => SKPathFillType.Winding,
-                _ => throw new InvalidOperationException($"Unknown fillRule value {pathGeometry.FillRule}")
-                };
-
-            List<SkiaPathFigure> skiaPathFigures = new List<SkiaPathFigure>();
             // TODO: Decide how (or if) to support geometry.StandardFlatteningTolerance
 
             SKPath skPath = new SKPath();
-            skPath.FillType = fillType;
+            skPath.FillType = FillRuleToSkiaPathFillType(pathGeometry.FillRule);
 
             foreach (IPathFigure pathFigure in pathGeometry.Figures)
             {
@@ -141,6 +143,26 @@ namespace XGraphics.SkiaRenderer
             }
 
             return skPath;
+        }
+
+        private static SKPathFillType FillRuleToSkiaPathFillType(FillRule fillRule)
+        {
+            return fillRule switch
+            {
+                FillRule.EvenOdd => SKPathFillType.EvenOdd,
+                FillRule.Nonzero => SKPathFillType.Winding,
+                _ => throw new InvalidOperationException($"Unknown fillRule value {fillRule}")
+            };
+        }
+
+        private SKPoint[] PointsToSkiaPoints(Point[] points)
+        {
+            int length = points.Length;
+            SKPoint[] skiaPoints = new SKPoint[length];
+            for (int i = 0; i < length; i++)
+                skiaPoints[i] = new SKPoint((float)points[i].X, (float) points[i].Y);
+
+            return skiaPoints;
         }
 
         private void AddPathSegmentToSkiaPath(SKPath skPath, IPathSegment pathSegment)
@@ -350,7 +372,7 @@ namespace XGraphics.SkiaRenderer
                 return new SKPoint((float)point.X, (float)point.Y);
         }
 
-        public static SKPoint ToSkiaPoint(Point point) => new SKPoint((float) point.X, (float) point.Y);
+        public static SKPoint PointToSkiaPoint(Point point) => new SKPoint((float) point.X, (float) point.Y);
 
         public static void AddSkiaPoints(IEnumerable<Point> points, List<SKPoint> skiaPoints)
         {

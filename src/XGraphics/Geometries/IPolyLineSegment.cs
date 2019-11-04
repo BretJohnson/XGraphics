@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace XGraphics.Geometries
+﻿namespace XGraphics.Geometries
 {
     [GraphicsModelObject]
     public interface IPolyLineSegment : IPathSegment
