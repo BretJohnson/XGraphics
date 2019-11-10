@@ -1,4 +1,4 @@
-# XGraphics: XAML-standard, animatable graphics, for all platforms
+# XGraphics: XAML-standard, animatable graphics, for all platforms [![Gitter](https://badges.gitter.im/XGraphics/community.svg)](https://gitter.im/XGraphics/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 XGraphics aims to solve these problems:
 
