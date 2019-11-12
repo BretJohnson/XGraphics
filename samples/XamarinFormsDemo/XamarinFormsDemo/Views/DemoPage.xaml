@@ -21,11 +21,11 @@
 
     <ScrollView>
         <StackLayout>
-            <!-- #region Various Icons -->
 
+            <!-- #region Various Icons -->
             <Label FontSize="20" FontAttributes="Bold" Margin="10,0,0,0">Various Icons</Label>
 
-            <XCanvas x:Name="appbar_arrow_corner_up_right" WidthRequest="400" HeightRequest="200" xaml:Grid.Row="1" xaml:Grid.Column="1" xmlns="http://schemas.microsoft.com/xgraphics/2019">
+            <XCanvas x:Name="appbar_arrow_corner_up_right" WidthRequest="400" HeightRequest="200" xmlns="http://schemas.microsoft.com/xgraphics/2019">
                 <XCanvas.GraphicsRenderTransform>
                     <TranslateTransform X="200" Y="200"/>
                 </XCanvas.GraphicsRenderTransform>
