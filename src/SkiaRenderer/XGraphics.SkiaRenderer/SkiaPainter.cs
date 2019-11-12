@@ -155,12 +155,13 @@ namespace XGraphics.SkiaRenderer
             };
         }
 
-        private SKPoint[] PointsToSkiaPoints(Point[] points)
+        private SKPoint[] PointsToSkiaPoints(Points points)
         {
-            int length = points.Length;
+            Point[] pointsArray = points.Value;
+            int length = pointsArray.Length;
             SKPoint[] skiaPoints = new SKPoint[length];
             for (int i = 0; i < length; i++)
-                skiaPoints[i] = new SKPoint((float)points[i].X, (float) points[i].Y);
+                skiaPoints[i] = new SKPoint((float)pointsArray[i].X, (float) pointsArray[i].Y);
 
             return skiaPoints;
         }

@@ -6,6 +6,6 @@
         [ModelDefaultValue(FillRule.EvenOdd)]
         FillRule FillRule { get; }
 
-        Point[] Points { get; }
+        Points Points { get; }
     }
 }

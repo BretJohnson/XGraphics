@@ -483,17 +483,12 @@ namespace XGraphics.DataModelGenerator
         {
             if (IsCollectionType(sourceType, out TypeSyntax elementType))
             {
-                if (IsPointType(elementType))
-                    return IdentifierName("PointCollection");
-                else
-                {
-                    TypeSyntax elementDestinationType = ToDestinationType(elementType);
+                TypeSyntax elementDestinationType = ToDestinationType(elementType);
 
-                    return GenericName(_outputType.EmitChangedNotifications ? "GraphicsObjectCollection" : "List")
-                        .WithTypeArgumentList(
-                            TypeArgumentList(
-                                SingletonSeparatedList(elementDestinationType)));
-                }
+                return GenericName(_outputType.EmitChangedNotifications ? "GraphicsObjectCollection" : "List")
+                    .WithTypeArgumentList(
+                        TypeArgumentList(
+                            SingletonSeparatedList(elementDestinationType)));
             }
             else if (sourceType is IdentifierNameSyntax identifierName)
                 return GetIdentifierDestinationType(identifierName);
@@ -558,7 +553,7 @@ namespace XGraphics.DataModelGenerator
 
         private bool IsWrappableType(string typeName)
         {
-            return typeName == "Color" || typeName == "Point" || typeName == "Size";
+            return typeName == "Color" || typeName == "Point" || typeName == "Points" || typeName == "Size";
         }
 
         private bool IsWrappedType(string typeName)
@@ -568,15 +563,8 @@ namespace XGraphics.DataModelGenerator
 
         private static bool IsEnumType(string typeName)
         {
-            return typeName == "SweepDirection" || typeName == "FillRule" || typeName == "GradientSpreadMethod" || typeName == "BrushMappingMode" || typeName == "PenLineCap" || typeName == "PenLineJoin";
-        }
-
-        private static bool IsPointType(TypeSyntax type)
-        {
-            if (!(type is IdentifierNameSyntax identifierName))
-                return false;
-
-            return identifierName.Identifier.Text == "Point";
+            return typeName == "SweepDirection" || typeName == "FillRule" || typeName == "GradientSpreadMethod" ||
+                   typeName == "BrushMappingMode" || typeName == "PenLineCap" || typeName == "PenLineJoin";
         }
 
         private static bool IsCollectionType(TypeSyntax type, out TypeSyntax elementType)
@@ -646,6 +634,7 @@ namespace XGraphics.DataModelGenerator
             }
             else if (propertyType is IdentifierNameSyntax propertyTypeName && (propertyTypeName.Identifier.Text == "Color" ||
                                                                                propertyTypeName.Identifier.Text == "Point" ||
+                                                                               propertyTypeName.Identifier.Text == "Points" ||
                                                                                propertyTypeName.Identifier.Text == "Size"))
             {
                 // WithoutTrivia is needed here to remove any comment before the type, so the comment isn't written to the output

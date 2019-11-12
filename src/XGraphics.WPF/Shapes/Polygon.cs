@@ -2,14 +2,13 @@
 using XGraphics.Shapes;
 using System.Windows;
 using System.Windows.Markup;
-using System;
 
 namespace XGraphics.WPF.Shapes
 {
     public class Polygon : Shape, IPolygon
     {
         public static readonly DependencyProperty FillRuleProperty = PropertyUtils.Create(nameof(FillRule), typeof(FillRule), typeof(Polygon), FillRule.EvenOdd);
-        public static readonly DependencyProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Point[]), typeof(Polygon), Array.Empty<Point>());
+        public static readonly DependencyProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Wrapper.Points), typeof(Polygon), Wrapper.Points.Default);
 
         public FillRule FillRule
         {
@@ -17,9 +16,10 @@ namespace XGraphics.WPF.Shapes
             set => SetValue(FillRuleProperty, value);
         }
 
-        public Point[] Points
+        Points IPolygon.Points => Points.WrappedPoints;
+        public Wrapper.Points Points
         {
-            get => (Point[])GetValue(PointsProperty);
+            get => (Wrapper.Points)GetValue(PointsProperty);
             set => SetValue(PointsProperty, value);
         }
     }

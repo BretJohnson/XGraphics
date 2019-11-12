@@ -2,14 +2,13 @@
 using XGraphics.Shapes;
 using System.Windows;
 using System.Windows.Markup;
-using System;
 
 namespace XGraphics.WPF.Shapes
 {
     public class Polyline : Shape, IPolyline
     {
         public static readonly DependencyProperty FillRuleProperty = PropertyUtils.Create(nameof(FillRule), typeof(FillRule), typeof(Polyline), FillRule.EvenOdd);
-        public static readonly DependencyProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Point[]), typeof(Polyline), Array.Empty<Point>());
+        public static readonly DependencyProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Wrapper.Points), typeof(Polyline), Wrapper.Points.Default);
 
         public FillRule FillRule
         {
@@ -17,9 +16,10 @@ namespace XGraphics.WPF.Shapes
             set => SetValue(FillRuleProperty, value);
         }
 
-        public Point[] Points
+        Points IPolyline.Points => Points.WrappedPoints;
+        public Wrapper.Points Points
         {
-            get => (Point[])GetValue(PointsProperty);
+            get => (Wrapper.Points)GetValue(PointsProperty);
             set => SetValue(PointsProperty, value);
         }
     }
