@@ -19,7 +19,7 @@ XGraphics aims to solve these problems:
    So you do can take XAML like what's below and use it on any XAML platform - Xamarin.Forms, UWP, WPF, or (eventually) community XAML based platforms like Uno, Ooui, and Avalonia UI. We may not have a XAML Standard for everything, but having a standard for graphic elements is an important step. A standard also helps design assets and graphics tools (e.g. https://github.com/netonjm/FigmaSharp) work across all platforms.
 
    ```
-        <XGraphics x:Name="arrow_corner_up_right" xmlns="http://schemas.microsoft.com/xgraphics/2019">
+        <XCanvas x:Name="arrow_corner_up_right" xmlns="http://schemas.microsoft.com/xgraphics/2019">
             <Path Width="40.25" Height="40" Left="22" Top="19" Data="F1 M 22,30L 47.75,30L 36.75,19L 48.25,19L 62.25,33L 47.25,48L 36.75,48L 47.75,37L 29,37L 29,59L 22,59L 22,30 Z">
                 <Path.Fill>
                     <SolidColorBrush Color="Blue" />
@@ -31,7 +31,7 @@ XGraphics aims to solve these problems:
                     </TransformGroup>
                 </Path.RenderTransform>
             </Path>
-        </XGraphics>
+        </XCanvas>
     ```
 
 <img style="padding-left:40px" src="Media/arrow-corner-up-right.png">
@@ -63,10 +63,12 @@ XGraphics aims to solve these problems:
 | ----------- | ----------- |
 | [`XCanvas`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.canvas)      | root Canvas; renamed to identify clearly as XGraphics |
 | [`Canvas`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.canvas)   | child canvas |
-| [`Shape`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.shape)  | `Stretch` & stroke join properties not yet implemented |
+| [`Shape`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.shape)  | `Stretch` property not yet implemented |
 | [`Ellipse`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.ellipse)  |  |
 | [`Line`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.line)  | |
 | [`Rectangle`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.rectangle)  | |
+| [`Polygon`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.polygon)  | |
+| [`Polyline`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.polyline)  | |
 | [`Path`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.path)  | |
 
 ### Geometry elements (mainly used for paths)
