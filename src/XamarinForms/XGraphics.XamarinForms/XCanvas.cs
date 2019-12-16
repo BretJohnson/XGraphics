@@ -18,31 +18,34 @@ namespace XGraphics.XamarinForms
     [ContentProperty("Children")]
     public class XCanvas : View, IXCanvas, INotifyObjectOrSubobjectChanged
     {
+        public static readonly BindableProperty ChildrenProperty = PropertyUtils.Create(nameof(Children), typeof(XGraphicsCollection<GraphicsElement>), typeof(Canvas), null);
         public static readonly BindableProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brush), typeof(XCanvas), null);
         public static readonly BindableProperty GraphicsRenderTransformProperty = PropertyUtils.Create(nameof(GraphicsRenderTransform), typeof(Transform), typeof(XCanvas), null);
 
         //private readonly bool designMode;
-        private bool ignorePixelScaling;
+        private bool _ignorePixelScaling;
 
         public event ObjectOrSubobjectChangedEventHandler Changed;
 
         public XCanvas()
         {
             //designMode = DesignerProperties.GetIsInDesignMode(this);
-            Children = new GraphicsObjectCollection<GraphicsElement>();
-            Children.Changed += OnSubobjectChanged;
+            Children = new XGraphicsCollection<GraphicsElement>();
 
             // If anything in the hierarchy changes, invalidate to trigger a redraw
-            //Changed += Invalidate;
+            Changed += Invalidate;
         }
 
-        public void OnChanged() => Changed?.Invoke();
+        public void NotifySinceObjectChanged() => Changed?.Invoke();
 
-        public void OnSubobjectChanged() => Changed?.Invoke();
+        public void NotifySinceSubobjectChanged() => Changed?.Invoke();
 
+        public XGraphicsCollection<GraphicsElement> Children
+        {
+            get => (XGraphicsCollection<GraphicsElement>)GetValue(ChildrenProperty);
+            set => SetValue(ChildrenProperty, value);
+        }
         IEnumerable<IGraphicsElement> IXCanvas.Children => Children;
-
-        public GraphicsObjectCollection<GraphicsElement> Children { get; }
 
         IBrush? IXCanvas.Background => Background;
 
@@ -60,6 +63,11 @@ namespace XGraphics.XamarinForms
         protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
         {
             return new SizeRequest(new Xamarin.Forms.Size(40.0, 40.0));
+        }
+
+        public void Invalidate()
+        {
+            // TODO: Implement this
         }
     }
 }

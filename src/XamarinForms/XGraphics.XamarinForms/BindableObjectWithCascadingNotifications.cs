@@ -6,8 +6,8 @@ namespace XGraphics.XamarinForms
     {
         public event ObjectOrSubobjectChangedEventHandler? Changed;
 
-        public void OnChanged() => Changed?.Invoke();
+        public void NotifySinceObjectChanged() => Changed?.Invoke();
 
-        public void OnSubobjectChanged() => Changed?.Invoke();
+        public void NotifySinceSubobjectChanged() => Changed?.Invoke();
     }
 }

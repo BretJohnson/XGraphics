@@ -44,12 +44,12 @@ namespace XGraphics.XamarinForms
             // The logic below cascades change notifications from subobjects up the object hierarchy, eventually causing the GraphicsCanvas
             // to be invalidated on any change
             if (oldValue is INotifyObjectOrSubobjectChanged oldChildObj)
-                oldChildObj.Changed -= parentObj.OnSubobjectChanged;
+                oldChildObj.Changed -= parentObj.NotifySinceSubobjectChanged;
 
             if (newValue is INotifyObjectOrSubobjectChanged newChildObj)
-                newChildObj.Changed += parentObj.OnSubobjectChanged;
+                newChildObj.Changed += parentObj.NotifySinceSubobjectChanged;
 
-            parentObj.OnChanged();
+            parentObj.NotifySinceObjectChanged();
         }
     }
 }

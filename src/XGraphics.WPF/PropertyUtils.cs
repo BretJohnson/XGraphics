@@ -42,12 +42,12 @@ namespace XGraphics.WPF
             // The logic below cascades change notifications from subobjects up the object hierarchy, eventually causing the GraphicsCanvas
             // to be invalidated on any change
             if (e.OldValue is INotifyObjectOrSubobjectChanged oldChildObj)
-                oldChildObj.Changed -= parentObj.OnSubobjectChanged;
+                oldChildObj.Changed -= parentObj.NotifySinceSubobjectChanged;
 
             if (e.NewValue is INotifyObjectOrSubobjectChanged newChildObj)
-                newChildObj.Changed += parentObj.OnSubobjectChanged;
+                newChildObj.Changed += parentObj.NotifySinceSubobjectChanged;
 
-            parentObj.OnChanged();
+            parentObj.NotifySinceObjectChanged();
         }
     }
 }

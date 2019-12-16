@@ -10,12 +10,12 @@
         /// Call this to notify the parent object that it has changed, and it should thus notify its listeners,
         /// cascading the change notification.
         /// </summary>
-        void OnChanged();
+        void NotifySinceObjectChanged();
 
         /// <summary>
         /// Call this to notify the parent object that one of its subobjects have changed, and it should thus notify its listeners,
         /// cascading the change notification.
         /// </summary>
-        void OnSubobjectChanged();
+        void NotifySinceSubobjectChanged();
     }
 }

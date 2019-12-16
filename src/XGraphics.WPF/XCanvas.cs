@@ -35,35 +35,37 @@ namespace XGraphics.WPF
     [ContentProperty("Children")]
     public class XCanvas : FrameworkElement, IXCanvas, INotifyObjectOrSubobjectChanged
     {
+        public static readonly DependencyProperty ChildrenProperty = PropertyUtils.Create(nameof(Children), typeof(XGraphicsCollection<GraphicsElement>), typeof(Canvas), null);
         public static readonly DependencyProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brushes.Brush), typeof(XCanvas), null);
         public static readonly DependencyProperty GraphicsRenderTransformProperty = PropertyUtils.Create(nameof(GraphicsRenderTransform), typeof(Transform), typeof(XCanvas), null);
 
-        private readonly bool designMode;
-        private WriteableBitmap? bitmap;
-        private bool ignorePixelScaling;
+        private readonly bool _designMode;
+        private WriteableBitmap? _bitmap;
+        private bool _ignorePixelScaling;
 
         public event ObjectOrSubobjectChangedEventHandler Changed;
 
         public XCanvas()
         {
-            designMode = DesignerProperties.GetIsInDesignMode(this);
-            Children = new GraphicsObjectCollection<GraphicsElement>();
-            Children.Changed += OnSubobjectChanged;
+            _designMode = DesignerProperties.GetIsInDesignMode(this);
+            Children = new XGraphicsCollection<GraphicsElement>();
 
             // If anything in the hierarchy changes, invalidate to trigger a redraw
             Changed += Invalidate;
         }
 
-        public void OnChanged() => Changed?.Invoke();
+        public void NotifySinceObjectChanged() => Changed?.Invoke();
 
-        public void OnSubobjectChanged() => Changed?.Invoke();
+        public void NotifySinceSubobjectChanged() => Changed?.Invoke();
 
+        public XGraphicsCollection<GraphicsElement> Children
+        {
+            get => (XGraphicsCollection<GraphicsElement>)GetValue(ChildrenProperty);
+            set => SetValue(ChildrenProperty, value);
+        }
         IEnumerable<IGraphicsElement> IXCanvas.Children => Children;
 
-        public GraphicsObjectCollection<GraphicsElement> Children { get; }
-
         IBrush? IXCanvas.Background => Background;
-
         public Brushes.Brush Background {
             get => (Brushes.Brush)GetValue(BackgroundProperty);
             set => SetValue(BackgroundProperty, value);
@@ -71,10 +73,10 @@ namespace XGraphics.WPF
 
         public bool IgnorePixelScaling
 		{
-			get => ignorePixelScaling;
+			get => _ignorePixelScaling;
             set
 			{
-				ignorePixelScaling = value;
+				_ignorePixelScaling = value;
 				InvalidateVisual();
 			}
 		}
@@ -89,7 +91,7 @@ namespace XGraphics.WPF
         {
             base.OnRender(drawingContext);
 
-            if (designMode)
+            if (_designMode)
                 return;
 
             if (Visibility != Visibility.Visible)
@@ -100,22 +102,22 @@ namespace XGraphics.WPF
                 return;
 
             // reset the bitmap if the size has changed
-            if (bitmap == null || size.Width != bitmap.PixelWidth || size.Height != bitmap.PixelHeight)
-                bitmap = new WriteableBitmap(size.Width, size.Height, 96 * scaleX, 96 * scaleY, PixelFormats.Pbgra32, null);
+            if (_bitmap == null || size.Width != _bitmap.PixelWidth || size.Height != _bitmap.PixelHeight)
+                _bitmap = new WriteableBitmap(size.Width, size.Height, 96 * scaleX, 96 * scaleY, PixelFormats.Pbgra32, null);
 
             // draw on the bitmap
-            bitmap.Lock();
+            _bitmap.Lock();
 
             var graphicsRenderer = XGraphicsRenderer.DefaultRenderer;
             if (graphicsRenderer == null)
                 throw new InvalidOperationException("GraphicsRenderer.DefaultRenderer must be initialized before attempting to render XGraphics");
 
-            graphicsRenderer.RenderToBuffer(this, bitmap.BackBuffer, size.Width, size.Height, bitmap.BackBufferStride);
+            graphicsRenderer.RenderToBuffer(this, _bitmap.BackBuffer, size.Width, size.Height, _bitmap.BackBufferStride);
 
             // draw the bitmap to the screen
-            bitmap.AddDirtyRect(new Int32Rect(0, 0, size.Width, size.Height));
-            bitmap.Unlock();
-            drawingContext.DrawImage(bitmap, new Rect(0, 0, ActualWidth, ActualHeight));
+            _bitmap.AddDirtyRect(new Int32Rect(0, 0, size.Width, size.Height));
+            _bitmap.Unlock();
+            drawingContext.DrawImage(_bitmap, new Rect(0, 0, ActualWidth, ActualHeight));
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
