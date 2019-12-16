@@ -157,11 +157,10 @@ namespace XGraphics.SkiaRenderer
 
         private SKPoint[] PointsToSkiaPoints(Points points)
         {
-            Point[] pointsArray = points.Value;
-            int length = pointsArray.Length;
+            int length = points.Length;
             SKPoint[] skiaPoints = new SKPoint[length];
             for (int i = 0; i < length; i++)
-                skiaPoints[i] = new SKPoint((float)pointsArray[i].X, (float) pointsArray[i].Y);
+                skiaPoints[i] = new SKPoint((float)points[i].X, (float)points[i].Y);
 
             return skiaPoints;
         }
@@ -175,12 +174,13 @@ namespace XGraphics.SkiaRenderer
                     (float)bezierSegment.Point3.X, (float)bezierSegment.Point3.Y);
             else if (pathSegment is IPolyBezierSegment polyBezierSegment)
             {
-                Point[] points = polyBezierSegment.Points;
+                Points points = polyBezierSegment.Points;
+                int length = points.Length;
 
-                if (points.Length % 3 != 0)
-                    throw new InvalidOperationException($"IPolyBezierSegment contains {points.Length} points, which isn't a multiple of 3");
+                if (length % 3 != 0)
+                    throw new InvalidOperationException($"IPolyBezierSegment contains {length} points, which isn't a multiple of 3");
 
-                for (int i = 0; i < points.Length;)
+                for (int i = 0; i < length;)
                 {
                     var point1 = points[i + 0];
                     var point2 = points[i + 1];
@@ -202,8 +202,9 @@ namespace XGraphics.SkiaRenderer
                     (float) quadraticBezierSegment.Point2.X, (float) quadraticBezierSegment.Point2.Y);
             else if (pathSegment is IPolyLineSegment polyLineSegment)
             {
-                Point[] points = polyLineSegment.Points;
+                Points points = polyLineSegment.Points;
                 int length = points.Length;
+
                 for (int i = 0; i < length; i++)
                 {
                     Point point = points[i];

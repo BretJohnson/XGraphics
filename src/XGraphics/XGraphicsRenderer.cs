@@ -17,8 +17,7 @@ namespace XGraphics
         /// <param name="width">width of the bitmap, in pixels</param>
         /// <param name="height">height of the bitmap, in pixels</param>
         /// <param name="rowBytes">number of bytes per row in the buffer</param>
-        public abstract void RenderToBuffer(IXCanvas xCanvas, IntPtr pixels, int width, int height,
-            int rowBytes);
+        public abstract void RenderToBuffer(IXCanvas xCanvas, IntPtr pixels, int width, int height, int rowBytes);
 
         public abstract IXGraphicsView CreateGraphicsView(object? arg1 = null, object? arg2 = null, object? arg3 = null);
     }

@@ -3,6 +3,6 @@
     [GraphicsModelObject]
     public interface IPolyLineSegment : IPathSegment
     {
-        Point[] Points { get; }
+        Points Points { get; }
     }
 }

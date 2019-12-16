@@ -190,7 +190,7 @@ namespace XGraphics.Converters.Path
                     if (count == 1)
                         segment = _geometryFactory.CreateLineSegment(_currentSegment.Points[0]);
                     else
-                        segment = _geometryFactory.CreatePolyLineSegment(_currentSegment.Points.ToArray());
+                        segment = _geometryFactory.CreatePolyLineSegment(new Points(_currentSegment.Points));
                     break;
                 case MIL_SEGMENT_TYPE.MilSegmentPolyBezier:
                     if (count == 3)
@@ -199,7 +199,7 @@ namespace XGraphics.Converters.Path
                     else
                     {
                         Debug.Assert(count % 3 == 0);
-                        segment = _geometryFactory.CreatePolyBezierSegment(_currentSegment.Points.ToArray());
+                        segment = _geometryFactory.CreatePolyBezierSegment(new Points(_currentSegment.Points));
                     }
                     break;
                 case MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier:
@@ -209,7 +209,7 @@ namespace XGraphics.Converters.Path
                     else
                     {
                         Debug.Assert(count % 2 == 0);
-                        segment = _geometryFactory.CreatePolyQuadraticBezierSegment(_currentSegment.Points.ToArray());
+                        segment = _geometryFactory.CreatePolyQuadraticBezierSegment(new Points(_currentSegment.Points));
                     }
                     break;
                 default:

@@ -3,6 +3,6 @@
     [GraphicsModelObject]
     public interface IPolyBezierSegment : IPathSegment
     {
-        Point[] Points { get; }
+        Points Points { get; }
     }
 }
