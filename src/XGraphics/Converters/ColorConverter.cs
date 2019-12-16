@@ -22,8 +22,8 @@ namespace XGraphics.Converters
                 throw new InvalidOperationException($"Cannot convert null into a Color");
 
 			value = value.Trim();
-			if (value.StartsWith("#", StringComparison.Ordinal))
-				return Color.FromHex(value);
+			if (value.StartsWith("#", StringComparison.Ordinal) && Color.FromHex(value, out Color hexColor))
+				   return hexColor;
 
 #if LATER
             if (value.StartsWith("rgba", StringComparison.OrdinalIgnoreCase)) {

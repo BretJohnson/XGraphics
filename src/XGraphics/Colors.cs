@@ -3,7 +3,6 @@
     public class Colors
     {
         public static readonly Color Transparent = Color.FromArgb(0, 255, 255, 255);
-        public static readonly Color Default = Color.FromArgb(0, 0, 0, 0);
 
         // These match Xamarin.Forms colors which in turn match WPF's System.Windows.Media.Colors
         // TODO: Compare to UWP colors and add anything new there
