@@ -6,7 +6,7 @@ namespace XGraphics.XamarinForms.Wrapper
     [TypeConverter(typeof(ColorTypeConverter))]
     public struct Color
     {
-        public static readonly Color Default = new Color(Colors.Default);
+        public static readonly Color Default = new Color(XGraphics.Color.Default);
         public static readonly Color Transparent = new Color(Colors.Transparent);
 
 
