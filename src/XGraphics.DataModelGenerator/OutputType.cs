@@ -10,7 +10,7 @@ namespace XGraphics.DataModelGenerator
     {
         public abstract string ProjectBaseDirectory { get; }
         public abstract QualifiedNameSyntax RootNamespace { get; }
-        public abstract IdentifierNameSyntax BaseClassName { get; }
+        public abstract IdentifierNameSyntax? BaseClassName { get; }
         public abstract IEnumerable<QualifiedNameSyntax> GetUsings(bool hasPropertyDescriptors, bool hasTypeConverterAttribute);
         public abstract bool EmitChangedNotifications { get; }
     }
@@ -30,7 +30,7 @@ namespace XGraphics.DataModelGenerator
         public override QualifiedNameSyntax RootNamespace =>
             QualifiedName(IdentifierName("XGraphics"), IdentifierName("WPF"));
         public override IdentifierNameSyntax DependencyPropertyClassName => IdentifierName("DependencyProperty");
-        public override IdentifierNameSyntax BaseClassName => IdentifierName("DependencyObjectWithCascadingNotifications");
+        public override IdentifierNameSyntax? BaseClassName => IdentifierName("DependencyObjectWithCascadingNotifications");
 
         public override IEnumerable<QualifiedNameSyntax> GetUsings(bool hasPropertyDescriptors, bool hasTypeConverterAttribute)
         {
@@ -57,7 +57,7 @@ namespace XGraphics.DataModelGenerator
         public override QualifiedNameSyntax RootNamespace =>
             QualifiedName(IdentifierName("XGraphics"), IdentifierName("UWP"));
         public override IdentifierNameSyntax DependencyPropertyClassName => IdentifierName("DependencyProperty");
-        public override IdentifierNameSyntax BaseClassName => IdentifierName("DependencyObjectWithCascadingNotifications");
+        public override IdentifierNameSyntax? BaseClassName => IdentifierName("DependencyObjectWithCascadingNotifications");
         public override IEnumerable<QualifiedNameSyntax> GetUsings(bool hasPropertyDescriptors, bool hasTypeConverterAttribute)
         {
             throw new NotImplementedException();
@@ -72,7 +72,7 @@ namespace XGraphics.DataModelGenerator
         public override QualifiedNameSyntax RootNamespace =>
             QualifiedName(IdentifierName("XGraphics"), IdentifierName("XamarinForms"));
         public override IdentifierNameSyntax DependencyPropertyClassName => IdentifierName("BindableProperty");
-        public override IdentifierNameSyntax BaseClassName => IdentifierName("BindableObjectWithCascadingNotifications");
+        public override IdentifierNameSyntax? BaseClassName => IdentifierName("BindableObjectWithCascadingNotifications");
 
         public override IEnumerable<QualifiedNameSyntax> GetUsings(bool hasPropertyDescriptors, bool hasTypeConverterAttribute)
         {
@@ -82,14 +82,14 @@ namespace XGraphics.DataModelGenerator
         }
     }
 
-    public class DefaultModelOutputType : OutputType
+    public class StandardModelOutputType : OutputType
     {
-        public static readonly DefaultModelOutputType Instance = new DefaultModelOutputType();
+        public static readonly StandardModelOutputType Instance = new StandardModelOutputType();
 
-        public override string ProjectBaseDirectory => Path.Combine("XGraphics", "DefaultModel");
+        public override string ProjectBaseDirectory => Path.Combine("XGraphics", "StandardModel");
         public override QualifiedNameSyntax RootNamespace =>
-            QualifiedName(IdentifierName("XGraphics"), IdentifierName("DefaultModel"));
-        public override IdentifierNameSyntax BaseClassName => IdentifierName("object");
+            QualifiedName(IdentifierName("XGraphics"), IdentifierName("StandardModel"));
+        public override IdentifierNameSyntax? BaseClassName => IdentifierName("ObjectWithCascadingNotifications");
 
         public override IEnumerable<QualifiedNameSyntax> GetUsings(bool hasPropertyDescriptors, bool hasTypeConverterAttribute)
         {
@@ -98,5 +98,4 @@ namespace XGraphics.DataModelGenerator
 
         public override bool EmitChangedNotifications => false;
     }
-
 }

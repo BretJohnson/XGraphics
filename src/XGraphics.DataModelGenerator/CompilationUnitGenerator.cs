@@ -63,30 +63,24 @@ namespace XGraphics.DataModelGenerator
 
                 string propertyName = modelProperty.Identifier.Text;
                 string propertyDescriptorName = propertyName + "Property";
-                TypeSyntax destinationPropertyType = ToDestinationType(modelProperty.Type);
-                ExpressionSyntax defaultValue = GetDefaultValue(modelProperty);
+                TypeSyntax sourcePropertyType = modelProperty.Type.WithoutTrivia();
+                TypeSyntax destinationPropertyType = ToDestinationType(sourcePropertyType);
+                ExpressionSyntax defaultValue = GetDefaultValue(modelProperty, destinationPropertyType);
 
-                bool isCollection = IsCollectionType(modelProperty.Type, out TypeSyntax collectionElementType);
-                if (isCollection)
+                if (IsCollectionType(modelProperty.Type, out TypeSyntax _))
                     collectionProperties.Add(modelProperty);
-                else AddPropertyDescriptor(propertyName, propertyDescriptorName, destinationPropertyType, defaultValue, destinationStaticMembers);
 
-                AddProperty(modelProperty, propertyName, propertyDescriptorName, destinationPropertyType, destinationMembers);
+                AddPropertyDescriptor(propertyName, propertyDescriptorName, destinationPropertyType, defaultValue, destinationStaticMembers);
+                AddProperty(modelProperty, propertyName, propertyDescriptorName, sourcePropertyType, destinationPropertyType, destinationMembers);
 
                 if (propertyName == "Children")
                     hasChildrenProperty = true;
             }
 
-            // Add an annotation on the last static member, so we can later add a blank line between it and the properties that follow
-            var lastStaticMemberAnnotation = new SyntaxAnnotation();
-            int staticMemberCount = destinationStaticMembers.Count;
-            if (staticMemberCount > 0)
-                destinationStaticMembers[staticMemberCount - 1] = destinationStaticMembers[staticMemberCount - 1].WithAdditionalAnnotations(lastStaticMemberAnnotation);
-
             ConstructorDeclarationSyntax? constructor = CreateConstructor(collectionProperties);
 
             TypeSyntax? baseInterface = _sourceInterfaceDeclaration.BaseList?.Types.FirstOrDefault()?.Type;
-            TypeSyntax destinationBaseClass = GetBaseClass(baseInterface);
+            TypeSyntax? destinationBaseClass = GetBaseClass(baseInterface);
 
             List<MemberDeclarationSyntax> classMembers = new List<MemberDeclarationSyntax>();
             classMembers.AddRange(destinationStaticMembers);
@@ -94,18 +88,23 @@ namespace XGraphics.DataModelGenerator
                 classMembers.Add(constructor);
             classMembers.AddRange(destinationMembers);
 
-            var classDeclaration =
+            SyntaxNodeOrToken[] baseList;
+            if (destinationBaseClass == null)
+                baseList = new SyntaxNodeOrToken[] {
+                    SimpleBaseType(IdentifierName(_interfaceName))
+                };
+            else
+                baseList = new SyntaxNodeOrToken[] {
+                    SimpleBaseType(destinationBaseClass), Token(SyntaxKind.CommaToken),
+                    SimpleBaseType(IdentifierName(_interfaceName))
+                };
+
+            ClassDeclarationSyntax classDeclaration =
                 ClassDeclaration(_destinationClassName.Identifier)
                     .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
                     .WithBaseList(
                         BaseList(
-                            SeparatedList<BaseTypeSyntax>(
-                                new SyntaxNodeOrToken[]
-                                {
-                                    SimpleBaseType(destinationBaseClass),
-                                    Token(SyntaxKind.CommaToken),
-                                    SimpleBaseType(IdentifierName(_interfaceName))
-                                })))
+                            SeparatedList<BaseTypeSyntax>(baseList)))
                     .WithMembers(new SyntaxList<MemberDeclarationSyntax>(classMembers));
 
             if (DestinationTypeHasTypeConverterAttribute())
@@ -182,20 +181,9 @@ namespace XGraphics.DataModelGenerator
                     .WithMembers(
                         SingletonList<MemberDeclarationSyntax>(
                             NamespaceDeclaration(_destinationNamespaceName)
-                                .WithMembers(SingletonList<MemberDeclarationSyntax>(classDeclaration))))
-                    .NormalizeWhitespace();
+                                .WithMembers(SingletonList<MemberDeclarationSyntax>(classDeclaration))));
 
             compilationUnit = (CompilationUnitSyntax)Formatter.Format(compilationUnit, _workspace);
-
-            MemberDeclarationSyntax? lastStaticMember = compilationUnit.DescendantNodes()
-                .OfType<MemberDeclarationSyntax>().FirstOrDefault(n => n.HasAnnotation(lastStaticMemberAnnotation));
-            if (lastStaticMember != null)
-            {
-                var newTrailingTrivia = lastStaticMember.GetTrailingTrivia().Add(CarriageReturnLineFeed);
-                compilationUnit = compilationUnit.ReplaceNode(lastStaticMember,
-                    lastStaticMember.WithTrailingTrivia(newTrailingTrivia));
-            }
-
             SourceText destinationSourceText = compilationUnit.GetText();
 
             string outputDirectory = GetOutputDirectory(_sourceNamespaceName);
@@ -227,18 +215,17 @@ namespace XGraphics.DataModelGenerator
                                 .WithArgumentList(
                                     ArgumentList()))));
 
-                if (_outputType.EmitChangedNotifications)
-                {
-                    statements.Add(
-                        ExpressionStatement(
-                            AssignmentExpression(
-                                SyntaxKind.AddAssignmentExpression,
-                                MemberAccessExpression(
-                                    SyntaxKind.SimpleMemberAccessExpression,
-                                    IdentifierName(propertyName),
-                                    IdentifierName("Changed")),
-                                IdentifierName("OnSubobjectChanged"))));
-                }
+#if NO_MORE
+                statements.Add(
+                    ExpressionStatement(
+                        AssignmentExpression(
+                            SyntaxKind.AddAssignmentExpression,
+                            MemberAccessExpression(
+                                SyntaxKind.SimpleMemberAccessExpression,
+                                IdentifierName(propertyName),
+                                IdentifierName("Changed")),
+                            IdentifierName("NotifySinceSubobjectChanged"))));
+#endif
             }
 
             return ConstructorDeclaration(_destinationClassName.Identifier)
@@ -261,7 +248,7 @@ namespace XGraphics.DataModelGenerator
                 nonNullablePropertyType = nullablePropertyType.ElementType;
             else nonNullablePropertyType = propertyType;
 
-            var propertyDescriptor =
+            FieldDeclarationSyntax propertyDescriptor =
                     FieldDeclaration(
                             VariableDeclaration(xamlOutputType.DependencyPropertyClassName)
                                 .WithVariables(
@@ -300,57 +287,33 @@ namespace XGraphics.DataModelGenerator
             destinationStaticMembers.Add(propertyDescriptor);
         }
 
-        private void AddProperty(PropertyDeclarationSyntax modelProperty, string propertyName, string propertyDescriptorName, TypeSyntax destinationPropertyType,
-            List<MemberDeclarationSyntax> destinationMembers)
+        private void AddProperty(PropertyDeclarationSyntax modelProperty, string propertyName, string propertyDescriptorName,
+            TypeSyntax sourcePropertyType, TypeSyntax destinationPropertyType, List<MemberDeclarationSyntax> destinationMembers)
         {
             IdentifierNameSyntax propertyDescriptorIdentifier = IdentifierName(propertyDescriptorName);
-            TypeSyntax sourcePropertyType = modelProperty.Type;
 
-            if (! ReferenceEquals(sourcePropertyType, destinationPropertyType))
-            {
-                ExpressionSyntax arrowRightHandSide;
-                if (sourcePropertyType is IdentifierNameSyntax identifierName &&
-                    IsWrappedType(identifierName.Identifier.Text))
-                {
-                    string wrapperTypeName = identifierName.Identifier.Text;
+            bool classPropertyTypeDiffersFromInterface = sourcePropertyType.ToString() != destinationPropertyType.ToString();
 
-                    arrowRightHandSide =
-                        MemberAccessExpression(
-                            SyntaxKind.SimpleMemberAccessExpression,
-                            IdentifierName(propertyName),
-                            IdentifierName($"Wrapped{wrapperTypeName}"));
-                }
-                else arrowRightHandSide = IdentifierName(propertyName);
+            SyntaxTrivia xmlCommentTrivia = modelProperty.GetLeadingTrivia().FirstOrDefault(t =>
+                t.Kind() == SyntaxKind.SingleLineDocumentationCommentTrivia ||
+                t.Kind() == SyntaxKind.MultiLineDocumentationCommentTrivia);
+            bool includeXmlComment = classPropertyTypeDiffersFromInterface && xmlCommentTrivia.Kind() != SyntaxKind.None;
 
-                var explicitInterfaceProperty =
-                    PropertyDeclaration(sourcePropertyType, propertyName)
-                        .WithExplicitInterfaceSpecifier(
-                            ExplicitInterfaceSpecifier(IdentifierName(_sourceInterfaceDeclaration.Identifier)))
-                        .WithExpressionBody(
-                            ArrowExpressionClause(arrowRightHandSide))
-                        .WithSemicolonToken(Token(SyntaxKind.SemicolonToken));
-
-                destinationMembers.Add(explicitInterfaceProperty);
-            }
+            SyntaxTokenList modifiers;
+            if (includeXmlComment)
+                modifiers = TokenList(
+                    Token(
+                        TriviaList(xmlCommentTrivia),
+                        SyntaxKind.PublicKeyword,
+                        TriviaList()));
+            else
+                modifiers = TokenList(Token(SyntaxKind.PublicKeyword));
 
             PropertyDeclarationSyntax propertyDeclaration;
-            if (IsCollectionType(sourcePropertyType, out TypeSyntax collectionElementType))
-            {
-                propertyDeclaration =
-                    PropertyDeclaration(destinationPropertyType, propertyName)
-                        .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
-                        .WithAccessorList(
-                            AccessorList(
-                                SingletonList(
-                                    AccessorDeclaration(
-                                            SyntaxKind.GetAccessorDeclaration)
-                                        .WithSemicolonToken(
-                                            Token(SyntaxKind.SemicolonToken)))));
-            }
-            else if (_outputType is XamlOutputType)
+            if (_outputType is XamlOutputType)
             {
                 propertyDeclaration = PropertyDeclaration(destinationPropertyType, propertyName)
-                    .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+                    .WithModifiers(modifiers)
                     .WithAccessorList(
                         AccessorList(
                             List(new[]
@@ -377,14 +340,15 @@ namespace XGraphics.DataModelGenerator
                                                         Argument(IdentifierName("value"))
                                                     })))))
                                     .WithSemicolonToken(Token(SyntaxKind.SemicolonToken))
-                            })));
+                            })))
+                    .NormalizeWhitespace();
             }
             else
             {
-                ExpressionSyntax defaultValue = GetDefaultValue(modelProperty);
+                ExpressionSyntax defaultValue = GetDefaultValue(modelProperty, destinationPropertyType);
 
                 propertyDeclaration = PropertyDeclaration(destinationPropertyType, propertyName)
-                    .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+                    .WithModifiers(modifiers)
                     .WithAccessorList(
                         AccessorList(
                             List(new[]
@@ -400,7 +364,41 @@ namespace XGraphics.DataModelGenerator
                         Token(SyntaxKind.SemicolonToken));
             }
 
+            //if (!includeXmlComment)
+                propertyDeclaration = propertyDeclaration.WithLeadingTrivia(
+                    TriviaList(propertyDeclaration.GetLeadingTrivia()
+                        .Insert(0, CarriageReturnLineFeed)
+                        .Insert(0, CarriageReturnLineFeed)));
+
             destinationMembers.Add(propertyDeclaration);
+
+            // If the interface property has a different type, add another property that explicitly implements it
+            if (classPropertyTypeDiffersFromInterface)
+            {
+                ExpressionSyntax arrowRightHandSide;
+                if (sourcePropertyType is IdentifierNameSyntax identifierName &&
+                    IsWrappedType(identifierName.Identifier.Text))
+                {
+                    string wrapperTypeName = identifierName.Identifier.Text;
+
+                    arrowRightHandSide =
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            IdentifierName(propertyName),
+                            IdentifierName($"Wrapped{wrapperTypeName}"));
+                }
+                else arrowRightHandSide = IdentifierName(propertyName);
+
+                PropertyDeclarationSyntax explicitInterfaceProperty =
+                    PropertyDeclaration(sourcePropertyType, propertyName)
+                        .WithExplicitInterfaceSpecifier(
+                            ExplicitInterfaceSpecifier(IdentifierName(_sourceInterfaceDeclaration.Identifier)))
+                        .WithExpressionBody(
+                            ArrowExpressionClause(arrowRightHandSide))
+                        .WithSemicolonToken(Token(SyntaxKind.SemicolonToken));
+
+                destinationMembers.Add(explicitInterfaceProperty);
+            }
         }
 
         private SyntaxList<UsingDirectiveSyntax> CreateUsingDeclarations(bool hasPropertyDescriptors)
@@ -447,6 +445,7 @@ namespace XGraphics.DataModelGenerator
                             TriviaList(
                                 Comment(
                                     $"// This file is generated from {_interfaceName}.cs. Update the source file to change its contents."),
+                                CarriageReturnLineFeed,
                                 CarriageReturnLineFeed),
                             SyntaxKind.UsingKeyword,
                             TriviaList()));
@@ -485,7 +484,7 @@ namespace XGraphics.DataModelGenerator
             {
                 TypeSyntax elementDestinationType = ToDestinationType(elementType);
 
-                return GenericName(_outputType.EmitChangedNotifications ? "GraphicsObjectCollection" : "List")
+                return GenericName("XGraphicsCollection")
                     .WithTypeArgumentList(
                         TypeArgumentList(
                             SingletonSeparatedList(elementDestinationType)));
@@ -584,7 +583,7 @@ namespace XGraphics.DataModelGenerator
             return true;
         }
 
-        private ExpressionSyntax GetDefaultValue(PropertyDeclarationSyntax modelProperty)
+        private ExpressionSyntax GetDefaultValue(PropertyDeclarationSyntax modelProperty, TypeSyntax destinationPropertyType)
         {
             foreach (AttributeListSyntax attributeList in modelProperty.AttributeLists)
             {
@@ -602,14 +601,25 @@ namespace XGraphics.DataModelGenerator
                     {
                         string literalExpressionString = literalExpression.Token.ToString();
                         if (literalExpressionString == "\"0.5,0.5\"")
-                            defaultExpression =
-                                MemberAccessExpression(
-                                    SyntaxKind.SimpleMemberAccessExpression,
+                        {
+                            bool isWrappedType = modelProperty.Type is IdentifierNameSyntax propertyTypeName &&
+                                             IsWrappedType(propertyTypeName.Identifier.Text);
+
+                            if (isWrappedType)
+                                defaultExpression =
                                     MemberAccessExpression(
                                         SyntaxKind.SimpleMemberAccessExpression,
-                                        IdentifierName("Wrapper"),
-                                        IdentifierName("Point")),
+                                        MemberAccessExpression(
+                                            SyntaxKind.SimpleMemberAccessExpression,
+                                            IdentifierName("Wrapper"),
+                                            IdentifierName("Point")),
+                                        IdentifierName("CenterDefault"));
+                            else
+                                defaultExpression = MemberAccessExpression(
+                                    SyntaxKind.SimpleMemberAccessExpression,
+                                    IdentifierName("Point"),
                                     IdentifierName("CenterDefault"));
+                        }
                         else throw new UserViewableException($"Unknown string literal based default value: {literalExpressionString}");
                     }
 
@@ -618,19 +628,13 @@ namespace XGraphics.DataModelGenerator
             }
 
             TypeSyntax propertyType = modelProperty.Type;
+
             if (propertyType is GenericNameSyntax genericName && genericName.Identifier.Text == "IEnumerable" &&
                 genericName.TypeArgumentList.Arguments.Count == 1 &&
                 genericName.TypeArgumentList.Arguments[0] is IdentifierNameSyntax elementIdentifierName)
             {
                 return
-                    InvocationExpression(
-                        MemberAccessExpression(
-                            SyntaxKind.SimpleMemberAccessExpression,
-                            IdentifierName("Enumerable"),
-                            GenericName(
-                                    Identifier("Empty"))
-                                .WithTypeArgumentList(
-                                    TypeArgumentList(SingletonSeparatedList<TypeSyntax>(elementIdentifierName)))));
+                    LiteralExpression(SyntaxKind.NullLiteralExpression);
             }
             else if (propertyType is IdentifierNameSyntax propertyTypeName && (propertyTypeName.Identifier.Text == "Color" ||
                                                                                propertyTypeName.Identifier.Text == "Point" ||
@@ -671,7 +675,7 @@ namespace XGraphics.DataModelGenerator
             throw new UserViewableException($"Property {modelProperty.Identifier.Text} has no [ModelDefaultValue] attribute nor hardcoded default");
         }
 
-        private TypeSyntax GetBaseClass(TypeSyntax? baseInterface)
+        private TypeSyntax? GetBaseClass(TypeSyntax? baseInterface)
         {
             if (baseInterface == null)
                 return _outputType.BaseClassName;

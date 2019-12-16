@@ -69,7 +69,7 @@ namespace XGraphics.DataModelGenerator
                         Console.WriteLine($"Processing {interfaceDeclaration.Identifier.Text}");
                         new CompilationUnitGenerator(workspace, interfaceDeclaration, rootDirectory, WpfXamlOutputType.Instance).Generate();
                         new CompilationUnitGenerator(workspace, interfaceDeclaration, rootDirectory, XamarinFormsXamlOutputType.Instance).Generate();
-                        //new CompilationUnitGenerator(workspace, interfaceDeclaration, rootDirectory, DefaultModelOutputType.Instance).Generate();
+                        new CompilationUnitGenerator(workspace, interfaceDeclaration, rootDirectory, StandardModelOutputType.Instance).Generate();
                     }
                     catch (UserViewableException e)
                     {
