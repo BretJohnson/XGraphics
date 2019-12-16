@@ -35,7 +35,7 @@ namespace XGraphics.WPF
     [ContentProperty("Children")]
     public class XCanvas : FrameworkElement, IXCanvas, INotifyObjectOrSubobjectChanged
     {
-        public static readonly DependencyProperty ChildrenProperty = PropertyUtils.Create(nameof(Children), typeof(XGraphicsCollection<GraphicsElement>), typeof(Canvas), null);
+        public static readonly DependencyProperty ChildrenProperty = PropertyUtils.Create(nameof(Children), typeof(XGraphicsCollection<GraphicsElement>), typeof(XCanvas), null);
         public static readonly DependencyProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brushes.Brush), typeof(XCanvas), null);
         public static readonly DependencyProperty GraphicsRenderTransformProperty = PropertyUtils.Create(nameof(GraphicsRenderTransform), typeof(Transform), typeof(XCanvas), null);
 

@@ -18,7 +18,7 @@ namespace XGraphics.XamarinForms
     [ContentProperty("Children")]
     public class XCanvas : View, IXCanvas, INotifyObjectOrSubobjectChanged
     {
-        public static readonly BindableProperty ChildrenProperty = PropertyUtils.Create(nameof(Children), typeof(XGraphicsCollection<GraphicsElement>), typeof(Canvas), null);
+        public static readonly BindableProperty ChildrenProperty = PropertyUtils.Create(nameof(Children), typeof(XGraphicsCollection<GraphicsElement>), typeof(XCanvas), null);
         public static readonly BindableProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brush), typeof(XCanvas), null);
         public static readonly BindableProperty GraphicsRenderTransformProperty = PropertyUtils.Create(nameof(GraphicsRenderTransform), typeof(Transform), typeof(XCanvas), null);
 
