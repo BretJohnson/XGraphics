@@ -8,7 +8,7 @@ namespace XGraphics.SkiaRenderer.Android
     /// </summary>
     public class AndroidXGraphicsView : GLTextureView, IXGraphicsView
     {
-        private readonly SKGLTextureViewRenderer renderer;
+        private readonly SKGLTextureViewRenderer _renderer;
 
         public IXCanvas? Content { get; set; } = null;
 
@@ -18,13 +18,13 @@ namespace XGraphics.SkiaRenderer.Android
             SetEGLContextClientVersion(2);
             SetEGLConfigChooser(8, 8, 8, 8, 0, 8);
 
-            renderer = new InternalRenderer(this);
-            SetRenderer(renderer);
+            _renderer = new InternalRenderer(this);
+            SetRenderer(_renderer);
         }
 
-        public SKSize CanvasSize => renderer.CanvasSize;
+        public SKSize CanvasSize => _renderer.CanvasSize;
 
-        public GRContext GRContext => renderer.GRContext;
+        public GRContext GRContext => _renderer.GRContext;
 
         public object? NativeControl => this;
 
@@ -34,7 +34,7 @@ namespace XGraphics.SkiaRenderer.Android
 
             public InternalRenderer(AndroidXGraphicsView view)
             {
-                this._view = view;
+                _view = view;
             }
 
             protected override void PaintSurface(SKSurface skSurface, GRBackendRenderTarget grBackendRenderTarget, GRSurfaceOrigin grSurfaceOrigin, 

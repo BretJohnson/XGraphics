@@ -36,9 +36,9 @@ namespace XGraphics.SkiaRenderer.iOS
 
         //private bool designMode;
 
-        private GRContext context;
-        private GRBackendRenderTarget renderTarget;
-        private SKSurface surface;
+        private GRContext _context;
+        private GRBackendRenderTarget _renderTarget;
+        private SKSurface _surface;
 
         // created in code
         public SKGLView()
@@ -85,9 +85,9 @@ namespace XGraphics.SkiaRenderer.iOS
             Delegate = this;
         }
 
-        public SKSize CanvasSize => renderTarget.Size;
+        public SKSize CanvasSize => _renderTarget.Size;
 
-        public GRContext GRContext => context;
+        public GRContext GRContext => _context;
 
         public new void DrawInRect(GLKView view, CGRect rect)
         {
@@ -97,37 +97,37 @@ namespace XGraphics.SkiaRenderer.iOS
 #endif
 
             // create the contexts if not done already
-            if (context == null)
+            if (_context == null)
             {
                 var glInterface = GRGlInterface.CreateNativeGlInterface();
-                context = GRContext.Create(GRBackend.OpenGL, glInterface);
+                _context = GRContext.Create(GRBackend.OpenGL, glInterface);
             }
 
             // manage the drawing surface
-            if (renderTarget == null || surface == null || renderTarget.Width != DrawableWidth || renderTarget.Height != DrawableHeight)
+            if (_renderTarget == null || _surface == null || _renderTarget.Width != DrawableWidth || _renderTarget.Height != DrawableHeight)
             {
                 // create or update the dimensions
-                renderTarget?.Dispose();
+                _renderTarget?.Dispose();
                 Gles.glGetIntegerv(Gles.GL_FRAMEBUFFER_BINDING, out var framebuffer);
                 Gles.glGetIntegerv(Gles.GL_STENCIL_BITS, out var stencil);
                 var glInfo = new GRGlFramebufferInfo((uint)framebuffer, colorType.ToGlSizedFormat());
-                renderTarget = new GRBackendRenderTarget((int)DrawableWidth, (int)DrawableHeight, context.GetMaxSurfaceSampleCount(colorType), stencil, glInfo);
+                _renderTarget = new GRBackendRenderTarget((int)DrawableWidth, (int)DrawableHeight, _context.GetMaxSurfaceSampleCount(colorType), stencil, glInfo);
 
                 // create the surface
-                surface?.Dispose();
-                surface = SKSurface.Create(context, renderTarget, surfaceOrigin, colorType);
+                _surface?.Dispose();
+                _surface = SKSurface.Create(_context, _renderTarget, surfaceOrigin, colorType);
             }
 
-            using (new SKAutoCanvasRestore(surface.Canvas, true))
+            using (new SKAutoCanvasRestore(_surface.Canvas, true))
             {
                 // start drawing
                 //var e = new SKPaintGLSurfaceEventArgs(surface, renderTarget, surfaceOrigin, colorType);
-                PaintSurface(surface);
+                PaintSurface(_surface);
             }
 
             // flush the SkiaSharp contents to GL
-            surface.Canvas.Flush();
-            context.Flush();
+            _surface.Canvas.Flush();
+            _context.Flush();
         }
 
         protected abstract void PaintSurface(SKSurface surface);
