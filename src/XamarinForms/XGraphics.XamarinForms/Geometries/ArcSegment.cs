@@ -1,4 +1,5 @@
 // This file is generated from IArcSegment.cs. Update the source file to change its contents.
+
 using XGraphics.Geometries;
 using Xamarin.Forms;
 
@@ -12,19 +13,19 @@ namespace XGraphics.XamarinForms.Geometries
         public static readonly BindableProperty IsLargeArcProperty = PropertyUtils.Create(nameof(IsLargeArc), typeof(bool), typeof(ArcSegment), false);
         public static readonly BindableProperty SweepDirectionProperty = PropertyUtils.Create(nameof(SweepDirection), typeof(SweepDirection), typeof(ArcSegment), SweepDirection.Counterclockwise);
 
-        Point IArcSegment.Point => Point.WrappedPoint;
         public Wrapper.Point Point
         {
             get => (Wrapper.Point)GetValue(PointProperty);
             set => SetValue(PointProperty, value);
         }
+        Point IArcSegment.Point => Point.WrappedPoint;
 
-        Size IArcSegment.Size => Size.WrappedSize;
         public Wrapper.Size Size
         {
             get => (Wrapper.Size)GetValue(SizeProperty);
             set => SetValue(SizeProperty, value);
         }
+        Size IArcSegment.Size => Size.WrappedSize;
 
         public double RotationAngle
         {

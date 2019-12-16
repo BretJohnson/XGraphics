@@ -1,4 +1,5 @@
 // This file is generated from IPathFigure.cs. Update the source file to change its contents.
+
 using System.Collections.Generic;
 using XGraphics.Geometries;
 using Xamarin.Forms;
@@ -7,28 +8,29 @@ namespace XGraphics.XamarinForms.Geometries
 {
     public class PathFigure : BindableObjectWithCascadingNotifications, IPathFigure
     {
+        public static readonly BindableProperty SegmentsProperty = PropertyUtils.Create(nameof(Segments), typeof(XGraphicsCollection<PathSegment>), typeof(PathFigure), null);
         public static readonly BindableProperty StartPointProperty = PropertyUtils.Create(nameof(StartPoint), typeof(Wrapper.Point), typeof(PathFigure), Wrapper.Point.Default);
         public static readonly BindableProperty IsClosedProperty = PropertyUtils.Create(nameof(IsClosed), typeof(bool), typeof(PathFigure), false);
         public static readonly BindableProperty IsFilledProperty = PropertyUtils.Create(nameof(IsFilled), typeof(bool), typeof(PathFigure), true);
 
         public PathFigure()
         {
-            Segments = new GraphicsObjectCollection<PathSegment>();
-            Segments.Changed += OnSubobjectChanged;
+            Segments = new XGraphicsCollection<PathSegment>();
         }
 
-        IEnumerable<IPathSegment> IPathFigure.Segments => Segments;
-        public GraphicsObjectCollection<PathSegment> Segments
+        public XGraphicsCollection<PathSegment> Segments
         {
-            get;
+            get => (XGraphicsCollection<PathSegment>)GetValue(SegmentsProperty);
+            set => SetValue(SegmentsProperty, value);
         }
+        IEnumerable<IPathSegment> IPathFigure.Segments => Segments;
 
-        Point IPathFigure.StartPoint => StartPoint.WrappedPoint;
         public Wrapper.Point StartPoint
         {
             get => (Wrapper.Point)GetValue(StartPointProperty);
             set => SetValue(StartPointProperty, value);
         }
+        Point IPathFigure.StartPoint => StartPoint.WrappedPoint;
 
         public bool IsClosed
         {

@@ -1,4 +1,5 @@
 // This file is generated from IGeometry.cs. Update the source file to change its contents.
+
 using XGraphics.Transforms;
 using XGraphics.XamarinForms.Transforms;
 using XGraphics.Geometries;
@@ -19,11 +20,11 @@ namespace XGraphics.XamarinForms.Geometries
             set => SetValue(StandardFlatteningToleranceProperty, value);
         }
 
-        ITransform IGeometry.Transform => Transform;
         public Transform Transform
         {
             get => (Transform)GetValue(TransformProperty);
             set => SetValue(TransformProperty, value);
         }
+        ITransform IGeometry.Transform => Transform;
     }
 }

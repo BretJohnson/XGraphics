@@ -1,18 +1,19 @@
 // This file is generated from IPolyBezierSegment.cs. Update the source file to change its contents.
+
 using XGraphics.Geometries;
 using Xamarin.Forms;
-using System;
 
 namespace XGraphics.XamarinForms.Geometries
 {
     public class PolyBezierSegment : PathSegment, IPolyBezierSegment
     {
-        public static readonly BindableProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Point[]), typeof(PolyBezierSegment), Array.Empty<Point>());
+        public static readonly BindableProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Wrapper.Points), typeof(PolyBezierSegment), Wrapper.Points.Default);
 
-        public Point[] Points
+        public Wrapper.Points Points
         {
-            get => (Point[])GetValue(PointsProperty);
+            get => (Wrapper.Points)GetValue(PointsProperty);
             set => SetValue(PointsProperty, value);
         }
+        Points IPolyBezierSegment.Points => Points.WrappedPoints;
     }
 }

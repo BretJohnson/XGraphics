@@ -1,4 +1,5 @@
 // This file is generated from IGraphicsElement.cs. Update the source file to change its contents.
+
 using XGraphics.Shapes;
 using XGraphics.XamarinForms.Shapes;
 using XGraphics.Transforms;
@@ -26,11 +27,11 @@ namespace XGraphics.XamarinForms
             set => SetValue(TopProperty, value);
         }
 
-        ITransform? IGraphicsElement.RenderTransform => RenderTransform;
         public Transform? RenderTransform
         {
             get => (Transform?)GetValue(RenderTransformProperty);
             set => SetValue(RenderTransformProperty, value);
         }
+        ITransform? IGraphicsElement.RenderTransform => RenderTransform;
     }
 }

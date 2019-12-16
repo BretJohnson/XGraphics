@@ -1,4 +1,5 @@
 // This file is generated from IPolygon.cs. Update the source file to change its contents.
+
 using XGraphics.Shapes;
 using Xamarin.Forms;
 
@@ -15,11 +16,11 @@ namespace XGraphics.XamarinForms.Shapes
             set => SetValue(FillRuleProperty, value);
         }
 
-        Points IPolygon.Points => Points.WrappedPoints;
         public Wrapper.Points Points
         {
             get => (Wrapper.Points)GetValue(PointsProperty);
             set => SetValue(PointsProperty, value);
         }
+        Points IPolygon.Points => Points.WrappedPoints;
     }
 }

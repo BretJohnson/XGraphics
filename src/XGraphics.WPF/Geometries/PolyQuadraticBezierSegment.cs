@@ -1,19 +1,20 @@
 // This file is generated from IPolyQuadraticBezierSegment.cs. Update the source file to change its contents.
+
 using XGraphics.Geometries;
 using System.Windows;
 using System.Windows.Markup;
-using System;
 
 namespace XGraphics.WPF.Geometries
 {
     public class PolyQuadraticBezierSegment : PathSegment, IPolyQuadraticBezierSegment
     {
-        public static readonly DependencyProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Point[]), typeof(PolyQuadraticBezierSegment), Array.Empty<Point>());
+        public static readonly DependencyProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Wrapper.Points), typeof(PolyQuadraticBezierSegment), Wrapper.Points.Default);
 
-        public Point[] Points
+        public Wrapper.Points Points
         {
-            get => (Point[])GetValue(PointsProperty);
+            get => (Wrapper.Points)GetValue(PointsProperty);
             set => SetValue(PointsProperty, value);
         }
+        Points IPolyQuadraticBezierSegment.Points => Points.WrappedPoints;
     }
 }

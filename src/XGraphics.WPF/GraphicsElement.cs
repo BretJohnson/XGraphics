@@ -1,4 +1,5 @@
 // This file is generated from IGraphicsElement.cs. Update the source file to change its contents.
+
 using XGraphics.Shapes;
 using XGraphics.WPF.Shapes;
 using XGraphics.Transforms;
@@ -27,11 +28,11 @@ namespace XGraphics.WPF
             set => SetValue(TopProperty, value);
         }
 
-        ITransform? IGraphicsElement.RenderTransform => RenderTransform;
         public Transform? RenderTransform
         {
             get => (Transform?)GetValue(RenderTransformProperty);
             set => SetValue(RenderTransformProperty, value);
         }
+        ITransform? IGraphicsElement.RenderTransform => RenderTransform;
     }
 }

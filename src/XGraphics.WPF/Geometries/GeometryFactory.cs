@@ -17,12 +17,11 @@ namespace XGraphics.WPF.Geometries
                 Point = new Wrapper.Point(point)
             };
 
-        public IPolyLineSegment CreatePolyLineSegment(Point[] points)
-        {
-            var polyLineSegment = new PolyLineSegment();
-            polyLineSegment.Points = points;
-            return polyLineSegment;
-        }
+        public IPolyLineSegment CreatePolyLineSegment(Points points) =>
+            new PolyLineSegment
+            {
+                Points = new Wrapper.Points(points)
+            };
 
         public IBezierSegment CreateBezierSegment(in Point point1, in Point point2, in Point point3) =>
             new BezierSegment()
@@ -32,12 +31,11 @@ namespace XGraphics.WPF.Geometries
                 Point3 = new Wrapper.Point(point3)
             };
 
-        public IPolyBezierSegment CreatePolyBezierSegment(Point[] points)
-        {
-            var polyBezierSegment = new PolyBezierSegment();
-            polyBezierSegment.Points = points;
-            return polyBezierSegment;
-        }
+        public IPolyBezierSegment CreatePolyBezierSegment(Points points) =>
+            new PolyBezierSegment
+            {
+                Points = new Wrapper.Points(points)
+            };
 
         public IQuadraticBezierSegment CreateQuadraticBezierSegment(in Point point1, in Point point2) =>
             new QuadraticBezierSegment()
@@ -46,12 +44,11 @@ namespace XGraphics.WPF.Geometries
                 Point2 = new Wrapper.Point(point2)
             };
 
-        public IPolyQuadraticBezierSegment CreatePolyQuadraticBezierSegment(Point[] points)
-        {
-            var polyQuadraticBezierSegment = new PolyQuadraticBezierSegment();
-            polyQuadraticBezierSegment.Points = points;
-            return polyQuadraticBezierSegment;
-        }
+        public IPolyQuadraticBezierSegment CreatePolyQuadraticBezierSegment(Points points) =>
+            new PolyQuadraticBezierSegment
+            {
+                Points = new Wrapper.Points(points)
+            };
 
         public IArcSegment CreateArcSegment(in Point point, in Size size, double rotationAngle, bool isLargeArc,
             SweepDirection sweepDirection) =>
@@ -79,7 +76,7 @@ namespace XGraphics.WPF.Geometries
                 pathGeometry.Transform = transform;
             }
 
-            GraphicsObjectCollection<PathFigure> destinationFigures = pathGeometry.Figures;
+            XGraphicsCollection<PathFigure> destinationFigures = pathGeometry.Figures;
             foreach (IPathFigure pathFigureInterface in figures)
             {
                 if (! (pathFigureInterface is PathFigure pathFigure))
@@ -100,7 +97,7 @@ namespace XGraphics.WPF.Geometries
                 IsFilled = isFilled
             };
 
-            GraphicsObjectCollection<PathSegment> destinationSegments = pathFigure.Segments;
+            XGraphicsCollection<PathSegment> destinationSegments = pathFigure.Segments;
             foreach (IPathSegment pathSegmentInterface in segments)
             {
                 if (!(pathSegmentInterface is PathSegment pathSegment))

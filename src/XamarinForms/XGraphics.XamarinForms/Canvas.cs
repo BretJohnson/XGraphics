@@ -1,4 +1,5 @@
 // This file is generated from ICanvas.cs. Update the source file to change its contents.
+
 using System.Collections.Generic;
 using XGraphics.Brushes;
 using XGraphics.XamarinForms.Brushes;
@@ -10,25 +11,26 @@ namespace XGraphics.XamarinForms
     [ContentProperty("Children")]
     public class Canvas : GraphicsElement, ICanvas
     {
+        public static readonly BindableProperty ChildrenProperty = PropertyUtils.Create(nameof(Children), typeof(XGraphicsCollection<GraphicsElement>), typeof(Canvas), null);
         public static readonly BindableProperty BackgroundProperty = PropertyUtils.Create(nameof(Background), typeof(Brush), typeof(Canvas), null);
 
         public Canvas()
         {
-            Children = new GraphicsObjectCollection<GraphicsElement>();
-            Children.Changed += OnSubobjectChanged;
+            Children = new XGraphicsCollection<GraphicsElement>();
         }
 
-        IEnumerable<IGraphicsElement> ICanvas.Children => Children;
-        public GraphicsObjectCollection<GraphicsElement> Children
+        public XGraphicsCollection<GraphicsElement> Children
         {
-            get;
+            get => (XGraphicsCollection<GraphicsElement>)GetValue(ChildrenProperty);
+            set => SetValue(ChildrenProperty, value);
         }
+        IEnumerable<IGraphicsElement> ICanvas.Children => Children;
 
-        IBrush? ICanvas.Background => Background;
         public Brush? Background
         {
             get => (Brush?)GetValue(BackgroundProperty);
             set => SetValue(BackgroundProperty, value);
         }
+        IBrush? ICanvas.Background => Background;
     }
 }

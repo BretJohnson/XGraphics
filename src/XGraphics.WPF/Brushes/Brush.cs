@@ -1,4 +1,5 @@
 // This file is generated from IBrush.cs. Update the source file to change its contents.
+
 using XGraphics.Brushes;
 using System.ComponentModel;
 using System.Windows.Markup;

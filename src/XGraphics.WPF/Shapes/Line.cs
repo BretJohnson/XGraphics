@@ -1,4 +1,5 @@
 // This file is generated from ILine.cs. Update the source file to change its contents.
+
 using XGraphics.Shapes;
 using System.Windows;
 using System.Windows.Markup;

@@ -1,18 +1,19 @@
 // This file is generated from IPolyLineSegment.cs. Update the source file to change its contents.
+
 using XGraphics.Geometries;
 using Xamarin.Forms;
-using System;
 
 namespace XGraphics.XamarinForms.Geometries
 {
     public class PolyLineSegment : PathSegment, IPolyLineSegment
     {
-        public static readonly BindableProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Point[]), typeof(PolyLineSegment), Array.Empty<Point>());
+        public static readonly BindableProperty PointsProperty = PropertyUtils.Create(nameof(Points), typeof(Wrapper.Points), typeof(PolyLineSegment), Wrapper.Points.Default);
 
-        public Point[] Points
+        public Wrapper.Points Points
         {
-            get => (Point[])GetValue(PointsProperty);
+            get => (Wrapper.Points)GetValue(PointsProperty);
             set => SetValue(PointsProperty, value);
         }
+        Points IPolyLineSegment.Points => Points.WrappedPoints;
     }
 }

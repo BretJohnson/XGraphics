@@ -1,4 +1,5 @@
 // This file is generated from IShape.cs. Update the source file to change its contents.
+
 using XGraphics.Brushes;
 using XGraphics.XamarinForms.Brushes;
 using XGraphics.Shapes;
@@ -29,12 +30,15 @@ namespace XGraphics.XamarinForms.Shapes
             set => SetValue(HeightProperty, value);
         }
 
-        IBrush? IShape.Stroke => Stroke;
+        /// <summary>
+        /// A Brush that specifies how the Shape outline is painted. The default is null.
+        /// </summary>
         public Brush? Stroke
         {
             get => (Brush?)GetValue(StrokeProperty);
             set => SetValue(StrokeProperty, value);
         }
+        IBrush? IShape.Stroke => Stroke;
 
         public double StrokeThickness
         {
@@ -60,11 +64,14 @@ namespace XGraphics.XamarinForms.Shapes
             set => SetValue(StrokeLineJoinProperty, value);
         }
 
-        IBrush? IShape.Fill => Fill;
+        /// <summary>
+        /// A Brush that paints/fills the shape interior. The default is null, (a null brush) which is evaluated as Transparent for rendering.
+        /// </summary>
         public Brush? Fill
         {
             get => (Brush?)GetValue(FillProperty);
             set => SetValue(FillProperty, value);
         }
+        IBrush? IShape.Fill => Fill;
     }
 }

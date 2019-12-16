@@ -1,4 +1,5 @@
 // This file is generated from IPath.cs. Update the source file to change its contents.
+
 using XGraphics.Geometries;
 using XGraphics.XamarinForms.Geometries;
 using XGraphics.Shapes;
@@ -10,11 +11,11 @@ namespace XGraphics.XamarinForms.Shapes
     {
         public static readonly BindableProperty DataProperty = PropertyUtils.Create(nameof(Data), typeof(Geometry), typeof(Path), null);
 
-        IGeometry IPath.Data => Data;
         public Geometry Data
         {
             get => (Geometry)GetValue(DataProperty);
             set => SetValue(DataProperty, value);
         }
+        IGeometry IPath.Data => Data;
     }
 }
