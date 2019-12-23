@@ -182,9 +182,9 @@ namespace XGraphics.SkiaRenderer
 
                 for (int i = 0; i < length;)
                 {
-                    var point1 = points[i + 0];
-                    var point2 = points[i + 1];
-                    var point3 = points[i + 2];
+                    Point point1 = points[i + 0];
+                    Point point2 = points[i + 1];
+                    Point point3 = points[i + 2];
 
                     skPath.CubicTo(
                         (float)point1.X, (float)point1.Y,

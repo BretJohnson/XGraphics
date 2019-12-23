@@ -108,8 +108,8 @@ namespace XGraphics.SkiaRenderer.iOS
             {
                 // create or update the dimensions
                 _renderTarget?.Dispose();
-                Gles.glGetIntegerv(Gles.GL_FRAMEBUFFER_BINDING, out var framebuffer);
-                Gles.glGetIntegerv(Gles.GL_STENCIL_BITS, out var stencil);
+                Gles.glGetIntegerv(Gles.GL_FRAMEBUFFER_BINDING, out int framebuffer);
+                Gles.glGetIntegerv(Gles.GL_STENCIL_BITS, out int stencil);
                 var glInfo = new GRGlFramebufferInfo((uint)framebuffer, colorType.ToGlSizedFormat());
                 _renderTarget = new GRBackendRenderTarget((int)DrawableWidth, (int)DrawableHeight, _context.GetMaxSurfaceSampleCount(colorType), stencil, glInfo);
 

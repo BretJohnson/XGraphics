@@ -97,7 +97,7 @@ namespace XGraphics.WPF
             if (Visibility != Visibility.Visible)
                 return;
 
-            var size = ComputeSize(out var scaleX, out var scaleY);
+            SizeInPixels size = ComputeSize(out double scaleX, out double scaleY);
             if (size.Width <= 0 || size.Height <= 0)
                 return;
 
@@ -108,7 +108,7 @@ namespace XGraphics.WPF
             // draw on the bitmap
             _bitmap.Lock();
 
-            var graphicsRenderer = XGraphicsRenderer.DefaultRenderer;
+            XGraphicsRenderer? graphicsRenderer = XGraphicsRenderer.DefaultRenderer;
             if (graphicsRenderer == null)
                 throw new InvalidOperationException("GraphicsRenderer.DefaultRenderer must be initialized before attempting to render XGraphics");
 
@@ -131,8 +131,8 @@ namespace XGraphics.WPF
             scaleX = 1.0;
             scaleY = 1.0;
 
-            var w = ActualWidth;
-            var h = ActualHeight;
+            double w = ActualWidth;
+            double h = ActualHeight;
 
             if (!IsPositive(w) || !IsPositive(h))
                 return SizeInPixels.Empty;
@@ -140,7 +140,7 @@ namespace XGraphics.WPF
             if (IgnorePixelScaling)
                 return new SizeInPixels((int)w, (int)h);
 
-            var m = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice;
+            Matrix m = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice;
             scaleX = m.M11;
             scaleY = m.M22;
             return new SizeInPixels((int)(w * scaleX), (int)(h * scaleY));
