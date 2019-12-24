@@ -132,8 +132,6 @@ namespace XGraphics.SvgImporter
                 if (graphicsElement != null)
                     xCanvas.Children.Add(graphicsElement);
             }
-
-            xCanvas = ;
         }
 
         private GraphicsElement? ReadElement(XElement e, StyleableProperties parentStyleableProperties)
