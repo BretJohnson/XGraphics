@@ -12,6 +12,12 @@ namespace XGraphics
         [ModelDefaultValue(0.0)]
         double Top { get; }
 
+        [ModelDefaultValue(double.NaN)]
+        double Width { get; }
+
+        [ModelDefaultValue(double.NaN)]
+        double Height { get; }
+
         [ModelDefaultValue(null)]
         ITransform? RenderTransform { get; }
     }

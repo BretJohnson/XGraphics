@@ -5,12 +5,6 @@ namespace XGraphics.Shapes
     [GraphicsModelObject]
     public interface IShape : IGraphicsElement
     {
-        [ModelDefaultValue(double.NaN)]
-        double Width { get; }
-
-        [ModelDefaultValue(double.NaN)]
-        double Height { get; }
-
         /// <summary>
         /// A Brush that specifies how the Shape outline is painted. The default is null.
         /// </summary>
