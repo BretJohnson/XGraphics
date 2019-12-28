@@ -14,6 +14,10 @@ namespace XGraphics.StandardModel
 
         public double Top { get; set; } = 0.0;
 
+        public double Width { get; set; } = double.NaN;
+
+        public double Height { get; set; } = double.NaN;
+
         public Transform? RenderTransform { get; set; } = null;
 
         ITransform? IGraphicsElement.RenderTransform => RenderTransform;

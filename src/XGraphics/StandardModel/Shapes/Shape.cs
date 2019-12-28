@@ -8,11 +8,6 @@ namespace XGraphics.StandardModel.Shapes
 {
     public class Shape : GraphicsElement, IShape
     {
-        public double Width { get; set; } = double.NaN;
-
-        public double Height { get; set; } = double.NaN;
-
-
         /// <summary>
         /// A Brush that specifies how the Shape outline is painted. The default is null.
         /// </summary>

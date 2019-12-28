@@ -9,8 +9,6 @@ namespace XGraphics.XamarinForms.Shapes
 {
     public class Shape : GraphicsElement, IShape
     {
-        public static readonly BindableProperty WidthProperty = PropertyUtils.Create(nameof(Width), typeof(double), typeof(Shape), double.NaN);
-        public static readonly BindableProperty HeightProperty = PropertyUtils.Create(nameof(Height), typeof(double), typeof(Shape), double.NaN);
         public static readonly BindableProperty StrokeProperty = PropertyUtils.Create(nameof(Stroke), typeof(Brush), typeof(Shape), null);
         public static readonly BindableProperty StrokeThicknessProperty = PropertyUtils.Create(nameof(StrokeThickness), typeof(double), typeof(Shape), 1.0);
         public static readonly BindableProperty StrokeMiterLimitProperty = PropertyUtils.Create(nameof(StrokeMiterLimit), typeof(double), typeof(Shape), 10.0);
@@ -18,17 +16,6 @@ namespace XGraphics.XamarinForms.Shapes
         public static readonly BindableProperty StrokeLineJoinProperty = PropertyUtils.Create(nameof(StrokeLineJoin), typeof(PenLineJoin), typeof(Shape), PenLineJoin.Miter);
         public static readonly BindableProperty FillProperty = PropertyUtils.Create(nameof(Fill), typeof(Brush), typeof(Shape), null);
 
-        public double Width
-        {
-            get => (double)GetValue(WidthProperty);
-            set => SetValue(WidthProperty, value);
-        }
-
-        public double Height
-        {
-            get => (double)GetValue(HeightProperty);
-            set => SetValue(HeightProperty, value);
-        }
 
         /// <summary>
         /// A Brush that specifies how the Shape outline is painted. The default is null.

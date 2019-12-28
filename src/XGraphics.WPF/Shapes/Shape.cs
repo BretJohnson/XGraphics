@@ -10,8 +10,6 @@ namespace XGraphics.WPF.Shapes
 {
     public class Shape : GraphicsElement, IShape
     {
-        public static readonly DependencyProperty WidthProperty = PropertyUtils.Create(nameof(Width), typeof(double), typeof(Shape), double.NaN);
-        public static readonly DependencyProperty HeightProperty = PropertyUtils.Create(nameof(Height), typeof(double), typeof(Shape), double.NaN);
         public static readonly DependencyProperty StrokeProperty = PropertyUtils.Create(nameof(Stroke), typeof(Brush), typeof(Shape), null);
         public static readonly DependencyProperty StrokeThicknessProperty = PropertyUtils.Create(nameof(StrokeThickness), typeof(double), typeof(Shape), 1.0);
         public static readonly DependencyProperty StrokeMiterLimitProperty = PropertyUtils.Create(nameof(StrokeMiterLimit), typeof(double), typeof(Shape), 10.0);
@@ -19,17 +17,6 @@ namespace XGraphics.WPF.Shapes
         public static readonly DependencyProperty StrokeLineJoinProperty = PropertyUtils.Create(nameof(StrokeLineJoin), typeof(PenLineJoin), typeof(Shape), PenLineJoin.Miter);
         public static readonly DependencyProperty FillProperty = PropertyUtils.Create(nameof(Fill), typeof(Brush), typeof(Shape), null);
 
-        public double Width
-        {
-            get => (double)GetValue(WidthProperty);
-            set => SetValue(WidthProperty, value);
-        }
-
-        public double Height
-        {
-            get => (double)GetValue(HeightProperty);
-            set => SetValue(HeightProperty, value);
-        }
 
         /// <summary>
         /// A Brush that specifies how the Shape outline is painted. The default is null.
