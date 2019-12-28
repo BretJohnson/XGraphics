@@ -41,7 +41,7 @@ namespace XGraphics.SkiaRenderer.Android
                 SKColorType skColorType)
             {
                 // Paint all elements from the canvas on the surface
-                new SkiaPainter(skSurface).Paint(_view.Content);
+                new SkiaPainter(skSurface, new AndroidImageProvider()).Paint(_view.Content);
             }
         }
     }

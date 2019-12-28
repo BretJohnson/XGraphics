@@ -11,7 +11,7 @@ namespace XGraphics.SkiaRenderer.iOS
         protected override void PaintSurface(SKSurface surface)
         {
             // Paint all elements from the canvas on the surface
-            new SkiaPainter(surface).Paint(Content);
+            new SkiaPainter(surface, new IOSImageProvider()).Paint(Content);
         }
     }
 }

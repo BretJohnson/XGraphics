@@ -12,11 +12,13 @@ namespace XGraphics.SkiaRenderer
     {
         private readonly SKSurface surface;
         private readonly SKCanvas skCanvas;
+        private readonly ImageProvider _imageProvider;
 
-        public SkiaPainter(SKSurface surface)
+        public SkiaPainter(SKSurface surface, ImageProvider imageProvider)
         {
             this.surface = surface;
             skCanvas = surface.Canvas;
+            _imageProvider = imageProvider;
         }
 
         public void Paint(IXCanvas xCanvas)

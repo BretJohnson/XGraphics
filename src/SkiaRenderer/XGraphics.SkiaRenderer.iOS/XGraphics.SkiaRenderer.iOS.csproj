@@ -42,6 +42,7 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IOSImageProvider.cs" />
     <Compile Include="IOSXGraphicsView.cs" />
     <Compile Include="GlesInterop\Gles.cs" />
     <Compile Include="IOSSkiaXGraphicsRenderer.cs" />

@@ -519,9 +519,7 @@ namespace XGraphics.DataModelGenerator
         private NameSyntax GetIdentifierDestinationType(IdentifierNameSyntax identifierName)
         {
             string typeName = identifierName.Identifier.Text;
-            if (typeName.StartsWith("I"))
-                return IdentifierName(typeName.Substring(1));
-            else if (IsEnumType(typeName))
+            if (IsEnumType(typeName))
                 return identifierName;
             else if (IsWrappableType(typeName))
             {
@@ -529,6 +527,8 @@ namespace XGraphics.DataModelGenerator
                     return QualifiedName(IdentifierName("Wrapper"), IdentifierName(typeName));
                 else return identifierName;
             }
+            else if (typeName.StartsWith("I"))
+                return IdentifierName(typeName.Substring(1));
             else
                 throw new UserViewableException(
                     $"Identifier type {typeName} isn't supported for model object generation; interface name starting with 'I' is expected");
@@ -552,7 +552,7 @@ namespace XGraphics.DataModelGenerator
 
         private bool IsWrappableType(string typeName)
         {
-            return typeName == "Color" || typeName == "Point" || typeName == "Points" || typeName == "Size";
+            return typeName == "Color" || typeName == "Point" || typeName == "Points" || typeName == "Size" || typeName == "ImageSource";
         }
 
         private bool IsWrappedType(string typeName)
