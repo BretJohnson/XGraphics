@@ -4,6 +4,6 @@
     public interface IImage : IGraphicsElement
     {
         [ModelDefaultValue(null)]
-        ImageSource Source { get; }
+        IImageSource Source { get; }
     }
 }
