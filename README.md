@@ -49,11 +49,9 @@ XGraphics aims to solve these problems:
 
 4. **Support more than just XAML markup**
 
-   XGraphics is really a standard graphics object model, not locked to XAML specifically. It will support (coming soon) a straight C# flavor for all the graphics elements, in addition to their XAML framework versions. Using the C# flavor is appropriate for apps that don't use XAML at all (say because they use coded UI
-   or Xamarin Android/iOS native, not Forms, UI).
+   XGraphics is really a standard graphics object model, not locked to XAML specifically. It supports a straight C# flavor for all the graphics elements (called the `StandardModel`) in addition to their XAML framework versions. Using the `StandardModel` is appropriate for apps that don't use XAML at all (say because they use coded UI).
 
-   This is all supported by having shared interfaces, like `XGraphics.IEllipse`, which define the object model. Then there are concrete versions of the objects,
-   like `XGraphics.XamarinForms.Ellipse` and `XGraphics.WPF.Ellipse` and which implement the interface is the appropriate way for the given XAML flavor or plain old C# object. You don't need to worry about this implementation detail, but Roslyn based code gen creates the concrete classes. Similar technology could be used other places to create a "XAML standard" object model that works across all flavors of XAML, with shared code.
+   This is all supported by having shared interfaces, like `XGraphics.IEllipse`, which define the object model. Then there are concrete versions of the objects which implement that interface, like `XGraphics.XamarinForms.Ellipse` and `XGraphics.WPF.Ellipse` for those two flavors of XAML, plus `XGraphics.StandardModel.Ellipse` for the plain old C# flavor. Code gen creates these concrete classes. Similar technology could be used other places to create a "XAML standard" object model that works across all flavors of XAML, with shared code.
 
 # Currently Supported Elements
 
@@ -70,6 +68,7 @@ XGraphics aims to solve these problems:
 | [`Polygon`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.polygon)  | |
 | [`Polyline`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.polyline)  | |
 | [`Path`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.shapes.path)  | |
+| [`Image`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.image) | Coming shortly. Supports PNG, GIF, JPEG, and SVG. Incorporates the spiffy loading/caching code from [FFImageLoading](https://github.com/luberda-molinet/FFImageLoading). |
 
 ### Geometry elements (mainly used for paths)
 | Element | Notes, including any differences from UWP |
@@ -103,5 +102,5 @@ XGraphics aims to solve these problems:
 | [`GradientBrush`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.gradientbrush)   | |
 | [`GradientStop`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.gradientstop)   | |
 | [`LinearGradientBrush`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.lineargradientbrush)   | |
-| [`RadialGradientBrush`](https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.radialgradientbrush?view=netframework-4.8)   | Not in standard UWP, but exists in WPF and Windows community toolkit. XGraphics only supports circular, not elliptical, gradients, so it just has a single `Radius` property |
+| [`RadialGradientBrush`](https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.radialgradientbrush?view=netframework-4.8)   | Not in standard UWP, but exists in WPF and Windows community toolkit. XGraphics (like SVG) only supports circular, not elliptical, gradients, so it just has a single `Radius` property |
 
