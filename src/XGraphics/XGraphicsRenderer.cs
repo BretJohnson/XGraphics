@@ -1,4 +1,6 @@
 ﻿using System;
+using XGraphics.ImageLoading;
+using XGraphics.ImageLoading.Work;
 
 namespace XGraphics
 {
@@ -13,14 +15,16 @@ namespace XGraphics
         /// Render the graphics to the specified bitmap memory buffer.
         /// </summary>
         /// <param name="xCanvas">graphics object to render</param>
-        /// <param name="imageProvider">image provider, downloading/processing ImageSources</param>
+        /// <param name="imageLoader">image provider, downloading/processing ImageSources</param>
         /// <param name="pixels">buffer data</param>
         /// <param name="width">width of the bitmap, in pixels</param>
         /// <param name="height">height of the bitmap, in pixels</param>
         /// <param name="rowBytes">number of bytes per row in the buffer</param>
-        public abstract void RenderToBuffer(IXCanvas xCanvas, ImageProvider imageProvider, IntPtr pixels, int width, int height, int rowBytes);
+        public abstract void RenderToBuffer(IXCanvas xCanvas, IntPtr pixels, int width, int height, int rowBytes);
 
         public abstract IXGraphicsView CreateGraphicsView(object? arg1 = null, object? arg2 = null, object? arg3 = null);
+
+        public abstract IImageLoader ImageLoader { get; set; }
     }
 
     public interface IXGraphicsView

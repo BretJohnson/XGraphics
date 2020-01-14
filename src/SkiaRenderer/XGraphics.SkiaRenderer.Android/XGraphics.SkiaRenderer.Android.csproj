@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AndroidSkiaXGraphicsRenderer.cs" />
-    <Compile Include="AndroidImageProvider.cs" />
+    <Compile Include="AndroidImageLoader.cs" />
     <Compile Include="AndroidXGraphicsView.cs" />
     <Compile Include="SKGLTextureViewRenderer.cs" />
     <Compile Include="GLTextureView.cs" />

@@ -552,7 +552,7 @@ namespace XGraphics.DataModelGenerator
 
         private bool IsWrappableType(string typeName)
         {
-            return typeName == "Color" || typeName == "Point" || typeName == "Points" || typeName == "Size" || typeName == "ImageSource";
+            return typeName == "Color" || typeName == "Point" || typeName == "Points" || typeName == "Size" || typeName == "DataSource";
         }
 
         private bool IsWrappedType(string typeName)

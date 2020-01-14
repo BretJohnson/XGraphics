@@ -112,7 +112,7 @@ namespace XGraphics.WPF
             if (graphicsRenderer == null)
                 throw new InvalidOperationException("GraphicsRenderer.DefaultRenderer must be initialized before attempting to render XGraphics");
 
-            graphicsRenderer.RenderToBuffer(this, new WpfImageProvider(), _bitmap.BackBuffer, size.Width, size.Height, _bitmap.BackBufferStride);
+            graphicsRenderer.RenderToBuffer(this, _bitmap.BackBuffer, size.Width, size.Height, _bitmap.BackBufferStride);
 
             // draw the bitmap to the screen
             _bitmap.AddDirtyRect(new Int32Rect(0, 0, size.Width, size.Height));

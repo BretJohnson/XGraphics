@@ -1,5 +1,7 @@
 ﻿using Android.Content;
 using SkiaSharp;
+using XGraphics.ImageLoading;
+using XGraphics.ImageLoading.Work;
 
 namespace XGraphics.SkiaRenderer.Android
 {
@@ -12,9 +14,11 @@ namespace XGraphics.SkiaRenderer.Android
 
         public IXCanvas? Content { get; set; } = null;
 
-        public AndroidXGraphicsView(Context context)
+        public AndroidXGraphicsView(Context context, AndroidSkiaXGraphicsRenderer xGraphicsRenderer)
             : base(context)
         {
+            XGraphicsRenderer = xGraphicsRenderer;
+
             SetEGLContextClientVersion(2);
             SetEGLConfigChooser(8, 8, 8, 8, 0, 8);
 
@@ -27,6 +31,8 @@ namespace XGraphics.SkiaRenderer.Android
         public GRContext GRContext => _renderer.GRContext;
 
         public object? NativeControl => this;
+
+        public AndroidSkiaXGraphicsRenderer XGraphicsRenderer { get; }
 
         private class InternalRenderer : SKGLTextureViewRenderer
         {
@@ -41,7 +47,7 @@ namespace XGraphics.SkiaRenderer.Android
                 SKColorType skColorType)
             {
                 // Paint all elements from the canvas on the surface
-                new SkiaPainter(skSurface, new AndroidImageProvider()).Paint(_view.Content);
+                new SkiaPainter(skSurface, _view.XGraphicsRenderer.ImageLoader).Paint(_view.Content);
             }
         }
     }

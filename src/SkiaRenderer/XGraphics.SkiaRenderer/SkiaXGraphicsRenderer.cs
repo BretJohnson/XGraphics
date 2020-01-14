@@ -1,18 +1,19 @@
 ﻿using System;
 using SkiaSharp;
+using XGraphics.ImageLoading.Work;
 
 namespace XGraphics.SkiaRenderer
 {
     public class SkiaXGraphicsRenderer : XGraphicsRenderer
     {
-        public override void RenderToBuffer(IXCanvas xCanvas, ImageProvider imageProvider, IntPtr pixels, int width, int height, int rowBytes)
+        public override void RenderToBuffer(IXCanvas xCanvas, IntPtr pixels, int width, int height, int rowBytes)
         {
             var info = new SKImageInfo(width, height, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
 
             using (SKSurface surface = SKSurface.Create(info, pixels, rowBytes))
             {
                 // Paint all elements from the canvas on the surface
-                new SkiaPainter(surface, imageProvider).Paint(xCanvas);
+                new SkiaPainter(surface, ImageLoader).Paint(xCanvas);
             }
         }
 
@@ -20,6 +21,20 @@ namespace XGraphics.SkiaRenderer
         {
             throw new NotImplementedException(
                 "CreateGraphicsView isn't supported for the default SkiaXGraphicsRender; use a platform specific subclass instead");
+        }
+
+        public override IImageLoader ImageLoader
+        {
+            get
+            {
+                throw new NotImplementedException(
+                    "There's no ImageLoader support for the default SkiaXGraphicsRender; use a platform specific subclass instead");
+            }
+            set
+            {
+                throw new NotImplementedException(
+                    "There's no ImageLoader support for the default SkiaXGraphicsRender; use a platform specific subclass instead");
+            }
         }
     }
 }

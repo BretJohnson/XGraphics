@@ -7,5 +7,7 @@ namespace XGraphics.StandardModel
     public class Image : GraphicsElement, IImage
     {
         public ImageSource Source { get; set; } = null;
+
+        IImageSource IImage.Source => Source;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SkiaSharp;
 using XGraphics.Brushes;
 using XGraphics.Geometries;
+using XGraphics.ImageLoading.Work;
 using XGraphics.Shapes;
 using XGraphics.Transforms;
 
@@ -12,13 +13,13 @@ namespace XGraphics.SkiaRenderer
     {
         private readonly SKSurface surface;
         private readonly SKCanvas skCanvas;
-        private readonly ImageProvider _imageProvider;
+        private readonly IImageLoader _imageLoader;
 
-        public SkiaPainter(SKSurface surface, ImageProvider imageProvider)
+        public SkiaPainter(SKSurface surface, IImageLoader imageLoader)
         {
             this.surface = surface;
             skCanvas = surface.Canvas;
-            _imageProvider = imageProvider;
+            _imageLoader = imageLoader;
         }
 
         public void Paint(IXCanvas xCanvas)
@@ -59,6 +60,18 @@ namespace XGraphics.SkiaRenderer
                     SKPath skiaPath = NonPathShapeToSkiaPath(shape);
                     FillSkiaPath(skiaPath, shape);
                     StrokeSkiaPath(skiaPath, shape);
+                }
+                else if (graphicsElement is IImage image)
+                {
+                    IImageSource imageSource = image.Source;
+
+                    if (imageSource is ILoadableImageSource loadableImageSource)
+                    {
+                        if (true /* needs loading */)
+                        {
+                            _imageLoader.LoadImage(loadableImageSource, null);
+                        }
+                    }
                 }
                 else throw new InvalidOperationException($"Unknown graphics element type {graphicsElement.GetType()}");
 
