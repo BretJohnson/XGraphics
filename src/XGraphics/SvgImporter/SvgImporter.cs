@@ -36,18 +36,7 @@ namespace XGraphics.SvgImporter
 
         public float PixelsPerInch { get; set; }
 
-        public SvgImporter(string fileName)
-        {
-            using FileStream stream = File.OpenRead(fileName);
-            Load(stream);
-        }
-
-        public SvgImporter(Stream stream)
-        {
-            Load(stream);
-        }
-
-        private void Load(Stream stream)
+        public XCanvas Import(Stream stream)
         {
             var nameTable = new NameTable();
             var xmlNamespaceManager = new XmlNamespaceManager(nameTable);
@@ -63,10 +52,10 @@ namespace XGraphics.SvgImporter
 
             using XmlReader reader = XmlReader.Create(stream, xmlReaderSettings, xmlParserContext);
             XDocument document = XDocument.Load(reader);
-            Load(document);
+            return Import(document);
         }
 
-        private void Load(XDocument document)
+        private XCanvas Import(XDocument document)
         {
             XElement svg = document.Root;
             XNamespace ns = svg.Name.Namespace;
@@ -132,6 +121,8 @@ namespace XGraphics.SvgImporter
                 if (graphicsElement != null)
                     xCanvas.Children.Add(graphicsElement);
             }
+
+            return xCanvas;
         }
 
         private GraphicsElement? ReadElement(XElement e, StyleableProperties parentStyleableProperties)
