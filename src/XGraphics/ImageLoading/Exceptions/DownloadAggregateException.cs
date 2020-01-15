@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace XGraphics
+namespace XGraphics.ImageLoading.Exceptions
 {
     public class DownloadAggregateException : AggregateException
     {

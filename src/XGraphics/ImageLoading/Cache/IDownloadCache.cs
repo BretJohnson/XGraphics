@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using XGraphics.ImageLoading.Work;
 
 namespace XGraphics.ImageLoading.Cache
 {

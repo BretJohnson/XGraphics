@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XGraphics
+namespace XGraphics.ImageLoading.Exceptions
 {
     public class DownloadException : Exception
     {

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace XGraphics
+namespace XGraphics.ImageLoading.IO
 {
     internal static class FileStore
     {

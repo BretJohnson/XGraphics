@@ -4,7 +4,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using XGraphics.ImageLoading.Exceptions;
+using XGraphics.ImageLoading.Extensions;
 using XGraphics.ImageLoading.Helpers;
+using XGraphics.ImageLoading.Work;
 
 namespace XGraphics.ImageLoading.Cache
 {
@@ -42,7 +45,7 @@ namespace XGraphics.ImageLoading.Cache
             parameters.OnDownloadStarted?.Invoke(downloadInfo);
 #endif
 
-            var responseBytes = await Retry.DoAsync(
+            byte[] responseBytes = await Retry.DoAsync(
                 async () => await DownloadAsync(url, token, _imageLoader.HttpClient, imageSource, downloadInfo).ConfigureAwait(false),
                 TimeSpan.FromMilliseconds(_imageLoader.RetryDelayInMs),
                 _imageLoader.RetryCount,

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using XGraphics.ImageLoading.Helpers;
+using XGraphics.ImageLoading.IO;
 
 namespace XGraphics.ImageLoading.Cache
 {

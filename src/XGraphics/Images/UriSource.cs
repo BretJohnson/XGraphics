@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using XGraphics.ImageLoading;
+using XGraphics.ImageLoading.Extensions;
 using XGraphics.ImageLoading.Work;
 
 namespace XGraphics

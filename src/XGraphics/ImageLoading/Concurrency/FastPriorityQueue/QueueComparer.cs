@@ -4,7 +4,7 @@ namespace XGraphics.ImageLoading.Concurrency.FastPriorityQueue
 {
     public class QueueComparer<TPriority> : Comparer<TPriority>
     {
-        Comparer<TPriority> _comparer = Comparer<TPriority>.Default;
+        private readonly Comparer<TPriority> _comparer = Comparer<TPriority>.Default;
 
         public override int Compare(TPriority x, TPriority y)
         {

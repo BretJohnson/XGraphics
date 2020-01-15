@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace XGraphics
+namespace XGraphics.ImageLoading.Exceptions
 {
     public class DownloadHttpStatusCodeException : Exception
     {

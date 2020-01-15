@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Diagnostics;
 using XGraphics.ImageLoading.Concurrency;
+using XGraphics.ImageLoading.Extensions;
 using XGraphics.ImageLoading.Helpers;
 
 namespace XGraphics.ImageLoading.Work

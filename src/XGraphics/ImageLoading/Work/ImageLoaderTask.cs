@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using XGraphics.ImageLoading.Cache;
+using XGraphics.ImageLoading.Extensions;
 using XGraphics.ImageLoading.Helpers;
 
 namespace XGraphics.ImageLoading.Work
@@ -150,7 +151,9 @@ namespace XGraphics.ImageLoading.Work
                 if (found == null)
                     return false;
 
+#if LATER
                 ImageSource.LoadSucceeded(found);
+#endif
 
                 _imageLoader.Logger?.Debug($"Image loaded from cache: {Key}");
                 IsCompleted = true;
@@ -201,7 +204,9 @@ namespace XGraphics.ImageLoading.Work
 
                     ThrowIfCancellationRequested();
 
+#if LATER
                     ImageSource.LoadSucceeded(decodedImage);
+#endif
 				}
 			}
 			catch (Exception ex)
@@ -221,7 +226,9 @@ namespace XGraphics.ImageLoading.Work
 					}
 
                     logger?.Error($"Image loading failed: {Key}", ex);
+#if LATER
                     ImageSource.LoadFailed(ex);
+#endif
 				}
 			}
 			finally

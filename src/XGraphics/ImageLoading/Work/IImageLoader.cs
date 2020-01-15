@@ -49,7 +49,8 @@ namespace XGraphics.ImageLoading.Work
         /// <summary>
         /// Queue an image loading task.
         /// </summary>
-        /// <param name="task">Image loading task.</param>
+        /// <param name="imageSource">image source to load</param>
+        /// <param name="decoder">renderer supplied decoder; used for bitmap images</param>
         void LoadImage(ILoadableImageSource imageSource, ImageDecoder? decoder);
 
         /// <summary>

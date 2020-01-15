@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XGraphics
+namespace XGraphics.ImageLoading.Cache
 {
     internal readonly struct CacheEntry
     {

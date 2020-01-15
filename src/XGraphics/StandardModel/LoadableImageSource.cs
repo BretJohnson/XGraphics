@@ -1,8 +1,6 @@
 // This file is generated from ILoadableImageSource.cs. Update the source file to change its contents.
 
 using System;
-using XGraphics.ImageLoading;
-using XGraphics.StandardModel.ImageLoading;
 using XGraphics;
 
 namespace XGraphics.StandardModel
@@ -17,6 +15,6 @@ namespace XGraphics.StandardModel
 
         public Exception? LoadingError { get; set; } = null;
 
-        public ImageDecoder Decoder { get; set; } = null;
+        public ImageDecoder? Decoder { get; set; } = null;
     }
 }

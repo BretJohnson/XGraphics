@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace XGraphics.ImageLoading
+namespace XGraphics.ImageLoading.Work
 {
-    public struct DownloadInformation
+    public class DownloadInformation
     {
         public DownloadInformation(TimeSpan cacheValidity)
         {

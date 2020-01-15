@@ -1,4 +1,4 @@
-﻿namespace XGraphics
+﻿namespace XGraphics.ImageLoading.Cache
 {
     public enum CacheType
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XGraphics.ImageLoading
+namespace XGraphics.ImageLoading.Extensions
 {
     public static class DisposableExtensions
     {
