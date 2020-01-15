@@ -127,6 +127,11 @@ namespace XGraphics.ImageLoading.Cache
                                     int totalRead = 0;
                                     byte[] buffer = new byte[_imageLoader.HttpReadBufferSize];
                                     int read = 0;
+                                    int currentProgress = 1;
+
+#if LATER
+                                    imageSource.RaiseDownloadProgress(new DownloadProgressEventArgs(currentProgress));
+#endif
 
                                     while ((read = await sourceStream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
                                     {
@@ -134,7 +139,18 @@ namespace XGraphics.ImageLoading.Cache
                                         outputStream.Write(buffer, 0, read);
                                         totalRead += read;
 
-                                        imageSource.RaiseDownloadProgress(new DownloadProgressEventArgs(totalRead, total));
+                                        if (total > 0)
+                                            currentProgress = totalRead * 100 / total;
+                                        else currentProgress = ++currentProgress;
+
+                                        if (currentProgress < 1)
+                                            currentProgress = 1;
+                                        if (currentProgress > 99)
+                                            currentProgress = 99;
+
+#if LATER
+                                        imageSource.RaiseDownloadProgress(new DownloadProgressEventArgs(currentProgress));
+#endif
                                     }
 
                                     if (outputStream.Length == 0)
@@ -142,6 +158,11 @@ namespace XGraphics.ImageLoading.Cache
 
                                     if (outputStream.Length < 32)
                                         throw new DownloadException("Invalid stream");
+
+                                    currentProgress = 100;
+#if LATER
+                                    imageSource.RaiseDownloadProgress(new DownloadProgressEventArgs(currentProgress));
+#endif
 
                                     return outputStream.ToArray();
                                 }

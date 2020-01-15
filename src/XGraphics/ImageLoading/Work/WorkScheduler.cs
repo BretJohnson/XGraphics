@@ -200,8 +200,10 @@ namespace XGraphics.ImageLoading.Work
                     PendingTasks.TryUpdatePriority(similarRunningTask, task.Priority.Value);
                 }
 
+#if LATER
                 similarRunningTask.ImageSource.DownloadProgress += (sender, args) =>
-                    task.ImageSource.DownloadProgress?.Invoke(sender, args);
+                    task.ImageSource.RaiseDownloadProgress(args);
+#endif
             }
 
             if (PauseWork)
