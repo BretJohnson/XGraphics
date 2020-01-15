@@ -1,4 +1,4 @@
-﻿namespace XGraphics.ImageLoading
+﻿namespace XGraphics
 {
     public abstract class LoadedImage
     {

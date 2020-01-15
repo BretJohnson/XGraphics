@@ -213,8 +213,6 @@ namespace XGraphics.ImageLoading
             DecodingLock = new SemaphoreSlim(DecodingMaxParallelTasks, DecodingMaxParallelTasks);
         }
 
-        protected virtual void PlatformSpecificConfiguration(ImageLoaderConfiguration configuration) { }
-
         /// <summary>
         /// Some platforms override this default
         /// </summary>

@@ -1,6 +1,7 @@
-﻿using XGraphics.StandardModel;
+﻿using XGraphics.ImageLoading;
+using XGraphics.StandardModel;
 
-namespace XGraphics.ImageLoading
+namespace XGraphics
 {
     public class VectorLoadedImage : LoadedImage
     {

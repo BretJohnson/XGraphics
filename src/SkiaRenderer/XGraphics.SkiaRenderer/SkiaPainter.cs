@@ -5,6 +5,7 @@ using XGraphics.Brushes;
 using XGraphics.Geometries;
 using XGraphics.ImageLoading.Work;
 using XGraphics.Shapes;
+using XGraphics.StandardModel;
 using XGraphics.Transforms;
 
 namespace XGraphics.SkiaRenderer
@@ -67,9 +68,23 @@ namespace XGraphics.SkiaRenderer
 
                     if (imageSource is ILoadableImageSource loadableImageSource)
                     {
-                        if (true /* needs loading */)
-                        {
+                        LoadingStatus loadingStatus = loadableImageSource.LoadingStatus;
+                        if (loadingStatus == LoadingStatus.NotStarted)
                             _imageLoader.LoadImage(loadableImageSource, null);
+                        else if (loadingStatus == LoadingStatus.Succeeded)
+                        {
+                            LoadedImage loadedImage = loadableImageSource.LoadedImage!;
+
+                            if (loadedImage is BitmapLoadedImage bitmapLoadedImage)
+                            {
+                                SKBitmap bitmap = (SKBitmap) bitmapLoadedImage.ImageObject;
+                                // TODO: Render it
+                            }
+                            else if (loadedImage is VectorLoadedImage vectorLoadedImage)
+                            {
+                                XCanvas childCanvas = vectorLoadedImage.Canvas;
+                                PaintGraphicsElements(childCanvas.Children);
+                            }
                         }
                     }
                 }

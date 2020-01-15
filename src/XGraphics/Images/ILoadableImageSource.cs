@@ -1,5 +1,4 @@
 ﻿using System;
-using XGraphics.ImageLoading;
 
 namespace XGraphics
 {
@@ -9,33 +8,43 @@ namespace XGraphics
         [ModelDefaultValue(null)]
         DataSource Source { get; }
 
+        [ModelDefaultValue(LoadingStatus.NotStarted)]
+        LoadingStatus LoadingStatus { get; }
+
         [ModelDefaultValue(null)]
         LoadedImage? LoadedImage { get; }
 
-        DownloadProgressEventHandler? DownloadProgress { get; set; }
-        event EventHandler? LoadComplete;
+        [ModelDefaultValue(null)]
+        Exception? LoadingError { get; }
 
-        void LoadSucceeded(LoadedImage loadedImage);
-        void LoadFailed(Exception exception);
+#if LATER
+        event DownloadProgressEventHandler DownloadProgress;
+        event EventHandler LoadComplete;
 
         void RaiseDownloadProgress(DownloadProgressEventArgs args);
 
+        void LoadStarted();
+        void LoadSucceeded(LoadedImage loadedImage);
+        void LoadFailed(Exception exception);
+        void LoadCanceled();
+#endif
+
         [ModelDefaultValue(null)]
-        ImageDecoder Decoder { get; }
+        ImageDecoder? Decoder { get; }
     }
 
     public delegate void DownloadProgressEventHandler(object sender, DownloadProgressEventArgs e);
 
     public class DownloadProgressEventArgs : EventArgs
     {
-        public DownloadProgressEventArgs(int current, int total)
+        public DownloadProgressEventArgs(int progress)
         {
-            Current = current;
-            Total = total;
+            Progress = progress;
         }
 
-        public int Current { get; }
-
-        public int Total { get; }
+        /// <summary>
+        /// Gets download progress as a value that is between 0 and 100. 0 indicates no progress; 100 indicates that the download is complete.
+        /// </summary>
+        public int Progress { get; }
     }
 }

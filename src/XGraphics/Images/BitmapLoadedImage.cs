@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace XGraphics.ImageLoading
+namespace XGraphics
 {
-    public class RasterLoadedImage : LoadedImage
+    public class BitmapLoadedImage : LoadedImage
     {
-        public RasterLoadedImage(IDisposable imageObject, int pixelWidth, int pixelHeight)
+        public BitmapLoadedImage(IDisposable imageObject, int pixelWidth, int pixelHeight)
         {
             ImageObject = imageObject;
             PixelWidth = pixelWidth;
