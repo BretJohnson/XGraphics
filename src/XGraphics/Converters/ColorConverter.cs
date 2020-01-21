@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 
 namespace XGraphics.Converters
 {
-	public static class ColorConverter
-	{
+    public static class ColorConverter
+    {
+        private static Lazy<Dictionary<string, Color>> NamesToColors = new Lazy<Dictionary<string, Color>>(CreateNamesToColors);
+        private static Lazy<Dictionary<Color, string>> ColorsToNames = new Lazy<Dictionary<Color, string>>(CreateColorsToNames);
+
         public static Color ConvertFromString(string value)
         {
             return Parse(value);
@@ -17,15 +21,15 @@ namespace XGraphics.Converters
         // HSLA		hsla(120, 100%, 50%, .8)						opacity is 0.0-1.0
         // Predefined color											case insensitive
         public static Color Parse(string value)
-		{
+        {
             if (value == null)
                 throw new InvalidOperationException($"Cannot convert null into a Color");
 
-			value = value.Trim();
-			if (value.StartsWith("#", StringComparison.Ordinal) && Color.FromHex(value, out Color hexColor))
-				   return hexColor;
-
+            value = value.Trim();
+            if (value.StartsWith("#", StringComparison.Ordinal) && Color.FromHex(value, out Color hexColor))
+                return hexColor;
 #if LATER
+
             if (value.StartsWith("rgba", StringComparison.OrdinalIgnoreCase)) {
 				var op = value.IndexOf('(');
 				var cp = value.LastIndexOf(')');
@@ -87,158 +91,197 @@ namespace XGraphics.Converters
             }
 #endif
 
-			string[] parts = value.Split('.');
-			if (parts.Length == 1 || (parts.Length == 2 && parts[0] == "Color"))
-			{
-				string color = parts[parts.Length - 1];
-				switch (color.ToLowerInvariant()) {
-				case "aliceblue": return Colors.AliceBlue;
-				case "antiquewhite": return Colors.AntiqueWhite;
-				case "aqua": return Colors.Aqua;
-				case "aquamarine": return Colors.Aquamarine;
-				case "azure": return Colors.Azure;
-				case "beige": return Colors.Beige;
-				case "bisque": return Colors.Bisque;
-				case "black": return Colors.Black;
-				case "blanchedalmond": return Colors.BlanchedAlmond;
-				case "blue": return Colors.Blue;
-				case "blueViolet": return Colors.BlueViolet;
-				case "brown": return Colors.Brown;
-				case "burlywood": return Colors.BurlyWood;
-				case "cadetblue": return Colors.CadetBlue;
-				case "chartreuse": return Colors.Chartreuse;
-				case "chocolate": return Colors.Chocolate;
-				case "coral": return Colors.Coral;
-				case "cornflowerblue": return Colors.CornflowerBlue;
-				case "cornsilk": return Colors.Cornsilk;
-				case "crimson": return Colors.Crimson;
-				case "cyan": return Colors.Cyan;
-				case "darkblue": return Colors.DarkBlue;
-				case "darkcyan": return Colors.DarkCyan;
-				case "darkgoldenrod": return Colors.DarkGoldenrod;
-				case "darkgray": return Colors.DarkGray;
-				case "darkgreen": return Colors.DarkGreen;
-				case "darkkhaki": return Colors.DarkKhaki;
-				case "darkmagenta": return Colors.DarkMagenta;
-				case "darkolivegreen": return Colors.DarkOliveGreen;
-				case "darkorange": return Colors.DarkOrange;
-				case "darkorchid": return Colors.DarkOrchid;
-				case "darkred": return Colors.DarkRed;
-				case "darksalmon": return Colors.DarkSalmon;
-				case "darkseagreen": return Colors.DarkSeaGreen;
-				case "darkslateblue": return Colors.DarkSlateBlue;
-				case "darkslategray": return Colors.DarkSlateGray;
-				case "darkturquoise": return Colors.DarkTurquoise;
-				case "darkviolet": return Colors.DarkViolet;
-				case "deeppink": return Colors.DeepPink;
-				case "deepskyblue": return Colors.DeepSkyBlue;
-				case "dimgray": return Colors.DimGray;
-				case "dodgerblue": return Colors.DodgerBlue;
-				case "firebrick": return Colors.Firebrick;
-				case "floralwhite": return Colors.FloralWhite;
-				case "forestgreen": return Colors.ForestGreen;
-				case "fuchsia": return Colors.Fuchsia;
-				case "gainsboro": return Colors.Gainsboro;
-				case "ghostwhite": return Colors.GhostWhite;
-				case "gold": return Colors.Gold;
-				case "goldenrod": return Colors.Goldenrod;
-				case "gray": return Colors.Gray;
-				case "green": return Colors.Green;
-				case "greenyellow": return Colors.GreenYellow;
-				case "honeydew": return Colors.Honeydew;
-				case "hotpink": return Colors.HotPink;
-				case "indianred": return Colors.IndianRed;
-				case "indigo": return Colors.Indigo;
-				case "ivory": return Colors.Ivory;
-				case "khaki": return Colors.Khaki;
-				case "lavender": return Colors.Lavender;
-				case "lavenderblush": return Colors.LavenderBlush;
-				case "lawngreen": return Colors.LawnGreen;
-				case "lemonchiffon": return Colors.LemonChiffon;
-				case "lightblue": return Colors.LightBlue;
-				case "lightcoral": return Colors.LightCoral;
-				case "lightcyan": return Colors.LightCyan;
-				case "lightgoldenrodyellow": return Colors.LightGoldenrodYellow;
-				case "lightgrey":
-				case "lightgray": return Colors.LightGray;
-				case "lightgreen": return Colors.LightGreen;
-				case "lightpink": return Colors.LightPink;
-				case "lightsalmon": return Colors.LightSalmon;
-				case "lightseagreen": return Colors.LightSeaGreen;
-				case "lightskyblue": return Colors.LightSkyBlue;
-				case "lightslategray": return Colors.LightSlateGray;
-				case "lightsteelblue": return Colors.LightSteelBlue;
-				case "lightyellow": return Colors.LightYellow;
-				case "lime": return Colors.Lime;
-				case "limegreen": return Colors.LimeGreen;
-				case "linen": return Colors.Linen;
-				case "magenta": return Colors.Magenta;
-				case "maroon": return Colors.Maroon;
-				case "mediumaquamarine": return Colors.MediumAquamarine;
-				case "mediumblue": return Colors.MediumBlue;
-				case "mediumorchid": return Colors.MediumOrchid;
-				case "mediumpurple": return Colors.MediumPurple;
-				case "mediumseagreen": return Colors.MediumSeaGreen;
-				case "mediumslateblue": return Colors.MediumSlateBlue;
-				case "mediumspringgreen": return Colors.MediumSpringGreen;
-				case "mediumturquoise": return Colors.MediumTurquoise;
-				case "mediumvioletred": return Colors.MediumVioletRed;
-				case "midnightblue": return Colors.MidnightBlue;
-				case "mintcream": return Colors.MintCream;
-				case "mistyrose": return Colors.MistyRose;
-				case "moccasin": return Colors.Moccasin;
-				case "navajowhite": return Colors.NavajoWhite;
-				case "navy": return Colors.Navy;
-				case "oldlace": return Colors.OldLace;
-				case "olive": return Colors.Olive;
-				case "olivedrab": return Colors.OliveDrab;
-				case "orange": return Colors.Orange;
-				case "orangered": return Colors.OrangeRed;
-				case "orchid": return Colors.Orchid;
-				case "palegoldenrod": return Colors.PaleGoldenrod;
-				case "palegreen": return Colors.PaleGreen;
-				case "paleturquoise": return Colors.PaleTurquoise;
-				case "palevioletred": return Colors.PaleVioletRed;
-				case "papayawhip": return Colors.PapayaWhip;
-				case "peachpuff": return Colors.PeachPuff;
-				case "peru": return Colors.Peru;
-				case "pink": return Colors.Pink;
-				case "plum": return Colors.Plum;
-				case "powderblue": return Colors.PowderBlue;
-				case "purple": return Colors.Purple;
-				case "red": return Colors.Red;
-				case "rosybrown": return Colors.RosyBrown;
-				case "royalblue": return Colors.RoyalBlue;
-				case "saddlebrown": return Colors.SaddleBrown;
-				case "salmon": return Colors.Salmon;
-				case "sandybrown": return Colors.SandyBrown;
-				case "seagreen": return Colors.SeaGreen;
-				case "seashell": return Colors.SeaShell;
-				case "sienna": return Colors.Sienna;
-				case "silver": return Colors.Silver;
-				case "skyblue": return Colors.SkyBlue;
-				case "slateblue": return Colors.SlateBlue;
-				case "slategray": return Colors.SlateGray;
-				case "snow": return Colors.Snow;
-				case "springgreen": return Colors.SpringGreen;
-				case "steelblue": return Colors.SteelBlue;
-				case "tan": return Colors.Tan;
-				case "teal": return Colors.Teal;
-				case "thistle": return Colors.Thistle;
-				case "tomato": return Colors.Tomato;
-				case "transparent": return Colors.Transparent;
-				case "turquoise": return Colors.Turquoise;
-				case "violet": return Colors.Violet;
-				case "wheat": return Colors.Wheat;
-				case "white": return Colors.White;
-				case "whitesmoke": return Colors.WhiteSmoke;
-				case "yellow": return Colors.Yellow;
-				case "yellowgreen": return Colors.YellowGreen;
-				}
-			}
+            string[] parts = value.Split('.');
+            if (parts.Length == 1 || (parts.Length == 2 && parts[0] == "Color"))
+            {
+                string colorName = parts[parts.Length - 1].ToLowerInvariant();
+                if (NamesToColors.Value.TryGetValue(colorName, out Color color))
+                    return color;
+            }
 
-			throw new InvalidOperationException($"Cannot convert \"{value}\" into a Color");
-		}
+            throw new InvalidOperationException($"Cannot convert \"{value}\" into a Color");
+        }
+
+        private static Dictionary<string, Color> CreateNamesToColors()
+        {
+            return new Dictionary<string, Color>
+            {
+                ["aliceblue"] = Colors.AliceBlue,
+                ["antiquewhite"] = Colors.AntiqueWhite,
+                ["aqua"] = Colors.Aqua,
+                ["aquamarine"] = Colors.Aquamarine,
+                ["azure"] = Colors.Azure,
+                ["beige"] = Colors.Beige,
+                ["bisque"] = Colors.Bisque,
+                ["black"] = Colors.Black,
+                ["blanchedalmond"] = Colors.BlanchedAlmond,
+                ["blue"] = Colors.Blue,
+                ["blueViolet"] = Colors.BlueViolet,
+                ["brown"] = Colors.Brown,
+                ["burlywood"] = Colors.BurlyWood,
+                ["cadetblue"] = Colors.CadetBlue,
+                ["chartreuse"] = Colors.Chartreuse,
+                ["chocolate"] = Colors.Chocolate,
+                ["coral"] = Colors.Coral,
+                ["cornflowerblue"] = Colors.CornflowerBlue,
+                ["cornsilk"] = Colors.Cornsilk,
+                ["crimson"] = Colors.Crimson,
+                ["cyan"] = Colors.Cyan,
+                ["darkblue"] = Colors.DarkBlue,
+                ["darkcyan"] = Colors.DarkCyan,
+                ["darkgoldenrod"] = Colors.DarkGoldenrod,
+                ["darkgray"] = Colors.DarkGray,
+                ["darkgreen"] = Colors.DarkGreen,
+                ["darkkhaki"] = Colors.DarkKhaki,
+                ["darkmagenta"] = Colors.DarkMagenta,
+                ["darkolivegreen"] = Colors.DarkOliveGreen,
+                ["darkorange"] = Colors.DarkOrange,
+                ["darkorchid"] = Colors.DarkOrchid,
+                ["darkred"] = Colors.DarkRed,
+                ["darksalmon"] = Colors.DarkSalmon,
+                ["darkseagreen"] = Colors.DarkSeaGreen,
+                ["darkslateblue"] = Colors.DarkSlateBlue,
+                ["darkslategray"] = Colors.DarkSlateGray,
+                ["darkturquoise"] = Colors.DarkTurquoise,
+                ["darkviolet"] = Colors.DarkViolet,
+                ["deeppink"] = Colors.DeepPink,
+                ["deepskyblue"] = Colors.DeepSkyBlue,
+                ["dimgray"] = Colors.DimGray,
+                ["dodgerblue"] = Colors.DodgerBlue,
+                ["firebrick"] = Colors.Firebrick,
+                ["floralwhite"] = Colors.FloralWhite,
+                ["forestgreen"] = Colors.ForestGreen,
+                ["fuchsia"] = Colors.Fuchsia,
+                ["gainsboro"] = Colors.Gainsboro,
+                ["ghostwhite"] = Colors.GhostWhite,
+                ["gold"] = Colors.Gold,
+                ["goldenrod"] = Colors.Goldenrod,
+                ["gray"] = Colors.Gray,
+                ["green"] = Colors.Green,
+                ["greenyellow"] = Colors.GreenYellow,
+                ["honeydew"] = Colors.Honeydew,
+                ["hotpink"] = Colors.HotPink,
+                ["indianred"] = Colors.IndianRed,
+                ["indigo"] = Colors.Indigo,
+                ["ivory"] = Colors.Ivory,
+                ["khaki"] = Colors.Khaki,
+                ["lavender"] = Colors.Lavender,
+                ["lavenderblush"] = Colors.LavenderBlush,
+                ["lawngreen"] = Colors.LawnGreen,
+                ["lemonchiffon"] = Colors.LemonChiffon,
+                ["lightblue"] = Colors.LightBlue,
+                ["lightcoral"] = Colors.LightCoral,
+                ["lightcyan"] = Colors.LightCyan,
+                ["lightgoldenrodyellow"] = Colors.LightGoldenrodYellow,
+                ["lightgrey"] = Colors.LightGray,
+                ["lightgray"] = Colors.LightGray,
+                ["lightgreen"] = Colors.LightGreen,
+                ["lightpink"] = Colors.LightPink,
+                ["lightsalmon"] = Colors.LightSalmon,
+                ["lightseagreen"] = Colors.LightSeaGreen,
+                ["lightskyblue"] = Colors.LightSkyBlue,
+                ["lightslategray"] = Colors.LightSlateGray,
+                ["lightsteelblue"] = Colors.LightSteelBlue,
+                ["lightyellow"] = Colors.LightYellow,
+                ["lime"] = Colors.Lime,
+                ["limegreen"] = Colors.LimeGreen,
+                ["linen"] = Colors.Linen,
+                ["magenta"] = Colors.Magenta,
+                ["maroon"] = Colors.Maroon,
+                ["mediumaquamarine"] = Colors.MediumAquamarine,
+                ["mediumblue"] = Colors.MediumBlue,
+                ["mediumorchid"] = Colors.MediumOrchid,
+                ["mediumpurple"] = Colors.MediumPurple,
+                ["mediumseagreen"] = Colors.MediumSeaGreen,
+                ["mediumslateblue"] = Colors.MediumSlateBlue,
+                ["mediumspringgreen"] = Colors.MediumSpringGreen,
+                ["mediumturquoise"] = Colors.MediumTurquoise,
+                ["mediumvioletred"] = Colors.MediumVioletRed,
+                ["midnightblue"] = Colors.MidnightBlue,
+                ["mintcream"] = Colors.MintCream,
+                ["mistyrose"] = Colors.MistyRose,
+                ["moccasin"] = Colors.Moccasin,
+                ["navajowhite"] = Colors.NavajoWhite,
+                ["navy"] = Colors.Navy,
+                ["oldlace"] = Colors.OldLace,
+                ["olive"] = Colors.Olive,
+                ["olivedrab"] = Colors.OliveDrab,
+                ["orange"] = Colors.Orange,
+                ["orangered"] = Colors.OrangeRed,
+                ["orchid"] = Colors.Orchid,
+                ["palegoldenrod"] = Colors.PaleGoldenrod,
+                ["palegreen"] = Colors.PaleGreen,
+                ["paleturquoise"] = Colors.PaleTurquoise,
+                ["palevioletred"] = Colors.PaleVioletRed,
+                ["papayawhip"] = Colors.PapayaWhip,
+                ["peachpuff"] = Colors.PeachPuff,
+                ["peru"] = Colors.Peru,
+                ["pink"] = Colors.Pink,
+                ["plum"] = Colors.Plum,
+                ["powderblue"] = Colors.PowderBlue,
+                ["purple"] = Colors.Purple,
+                ["red"] = Colors.Red,
+                ["rosybrown"] = Colors.RosyBrown,
+                ["royalblue"] = Colors.RoyalBlue,
+                ["saddlebrown"] = Colors.SaddleBrown,
+                ["salmon"] = Colors.Salmon,
+                ["sandybrown"] = Colors.SandyBrown,
+                ["seagreen"] = Colors.SeaGreen,
+                ["seashell"] = Colors.SeaShell,
+                ["sienna"] = Colors.Sienna,
+                ["silver"] = Colors.Silver,
+                ["skyblue"] = Colors.SkyBlue,
+                ["slateblue"] = Colors.SlateBlue,
+                ["slategray"] = Colors.SlateGray,
+                ["snow"] = Colors.Snow,
+                ["springgreen"] = Colors.SpringGreen,
+                ["steelblue"] = Colors.SteelBlue,
+                ["tan"] = Colors.Tan,
+                ["teal"] = Colors.Teal,
+                ["thistle"] = Colors.Thistle,
+                ["tomato"] = Colors.Tomato,
+                ["transparent"] = Colors.Transparent,
+                ["turquoise"] = Colors.Turquoise,
+                ["violet"] = Colors.Violet,
+                ["wheat"] = Colors.Wheat,
+                ["white"] = Colors.White,
+                ["whitesmoke"] = Colors.WhiteSmoke,
+                ["yellow"] = Colors.Yellow,
+                ["yellowgreen"] = Colors.YellowGreen
+            };
+        }
+
+        private static Dictionary<Color, string> CreateColorsToNames()
+        {
+            var colorsToNames = new Dictionary<Color, string>();
+            foreach (KeyValuePair<string, Color> pair in NamesToColors.Value)
+            {
+                string name = pair.Key;
+
+                // A few colors have name aliases. Prefer "cyan" to "aqua", "magenta" to "fuchsia", and "gray" to "grey"
+                if (name == "aqua" || name == "fuchsia" || name.EndsWith("grey"))
+                    continue;
+
+                colorsToNames.Add(pair.Value, pair.Key);
+            }
+
+            return colorsToNames;
+        }
+
+        public static string ConvertToString(Color color)
+        {
+            if (ColorsToNames.Value.TryGetValue(color, out string colorName))
+                return colorName;
+
+            if (color.A == 0xFF)
+                return $"#{ToHex(color.R)}{ToHex(color.G)}{ToHex(color.B)}";
+            else return $"#{ToHex(color.A)}{ToHex(color.R)}{ToHex(color.G)}{ToHex(color.B)}";
+        }
+
+        private static string ToHex(byte value)
+        {
+            return value.ToString("X2");
+        }
 
 #if LATER
         static double ParseColorValue(string elem, int maxValue, bool acceptPercent)
@@ -257,6 +300,6 @@ namespace XGraphics.Converters
             return double.Parse(elem, NumberStyles.Number, CultureInfo.InvariantCulture).Clamp(0, 1);
         }
 #endif
-	}
+    }
 
 }

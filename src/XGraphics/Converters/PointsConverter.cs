@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 
 namespace XGraphics.Converters
 {
@@ -32,6 +33,26 @@ namespace XGraphics.Converters
             }
 
             return new Points(pointsList.ToArray());
+        }
+
+        public static string ConvertToString(Points points)
+        {
+            IFormatProvider formatProvider = CultureInfo.InvariantCulture;
+
+            StringBuilder buffer = new StringBuilder();
+            int length = points.Length;
+            for (int i = 0; i < length; i++)
+            {
+                if (buffer.Length > 0)
+                    buffer.Append(" ");
+
+                Point point = points[i];
+                buffer.Append(point.X.ToString(formatProvider));
+                buffer.Append(",");
+                buffer.Append(point.Y.ToString(formatProvider));
+            }
+
+            return buffer.ToString();
         }
     }
 }
